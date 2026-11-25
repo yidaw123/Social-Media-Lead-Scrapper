@@ -663,6 +663,77 @@ tbody tr:hover td { background: rgba(255, 255, 255, 0.02); }
   color: #052e16;
 }
 
+.outreach-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.stage-select {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  border: 1px solid #475569;
+  border-radius: 7px;
+  padding: 5px 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+.stage-select:focus { border-color: var(--primary); }
+.stage-select.stage-contacted {
+  background: rgba(16, 185, 129, 0.14);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.stage-select.stage-replied {
+  background: rgba(6, 182, 212, 0.16);
+  color: #67e8f9;
+  border-color: rgba(6, 182, 212, 0.42);
+}
+.stage-select.stage-signed {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+.note-btn, .dismiss-partner-btn, .restore-partner-btn {
+  background: var(--surface-subtle);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.note-btn:hover { color: #fff; background: var(--surface-hover); }
+.dismiss-partner-btn:hover {
+  color: #fda4af;
+  border-color: rgba(244, 63, 94, 0.45);
+  background: rgba(244, 63, 94, 0.12);
+}
+.restore-partner-btn {
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.restore-partner-btn:hover {
+  background: rgba(16, 185, 129, 0.18);
+  color: #fff;
+}
+.partner-note-chip {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #cbd5e1;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  word-break: break-word;
+  cursor: pointer;
+}
+
 /* Pagination */
 .pagination-bar {
   display: flex;

@@ -9,8 +9,10 @@ from .sports_scraper import (
     _parse_html_page_signals,
     _parse_instagram_followers_html,
     _parse_tiktok_followers_html,
+    deduplicate_and_merge_partners,
     enrich_partner_profile_deep,
     populate_partner_follower_counts,
+    sanitize_stored_partner_row,
     scrape_sports_partners,
 )
 
@@ -25,7 +27,9 @@ __all__ = [
     "_parse_html_page_signals",
     "_parse_instagram_followers_html",
     "_parse_tiktok_followers_html",
+    "deduplicate_and_merge_partners",
     "enrich_partner_profile_deep",
     "populate_partner_follower_counts",
+    "sanitize_stored_partner_row",
     "scrape_sports_partners",
 ]

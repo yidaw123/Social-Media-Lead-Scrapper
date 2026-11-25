@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crews — Sports Creator &amp; Partner Scraper</title>
-  <link rel="stylesheet" href="./static/styles.css?v=3" />
+  <link rel="stylesheet" href="./static/styles.css?v=4" />
 </head>
 <body>
   <div class="container">
@@ -60,7 +60,7 @@
       <div class="kpi-card" id="pkpi-card-contacted" onclick="quickFilterPartners('contacted')">
         <div class="kpi-label">Contacted</div>
         <div class="kpi-val" id="pkpi-contacted" style="color:#fb7185">0</div>
-        <div class="kpi-sub">Outreach tracked</div>
+        <div class="kpi-sub" id="pkpi-contacted-sub">Outreach tracked</div>
       </div>
     </div>
 
@@ -229,20 +229,22 @@
         <div class="field">
           <label for="partner-contacted">Outreach Status</label>
           <select id="partner-contacted" onchange="loadPartners()">
-            <option value="all">All Statuses</option>
-            <option value="not_contacted">Not Contacted Yet</option>
-            <option value="contacted">Contacted</option>
+            <option value="all">All Active Partners</option>
+            <option value="not_contacted">To Contact (Not Contacted)</option>
+            <option value="contacted">All Contacted (Any Stage)</option>
+            <option value="stage_contacted">Stage: Contacted</option>
+            <option value="replied">Stage: Replied</option>
+            <option value="signed">Stage: Signed Partner</option>
+            <option value="dismissed">Hidden / Not a Fit</option>
           </select>
         </div>
         <div class="field">
           <label for="partner-country">Country / Region</label>
           <select id="partner-country" onchange="onPartnerCountryChange()">
-            <option value="all">All Countries</option>
+            <option value="all">All US &amp; Canada</option>
             <option value="Toronto / GTA">Toronto / GTA (Launch Market)</option>
-            <option value="North America">US &amp; Canada</option>
             <option value="Canada">Canada</option>
             <option value="United States">United States</option>
-            <option value="Other">Other / Unlisted</option>
           </select>
         </div>
         <div class="field">
@@ -260,6 +262,7 @@
         <div class="field">
           <label for="partner-sort">Sort By</label>
           <select id="partner-sort" onchange="applyPartnersSortAndRender()">
+            <option value="best_fit">Best Crews Fit (Toronto + Email + Reach)</option>
             <option value="email_first">Verified Email First + Followers</option>
             <option value="toronto_first">Toronto / GTA First + Followers</option>
             <option value="audience_desc">Most Followers First</option>
@@ -382,6 +385,6 @@
     </div>
   </div>
 
-  <script src="./static/app.js?v=3"></script>
+  <script src="./static/app.js?v=4"></script>
 </body>
 </html>

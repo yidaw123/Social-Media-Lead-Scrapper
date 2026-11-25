@@ -1,11 +1,12 @@
 import html as html_lib
 import json
 import re
+import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Dict, List, Optional, Set, Tuple
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -110,16 +111,52 @@ MEETUP_SEARCH_SEEDS: List[Tuple[str, str, str]] = [
 ]
 
 BLUESKY_SEARCH_SEEDS: List[Tuple[str, str, str]] = [
-    ("basketball skills coach trainer", "Basketball", "pro_candidate"),
-    ("toronto run club", "Running & Run Clubs", "sports_org"),
-    ("pickleball coach", "Tennis & Pickleball", "pro_candidate"),
-    ("soccer coach futsal", "Soccer", "pro_candidate"),
-    ("volleyball club league", "Volleyball", "sports_org"),
-    ("boxing coach bjj gym", "Combat & Martial Arts", "pro_candidate"),
-    ("hyrox crossfit personal trainer", "Fitness & Cross-Training", "pro_candidate"),
-    ("golf swing coach instructor", "Golf", "pro_candidate"),
-    ("hockey skills skating coach", "Hockey & Ice Sports", "pro_candidate"),
-    ("adult rec league sports club", "Multi-Sport & Rec Leagues", "sports_org"),
+    ("toronto basketball coach trainer", "Basketball", "pro_candidate"),
+    ("toronto run club crew", "Running & Run Clubs", "sports_org"),
+    ("pickleball coach club canada", "Tennis & Pickleball", "pro_candidate"),
+    ("toronto soccer futsal club", "Soccer", "pro_candidate"),
+    ("volleyball club league canada", "Volleyball", "sports_org"),
+    ("boxing coach bjj gym toronto", "Combat & Martial Arts", "pro_candidate"),
+    ("hyrox crossfit personal trainer canada", "Fitness & Cross-Training", "pro_candidate"),
+    ("golf swing coach instructor canada", "Golf", "pro_candidate"),
+    ("hockey skills skating coach canada", "Hockey & Ice Sports", "pro_candidate"),
+    ("toronto rec league sports club", "Multi-Sport & Rec Leagues", "sports_org"),
+]
+
+EVENTBRITE_TORONTO_SEEDS: List[Tuple[str, str]] = [
+    ("basketball", "Basketball"),
+    ("soccer", "Soccer"),
+    ("volleyball", "Volleyball"),
+    ("pickleball", "Tennis & Pickleball"),
+    ("tennis", "Tennis & Pickleball"),
+    ("running", "Running & Run Clubs"),
+    ("flag-football", "Flag Football & Turf Sports"),
+    ("hockey", "Hockey & Ice Sports"),
+    ("softball", "Baseball & Softball"),
+    ("golf", "Golf"),
+    ("fitness", "Fitness & Cross-Training"),
+    ("martial-arts", "Combat & Martial Arts"),
+    ("sports-and-fitness--events", "Multi-Sport & Rec Leagues"),
+]
+
+TORONTO_SOCIAL_WEB_SEEDS: List[Tuple[str, str, str, str]] = [
+    ('site:instagram.com "Toronto" basketball trainer OR coach OR pickup', "instagram", "Basketball", "pro_candidate"),
+    ('site:instagram.com "Toronto" soccer trainer OR futsal OR pickup', "instagram", "Soccer", "pro_candidate"),
+    ('site:instagram.com "Toronto" volleyball pickup OR coach OR club', "instagram", "Volleyball", "pro_candidate"),
+    ('site:instagram.com "Toronto" pickleball coach OR open play OR club', "instagram", "Tennis & Pickleball", "pro_candidate"),
+    ('site:instagram.com "Toronto" tennis coach OR instructor', "instagram", "Tennis & Pickleball", "pro_candidate"),
+    ('site:instagram.com "Toronto" "run club" OR "run crew" OR "running club"', "instagram", "Running & Run Clubs", "sports_org"),
+    ('site:instagram.com "Toronto" running coach OR marathon trainer', "instagram", "Running & Run Clubs", "pro_candidate"),
+    ('site:instagram.com "Toronto" hockey skills coach OR power skating OR shinny', "instagram", "Hockey & Ice Sports", "pro_candidate"),
+    ('site:instagram.com "Toronto" flag football OR ultimate frisbee', "instagram", "Flag Football & Turf Sports", "pro_candidate"),
+    ('site:instagram.com "Toronto" baseball trainer OR hitting coach OR slowpitch', "instagram", "Baseball & Softball", "pro_candidate"),
+    ('site:instagram.com "Toronto" golf coach OR golf instructor', "instagram", "Golf", "pro_candidate"),
+    ('site:instagram.com "Toronto" hyrox OR calisthenics OR strength coach', "instagram", "Fitness & Cross-Training", "pro_candidate"),
+    ('site:instagram.com "Toronto" boxing coach OR bjj OR muay thai', "instagram", "Combat & Martial Arts", "pro_candidate"),
+    ('site:tiktok.com "Toronto" basketball trainer OR pickup hoops', "tiktok", "Basketball", "pro_candidate"),
+    ('site:tiktok.com "Toronto" run club OR marathon running', "tiktok", "Running & Run Clubs", "pro_candidate"),
+    ('site:tiktok.com "Toronto" pickleball OR tennis OR volleyball', "tiktok", "Tennis & Pickleball", "pro_candidate"),
+    ('site:tiktok.com "Toronto" personal trainer OR hyrox OR fitness coach', "tiktok", "Fitness & Cross-Training", "pro_candidate"),
 ]
 
 # Curated real public Toronto/GTA & Canadian Sports Organizations, Clubs & University Networks
@@ -198,13 +235,54 @@ _EXCLUDED_SLUGS = (
     "nba", "nfl", "nhl", "mlb", "mls", "ufc", "wwe", "fifa", "pgatour",
     "cbcnews", "ctvnews", "globalnews", "cp24", "bbcnews", "cnn", "abcnews",
     "cbsnews", "nbcnews", "foxnews", "6ixbuzz", "blogto", "narcity",
+    "playyourcourt", "basketballreference", "sportsreference", "profootballreference",
+    "hockeyreference", "baseballreference", "statmuse", "theringer", "billsimmons",
+    "scoregolf", "golfdigest", "runnersworld", "theathletic",
+    "ballislife", "yokkao", "fightcamp",
 )
 
-_NON_TARGET_COUNTRIES = {
-    "india", "pakistan", "bangladesh", "indonesia", "vietnam", "philippines",
-    "nigeria", "brazil", "russia", "ukraine", "egypt", "morocco", "turkey",
-    "mexico", "colombia", "argentina", "peru", "thailand", "malaysia",
+_ALLOWED_COUNTRIES = {
+    "", "ca", "can", "canada", "us", "usa", "u.s.", "u.s.a.",
+    "united states", "united states of america",
 }
+
+_FRANCHISE_OR_MEDIA_DOMAINS = (
+    "playyourcourt.com", "playyourcourt", "superprof.ca", "superprof.com", "lessons.com",
+    "thumbtack.com", "bark.com", "classpass.com", "groupon.com",
+    "basketball-reference.com", "sports-reference.com", "pro-football-reference.com",
+    "hockey-reference.com", "baseball-reference.com", "fbref.com", "statmuse.com",
+    "transfermarkt.com", "theathletic.com", "theringer.com", "barstoolsports.com",
+    "bleacherreport.com", "sbnation.com", "scoregolf.com", "golfdigest.com",
+    "golf.com", "runnersworld.com", "espn.com", "tsn.ca", "sportsnet.ca",
+    "si.com", "cbssports.com", "nbcsports.com", "foxsports.com",
+    "nytimes.com", "npr.org", "marketplace.org",
+)
+
+_MEDIA_OR_STATS_RE = re.compile(
+    r"(?:\bbasketball\s+stats\s+and\s+history\b|\bsports-reference\b|\bbasketball-reference\b|"
+    r"\bthe\s+ringer\b|\bgrantland\b|\b30\s+for\s+30\b|\bhbo['’]?s\b|"
+    r"\bhost\s+of\s+the\s+[\w\s]{2,35}\s+podcast\b|\bthe\s+[\w\s]{2,30}\s+podcast,\s+the\b|"
+    r"\bthe\s+show\s+about\s+the\s+show\b|\bcanadian\s+golf\s+course\b|\bscoregolf\.com\b|"
+    r"\bsports\s+media\s+network\b|\bnewsroom\b|\bsports\s+talk\s+radio\b|"
+    r"\bi\s+talk\s+about\s+(?:basketball|football|soccer|hockey|baseball|sports)\s+and\s+movies\b)",
+    re.IGNORECASE,
+)
+
+_ACTIVE_PARTNER_ROLE_RE = re.compile(
+    r"\b(coach|coaching|trainer|training|instructor|lessons|clinics?|pickup|drop-?in|"
+    r"open\s+gym|open\s+play|run\s+club|run\s+crew|running\s+club|rec\s+league|sports?\s+league|"
+    r"social\s+club|sport\s*(?:&|and)\s*social|racket\s+club|pickleball\s+club|tennis\s+club|"
+    r"volleyball\s+club|soccer\s+club|basketball\s+club|academy|dojo|gym|crossfit|hyrox|"
+    r"bootcamp|bjj|jiu-?jitsu|muay\s+thai|boxing\s+club|organizer|intramurals?)\b",
+    re.IGNORECASE,
+)
+
+_BSKY_HOBBYIST_DISQUALIFIER_RE = re.compile(
+    r"(?:\bdad,\s*husband\b|\bhusband,\s*dad\b|\bipas?\b|\bmoves?\s+and\s+tv\b|"
+    r"\bsoccer\s+referee,\s*trail\s+runner\b|\bsoftware\s+engineer\b|\bweb\s+developer\b|"
+    r"\bphd\s+student\b|\blawyer\b|\battorney\b|\bjournalist\b|\bpodcaster\b)",
+    re.IGNORECASE,
+)
 
 _GAMING_OR_BETTING_RE = re.compile(
     r"\b(nba\s*2k|2k\d{2}|ea\s*fc|fifa\s*\d{2}|madden\s*\d{2}|nhl\s*\d{2}|mlb\s*the\s*show|"
@@ -245,6 +323,9 @@ _NON_SPORTS_IDENTITY_RE = re.compile(
     r"tech reviews?\s+for|pok[eé]mon|retro trophy hunter|consumer of basketball|"
     r"soccer mom|baseball mom|hockey mom|rodeo mom|basketball nerd|basketball enjoyer|"
     r"tennis fan|sports fan|cubs fan|premier league and tennis fan|fitness advocate|"
+    r"speciality store|specialty store|curbside pickup only|accepted payment methods|"
+    r"dating hub|speed dating|singles mixer|singles event|dating events?|theclicapp|meetinto|"
+    r"transforming life centre|church\s+in|ministries|settlement services|culturelink|"
     r"girls out at events|weekend walks|weight loss challenge|lose pounds)\b|"
     r"\.house\.gov\b|\.senate\.gov\b)",
     re.IGNORECASE,
@@ -293,6 +374,26 @@ def _is_adult_or_nsfw_profile(*parts: Any) -> bool:
     return bool(_ADULT_NSFW_RE.search(blob))
 
 
+def _is_franchise_or_media_entity(*parts: Any) -> bool:
+    """Return True if any URL, handle, or text belongs to a national booking aggregator, media outlet, or stats site."""
+    chunks: List[str] = []
+    for p in parts:
+        if isinstance(p, (list, tuple, set)):
+            chunks.extend(str(x or "") for x in p)
+        elif isinstance(p, dict):
+            chunks.extend(str(v or "") for v in p.values())
+        elif p:
+            chunks.append(str(p))
+    low = "\n".join(chunks).lower()
+    if not low.strip():
+        return False
+    return any(dom in low for dom in _FRANCHISE_OR_MEDIA_DOMAINS)
+
+
+def _is_allowed_north_american_country(country: str) -> bool:
+    return (country or "").strip().lower() in _ALLOWED_COUNTRIES
+
+
 def _is_authentic_sports_partner(
     name: str,
     handle: str,
@@ -300,20 +401,40 @@ def _is_authentic_sports_partner(
     primary_platform: str = "",
     video_title: str = "",
     raw_urls: Optional[List[str]] = None,
+    country: str = "",
 ) -> bool:
     """
-    Ensure discovered profiles are genuine sports/fitness creators, coaches, pickup hosts,
-    or organizations — rejecting OnlyFans/NSFW, politicians, journalists, gamers, and casual hobby bios.
+    Ensure discovered profiles are genuine North American sports/fitness creators, coaches,
+    pickup hosts, or organizations — rejecting NSFW, franchises, media/stats outlets, politicians,
+    gamers, non-NA accounts, and casual hobby bios.
     """
+    if not _is_allowed_north_american_country(country):
+        return False
     if _is_excluded_slug(name, handle):
         return False
     combined = f"{name} {handle} {bio}".strip()
+    if re.search(r"[\u0900-\u097f\u0600-\u06ff\u0400-\u04ff\uac00-\ud7af\u3040-\u30ff\u4e00-\u9fff]", f"{name} {handle}"):
+        return False
     if _is_adult_or_nsfw_profile(name, handle, bio, raw_urls or []):
+        return False
+    if _is_franchise_or_media_entity(name, handle, bio, raw_urls or []):
         return False
     if _GAMING_OR_BETTING_RE.search(combined) or _OFF_TOPIC_CHANNEL_RE.search(combined):
         return False
     if _NON_SPORTS_IDENTITY_RE.search(combined):
         return False
+    if _MEDIA_OR_STATS_RE.search(combined) and not re.search(
+        r"\b(personal trainer|skills trainer|certified coach|run club|rec league|pickup|drop-in|bjj|crossfit)\b",
+        combined,
+        re.IGNORECASE,
+    ):
+        return False
+
+    if primary_platform == "bluesky":
+        if _BSKY_HOBBYIST_DISQUALIFIER_RE.search(combined):
+            return False
+        if not _ACTIVE_PARTNER_ROLE_RE.search(combined):
+            return False
 
     if primary_platform == "youtube" and len((bio or "").strip()) < 10:
         if not (_CONCRETE_NON_FITNESS_SPORT_RE.search(name) or _FITNESS_CREDENTIAL_RE.search(name)):
@@ -328,7 +449,13 @@ def _is_authentic_sports_partner(
         if _FITNESS_CASUAL_DISQUALIFIER_RE.search(combined):
             return False
         has_cred = bool(_FITNESS_CREDENTIAL_RE.search(search_text))
-        has_fit_brand = bool(re.search(r"\b(fitness|fit|gym|crossfit|hyrox|lifting|calisthenics|bootcamp)\b", f"{name} {handle}", re.IGNORECASE))
+        has_fit_brand = bool(
+            re.search(
+                r"(?:\b(?:fitness|fit|gym|crossfit|hyrox|lifting|calisthenics|bootcamp)\b|fitness|crossfit|hyrox)",
+                f"{name} {handle}",
+                re.IGNORECASE,
+            )
+        )
         if not (has_cred or has_fit_brand):
             return False
 
@@ -376,12 +503,14 @@ _BAD_EMAIL_DOMAINS = (
     "canva.com", "adobe.com", "gravatar.com", "schema.org", "w3.org",
     "amazonaws.com", "mutiny.app", "creator-spring.com", "teespring.com",
     "bonfire.com", "fourthwall.com", "redbubble.com", "etsy.com",
-    # Sports league/gym SaaS platforms (never partner personal/org outreach)
+    # Sports league/gym SaaS & aggregator platforms (never partner personal/org outreach)
     "teamsnap.com", "leagueapps.com", "courtreserve.com", "mindbodyonline.com",
     "mindbody.io", "raceroster.com", "runsignup.com", "sportsengine.com",
     "amilia.com", "ezfacility.com", "active.com", "clubready.com",
     "glofox.com", "zenplanner.com", "pushpress.com", "wodify.com",
     "opensports.net", "playyon.com", "teamlinkt.com", "sportsillustrated.com",
+    "playyourcourt.com", "superprof.ca", "superprof.com", "classpass.com", "bendingspoons.com",
+    *_FRANCHISE_OR_MEDIA_DOMAINS,
     # Adult / NSFW platforms
     *_ADULT_DOMAINS,
     # Major sports retail, gear, supplement & betting sponsor brands + affiliate trackers
@@ -446,21 +575,27 @@ _AFFILIATE_OR_RETAIL_HOSTS = (
     "onlyfans.", "fansly.", "justfor.fans", "loyalfans.", "fanvue.", "manyvids.",
     "pornhub.", "xvideos.", "xnxx.", "chaturbate.",
     "jotform.com", "typeform.com", "docs.google.com", "forms.gle", "surveymonkey.com", "wufoo.com",
+    "meetupstatic.com", "evbstatic.com", "evbuc.com", "googletagmanager.com",
+    "googleapis.com", "gstatic.com", "cloudfront.net", "fastly.net", "akamaized.net",
+    "playyourcourt.com", "spotify.com", "podcasts.apple.com", "soundcloud.com",
+    "whatsapp.com", "t.me", "telegram.me", "strava.app.link",
 )
 
 _BLOCKED_SOCIAL_HANDLES = {
     "onlyfans", "fansly", "justforfans", "loyalfans", "fanvue", "manyvids",
     "meetup", "meetuphq", "wix", "wixstudio", "squarespace", "shopify", "wordpress",
     "webflow", "godaddy", "canva", "linktr", "linktree", "beacons", "stanstore",
-    "carrd", "eventbrite", "strava", "youtube", "instagram", "tiktok", "facebook",
+    "carrd", "eventbrite", "eventbritehelp", "strava", "youtube", "instagram", "tiktok", "facebook",
     "twitter", "x", "threads", "linkedin", "pinterest", "reddit", "bsky", "bluesky",
+    "whatsapp", "telegram", "messenger", "signal",
     "google", "apple", "meta", "amazon", "nike", "adidas", "spotify", "discord",
     "patreon", "substack", "mailchimp", "hubspot", "stripe", "cloudflare",
     "teamsnap", "leagueapps", "sportsengine", "mindbody", "raceroster", "active",
     "jotform", "jotform_official", "typeform", "mapbox", "mapbox-gl-js",
+    "playyourcourt", "basketball-reference", "theringer", "espn", "tsn", "sportsnet",
     "home", "share", "sharer", "intent", "explore", "search", "login", "signup",
     "watch", "shorts", "privacy", "privacy-policy", "terms", "terms-of-service",
-    "terms-of-use", "cookie-policy", "about", "help",
+    "terms-of-use", "cookie-policy", "about", "help", "rsrc.php", "blog",
 }
 
 _LINK_HUB_HOSTS = (
@@ -598,10 +733,18 @@ def _normalize_social_url(raw_url: str, keep_query: bool = False) -> str:
         p = urlparse(u)
         if not p.netloc or "." not in p.netloc:
             return ""
+        host = p.netloc.lower()
         path = p.path.rstrip("/") or ""
+        # Facebook numeric profiles require ?id=...; bare /profile.php is a broken dead link
+        if ("facebook.com" in host or "fb.com" in host) and path.lower() == "/profile.php":
+            qmap = parse_qs(p.query or "")
+            fb_id = (qmap.get("id") or [""])[0].strip()
+            if fb_id and fb_id.isdigit():
+                return f"https://www.facebook.com/profile.php?id={fb_id}"
+            return ""
         if not keep_query:
-            return f"https://{p.netloc.lower()}{path}"
-        return f"https://{p.netloc.lower()}{path}" + (f"?{p.query}" if p.query else "")
+            return f"https://{host}{path}"
+        return f"https://{host}{path}" + (f"?{p.query}" if p.query else "")
     except Exception:
         return ""
 
@@ -706,30 +849,63 @@ _MOBILE_UA = (
 )
 
 
-def _parse_instagram_followers_html(raw_html: str) -> int:
-    """Parse follower count from Instagram public og:description / meta HTML."""
+def _parse_instagram_profile_html(raw_html: str) -> Dict[str, Any]:
+    """Parse follower count, display name, and bio text from Instagram public meta tags."""
+    out: Dict[str, Any] = {"followers": 0, "name": "", "bio": ""}
     if not raw_html:
-        return 0
+        return out
+    unesc = html_lib.unescape(raw_html)
     for pat in (
         r'([0-9][0-9.,]*\s*[KMB]?)\s+Followers',
         r'"edge_followed_by"\s*:\s*\{\s*"count"\s*:\s*(\d+)\s*\}',
     ):
-        m = re.search(pat, raw_html, re.IGNORECASE)
+        m = re.search(pat, unesc, re.IGNORECASE)
         if m:
             val = _parse_audience_count(m.group(1))
             if val > 0:
-                return val
-    return 0
+                out["followers"] = val
+                break
 
-
-def _fetch_instagram_followers(instagram_url: str) -> int:
-    if not instagram_url or "instagram.com/" not in instagram_url.lower():
-        return 0
     try:
-        path = (urlparse(instagram_url).path or "").strip("/")
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(raw_html, "html.parser")
+        for m_tag in soup.find_all("meta"):
+            prop = (m_tag.get("property") or m_tag.get("name") or "").lower()
+            cval = html_lib.unescape(m_tag.get("content") or "").strip()
+            if not cval:
+                continue
+            if prop == "og:title" and not out["name"]:
+                m_name = re.match(r"^(.+?)\s*\(@[A-Za-z0-9_.]+\)", cval)
+                if m_name:
+                    out["name"] = m_name.group(1).strip()
+            if "on instagram:" in cval.lower() and not out["bio"]:
+                m_bio = re.search(r'on Instagram:\s*["“]?(.*?)["”]?\s*$', cval, re.I | re.S)
+                if m_bio:
+                    out["bio"] = re.sub(r"\s+", " ", m_bio.group(1)).strip()[:550]
+    except Exception:
+        pass
+    return out
+
+
+def _parse_instagram_followers_html(raw_html: str) -> int:
+    """Parse follower count from Instagram public og:description / meta HTML."""
+    return int(_parse_instagram_profile_html(raw_html).get("followers") or 0)
+
+
+def _fetch_instagram_profile_details(instagram_url_or_handle: str) -> Dict[str, Any]:
+    raw = (instagram_url_or_handle or "").strip()
+    if not raw:
+        return {"followers": 0, "name": "", "bio": "", "slug": ""}
+    if "instagram.com/" in raw.lower():
+        path = (urlparse(raw).path or "").strip("/")
         slug = path.split("/")[0] if path else ""
-        if not slug or slug.lower() in ("p", "reel", "explore", "accounts", "meetup"):
-            return 0
+    else:
+        slug = raw.lstrip("@").split("/")[0]
+    slug_low = slug.lower()
+    if not slug or slug_low in ("p", "reel", "reels", "tv", "stories", "explore", "accounts", "about", "blog", "rsrc.php") or slug_low in _BLOCKED_SOCIAL_HANDLES:
+        return {"followers": 0, "name": "", "bio": "", "slug": ""}
+    try:
         url = f"https://www.instagram.com/{slug}/"
         req = urllib.request.Request(
             url,
@@ -737,44 +913,85 @@ def _fetch_instagram_followers(instagram_url: str) -> int:
         )
         with urllib.request.urlopen(req, timeout=5) as resp:
             body = resp.read().decode("utf-8", errors="ignore")
-        return _parse_instagram_followers_html(body)
+        parsed = _parse_instagram_profile_html(body)
+        parsed["slug"] = slug
+        return parsed
     except Exception:
-        return 0
+        return {"followers": 0, "name": "", "bio": "", "slug": slug}
+
+
+def _fetch_instagram_followers(instagram_url: str) -> int:
+    return int(_fetch_instagram_profile_details(instagram_url).get("followers") or 0)
+
+
+def _parse_tiktok_profile_html(raw_html: str) -> Dict[str, Any]:
+    """Parse primary profile userInfo (followers, nickname, bio, external bioLink) from TikTok HTML."""
+    out: Dict[str, Any] = {"followers": 0, "name": "", "bio": "", "bio_link": ""}
+    if not raw_html:
+        return out
+    mt = re.search(r'<script id="__UNIVERSAL_DATA_FOR_REHYDRATION__"[^>]*>(.*?)</script>', raw_html, re.S)
+    if mt:
+        try:
+            td = json.loads(mt.group(1))
+            ui = ((td.get("__DEFAULT_SCOPE__") or {}).get("webapp.user-detail") or {}).get("userInfo") or {}
+            user_obj = ui.get("user") or {}
+            stats_obj = ui.get("stats") or {}
+            out["followers"] = int(stats_obj.get("followerCount") or 0)
+            out["name"] = (user_obj.get("nickname") or "").strip()
+            sig = (user_obj.get("signature") or "").strip()
+            if sig and sig.lower() != "no bio yet":
+                out["bio"] = re.sub(r"\s+", " ", sig)[:550]
+            blink = ((user_obj.get("bioLink") or {}).get("link") or "").strip()
+            if blink:
+                out["bio_link"] = blink
+            if out["followers"] > 0 or out["name"]:
+                return out
+        except Exception:
+            pass
+    m = re.search(r'"followerCount"\s*:\s*(\d+)', raw_html)
+    if m:
+        try:
+            out["followers"] = int(m.group(1))
+        except ValueError:
+            pass
+    return out
 
 
 def _parse_tiktok_followers_html(raw_html: str) -> int:
     """Parse followerCount from TikTok mobile profile HTML."""
-    if not raw_html:
-        return 0
-    m = re.search(r'"followerCount"\s*:\s*(\d+)', raw_html)
-    if m:
-        try:
-            return int(m.group(1))
-        except ValueError:
-            return 0
-    return 0
+    return int(_parse_tiktok_profile_html(raw_html).get("followers") or 0)
 
 
-def _fetch_tiktok_followers(tiktok_url: str) -> int:
-    if not tiktok_url or "tiktok.com/" not in tiktok_url.lower():
-        return 0
-    try:
-        path = (urlparse(tiktok_url).path or "").strip("/")
+def _fetch_tiktok_profile_details(tiktok_url_or_handle: str) -> Dict[str, Any]:
+    raw = (tiktok_url_or_handle or "").strip()
+    if not raw:
+        return {"followers": 0, "name": "", "bio": "", "bio_link": "", "handle": ""}
+    if "tiktok.com/" in raw.lower():
+        path = (urlparse(raw).path or "").strip("/")
         handle = path.split("/")[0] if path else ""
-        if not handle or handle.lower() in ("discover", "tag", "music", "@meetup"):
-            return 0
-        if not handle.startswith("@"):
-            handle = "@" + handle
-        url = f"https://www.tiktok.com/{handle}"
+    else:
+        handle = raw.split("/")[0]
+    clean_h = handle.lstrip("@")
+    if not clean_h or clean_h.lower() in ("discover", "tag", "music", "video", "live") or clean_h.lower() in _BLOCKED_SOCIAL_HANDLES:
+        return {"followers": 0, "name": "", "bio": "", "bio_link": "", "handle": ""}
+    at_handle = "@" + clean_h
+    try:
+        url = f"https://www.tiktok.com/{at_handle}"
         req = urllib.request.Request(
             url,
             headers={"User-Agent": _MOBILE_UA, "Accept-Language": "en-US,en;q=0.9"},
         )
         with urllib.request.urlopen(req, timeout=5) as resp:
             body = resp.read().decode("utf-8", errors="ignore")
-        return _parse_tiktok_followers_html(body)
+        parsed = _parse_tiktok_profile_html(body)
+        parsed["handle"] = at_handle
+        return parsed
     except Exception:
-        return 0
+        return {"followers": 0, "name": "", "bio": "", "bio_link": "", "handle": at_handle}
+
+
+def _fetch_tiktok_followers(tiktok_url: str) -> int:
+    return int(_fetch_tiktok_profile_details(tiktok_url).get("followers") or 0)
 
 
 def populate_partner_follower_counts(partner: Dict[str, Any]) -> Dict[str, Any]:
@@ -787,8 +1004,8 @@ def populate_partner_follower_counts(partner: Dict[str, Any]) -> Dict[str, Any]:
     raw_aud = int(updated.get("audience_count") or 0)
 
     yt_f = int(updated.get("youtube_followers") or (raw_aud if prim == "youtube" else 0))
-    ig_f = int(updated.get("instagram_followers") or 0)
-    tt_f = int(updated.get("tiktok_followers") or 0)
+    ig_f = int(updated.get("instagram_followers") or (raw_aud if prim == "instagram" else 0))
+    tt_f = int(updated.get("tiktok_followers") or (raw_aud if prim == "tiktok" else 0))
     bs_f = int(updated.get("bluesky_followers") or (raw_aud if prim == "bluesky" else 0))
     mu_m = int(updated.get("meetup_members") or (raw_aud if prim == "meetup" else 0))
 
@@ -857,6 +1074,7 @@ _SOCIAL_URL_SCAN_RE = re.compile(
     r"linktr\.ee|beacons\.ai|stan\.store|bio\.site|linkin\.bio|solo\.to|taplink\.cc|"
     r"campsite\.bio|hoo\.be|msha\.ke|carrd\.co|direct\.me|lnk\.bio|komi\.io|allmylinks\.com|"
     r"youtube\.com/(?:@|channel/|c/|user/)|"
+    r"facebook\.com/profile\.php\?id=\d+|"
     r"instagram\.com|tiktok\.com|facebook\.com|fb\.com|twitter\.com|x\.com|threads\.net|threads\.com|"
     r"linkedin\.com|pinterest\.com|pinterest\.ca|reddit\.com|"
     r"strava\.com/(?:clubs|athletes)|bsky\.app/profile|meetup\.com|eventbrite\.(?:com|ca)"
@@ -1203,11 +1421,11 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
         return None
 
     country = (about.get("country") or "").strip()
-    if country.lower() in _NON_TARGET_COUNTRIES:
+    if not _is_allowed_north_american_country(country):
         return None
 
     desc = (about.get("description") or "").strip()
-    if re.search(r"[\u0900-\u097f\u0600-\u06ff\u0400-\u04ff]", f"{seed['name']} {desc}"):
+    if re.search(r"[\u0900-\u097f\u0600-\u06ff\u0400-\u04ff\uac00-\ud7af\u3040-\u30ff\u4e00-\u9fff]", f"{seed['name']} {desc}"):
         return None
     if not _is_authentic_sports_partner(
         seed["name"],
@@ -1215,6 +1433,7 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
         desc,
         primary_platform="youtube",
         video_title=seed.get("video_title", ""),
+        country=country,
     ):
         return None
 
@@ -1292,6 +1511,8 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
         _merge_socials_into(socials, site_socials)
 
     if _is_adult_or_nsfw_profile(seed["name"], nav_url, desc, raw_links, socials, extra_geo_chunks):
+        return None
+    if _is_franchise_or_media_entity(seed["name"], nav_url, desc, raw_links, socials):
         return None
 
     handle = nav_url.lstrip("/")
@@ -1375,12 +1596,18 @@ def _search_meetup_seed(keyword: str, location: str, default_sport: str) -> List
         if not slug:
             continue
         ctry_code = (grp.get("country") or "").lower()
-        ctry = "Canada" if ctry_code == "ca" else ("United States" if ctry_code == "us" else "")
+        if ctry_code not in ("ca", "us"):
+            continue
+        ctry = "Canada" if ctry_code == "ca" else "United States"
+        clean_desc = extract_visible_text_from_html(desc)
+        if not _is_authentic_sports_partner(name, link, clean_desc, primary_platform="meetup", country=ctry):
+            continue
         out.append({
             "slug": slug,
             "name": name,
             "link": f"https://www.meetup.com/{slug}",
             "description": desc,
+            "clean_description": clean_desc,
             "city": (grp.get("city") or "").strip(),
             "state": (grp.get("state") or "").strip(),
             "country": ctry,
@@ -1394,8 +1621,9 @@ def _search_meetup_seed(keyword: str, location: str, default_sport: str) -> List
 def _enrich_meetup_group(grp: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     link = grp["link"]
     desc = grp.get("description") or ""
+    clean_desc = grp.get("clean_description") or extract_visible_text_from_html(desc)
     emails = _extract_clean_emails(desc, require_context_for_third_party=False)
-    raw_urls = list(_SOCIAL_URL_SCAN_RE.findall(desc)) + re.findall(r"https?://[^\s)<\]\"']+", desc, re.IGNORECASE)
+    raw_urls = list(_SOCIAL_URL_SCAN_RE.findall(desc)) + re.findall(r"https?://[^\s)<\]\"'>]+", desc, re.IGNORECASE)
     # Extract external URLs & emails strictly from the group's own description (not Meetup site chrome)
     extra_geo_chunks: List[str] = []
     socials = _classify_partner_links([u for u in raw_urls if u and "meetup.com" not in u.lower()])
@@ -1421,7 +1649,9 @@ def _enrich_meetup_group(grp: Dict[str, Any]) -> Optional[Dict[str, Any]]:
                 emails.append(em)
         _merge_socials_into(socials, ss)
 
-    if _is_adult_or_nsfw_profile(grp["name"], grp["slug"], desc, raw_urls, socials, extra_geo_chunks):
+    if _is_adult_or_nsfw_profile(grp["name"], grp["slug"], clean_desc, raw_urls, socials, extra_geo_chunks):
+        return None
+    if _is_franchise_or_media_entity(grp["name"], grp["slug"], clean_desc, raw_urls, socials, emails):
         return None
 
     members = int(grp.get("members") or 0)
@@ -1441,7 +1671,7 @@ def _enrich_meetup_group(grp: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "audience_text": f"{members:,} members" if members else "Meetup Group",
         "default_sport": grp["default_sport"],
         "seed_topic": grp["seed_topic"],
-        "bio": re.sub(r"\s+", " ", desc)[:600],
+        "bio": re.sub(r"\s+", " ", clean_desc)[:600],
         "business_email": ", ".join(emails[:2]),
         "website": socials["website"] or (socials["link_hubs"][0] if socials["link_hubs"] else ""),
         "youtube_url": socials["youtube_url"],
@@ -1551,6 +1781,8 @@ def _fetch_bluesky_partner(
         _merge_socials_into(socials, ss)
 
     if _is_adult_or_nsfw_profile(name, handle, bio, raw_urls, socials, extra_geo_chunks):
+        return None
+    if _is_franchise_or_media_entity(name, handle, bio, raw_urls, socials, emails):
         return None
 
     bsky_url = f"https://bsky.app/profile/{handle}"
@@ -1710,8 +1942,620 @@ def _scrape_curated_canadian_orgs(existing_ids: Optional[Set[str]] = None) -> Li
 
 
 # ---------------------------------------------------------------------------
-# Deep Enrichment & Orchestrator
+# Channel 5: Eventbrite Toronto / GTA Sports & Pickup Organizers
 # ---------------------------------------------------------------------------
+
+def _search_eventbrite_toronto_seed(slug: str, default_sport: str) -> List[Dict[str, Any]]:
+    url = f"https://www.eventbrite.ca/d/canada--toronto/{slug}/"
+    try:
+        raw_html = _fetch_text(url, timeout=9)
+    except Exception:
+        return []
+    idx = raw_html.find("window.__SERVER_DATA__")
+    brace = raw_html.find("{", idx) if idx != -1 else -1
+    if brace == -1:
+        return []
+    try:
+        sd, _ = json.JSONDecoder().raw_decode(raw_html[brace:])
+    except Exception:
+        return []
+
+    events = ((sd.get("search_data") or {}).get("events") or {}).get("results") or []
+    found: Dict[str, Dict[str, Any]] = {}
+    for ev in events:
+        if not isinstance(ev, dict):
+            continue
+        if ev.get("is_online_event") or ev.get("is_cancelled"):
+            continue
+        org_id = str(ev.get("primary_organizer_id") or "").strip()
+        if not org_id or not org_id.isdigit():
+            continue
+        addr = ((ev.get("primary_venue") or {}).get("address") or {})
+        ctry_code = str(addr.get("country") or "CA").upper()
+        if ctry_code != "CA":
+            continue
+        ev_name = (ev.get("name") or "").strip()
+        ev_sum = (ev.get("summary") or "").strip()
+        city = (addr.get("city") or "Toronto").strip() or "Toronto"
+        region = (addr.get("region") or "ON").strip() or "ON"
+        if org_id not in found:
+            found[org_id] = {
+                "org_id": org_id,
+                "event_title": ev_name,
+                "event_summary": ev_sum,
+                "city": city,
+                "state": region,
+                "default_sport": default_sport,
+            }
+    return list(found.values())
+
+
+def _enrich_eventbrite_organizer(seed: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    org_id = seed["org_id"]
+    org_url = f"https://www.eventbrite.ca/o/{org_id}"
+    try:
+        raw_html = _fetch_text(org_url, timeout=7)
+    except Exception:
+        return None
+    org_name = ""
+    org_bio = ""
+    try:
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(raw_html, "html.parser")
+        for m_tag in soup.find_all("meta"):
+            prop = (m_tag.get("property") or m_tag.get("name") or "").lower()
+            cval = html_lib.unescape(m_tag.get("content") or "").strip()
+            if prop == "og:title" and cval and not org_name:
+                org_name = cval
+            elif prop == "og:description" and cval and not org_bio:
+                org_bio = re.sub(r"\s+", " ", cval).strip()
+    except Exception:
+        pass
+    if not org_name or org_name.lower() in ("eventbrite", "events", "organizer", "unnamed organizer", "unknown"):
+        return None
+    if "discover the best local events" in org_bio.lower():
+        org_bio = ""
+    combined_bio = f"{org_bio} | Hosting: {seed['event_title']} — {seed['event_summary']}".strip(" |")
+
+    hrefs = [
+        u for u in re.findall(r'href=["\'](https?://[^"\']+)["\']', raw_html, re.I)
+        if not any(
+            skip in u.lower()
+            for skip in (
+                "eventbrite.", "evbstatic.", "evbuc.", "googletagmanager.",
+                "onetrust.", "cookielaw.", "googleapis.", "gstatic.", "facebook.com/tr",
+            )
+        )
+    ]
+    socials = _classify_partner_links(hrefs)
+    emails = _extract_clean_emails(combined_bio)
+    extra_geo_chunks: List[str] = []
+    site_domain = _root_domain(socials["website"]) if socials.get("website") else ""
+
+    for hub_url in socials["link_hubs"][:2]:
+        he, hs, ht = _extract_page_signals(hub_url, timeout=5, allowed_site_domain=site_domain)
+        if ht:
+            extra_geo_chunks.append(ht)
+        for em in he:
+            if em not in emails:
+                emails.append(em)
+        _merge_socials_into(socials, hs)
+        if not site_domain and socials.get("website"):
+            site_domain = _root_domain(socials["website"])
+
+    if socials["website"] and not emails:
+        se, ss, st, _ = _crawl_partner_website(socials["website"], need_email=True, need_geo=False)
+        if st:
+            extra_geo_chunks.append(st)
+        for em in se:
+            if em not in emails:
+                emails.append(em)
+        _merge_socials_into(socials, ss)
+
+    if not _is_authentic_sports_partner(
+        org_name,
+        f"eventbrite/{org_id}",
+        combined_bio,
+        primary_platform="eventbrite",
+        raw_urls=hrefs,
+        country="Canada",
+    ):
+        return None
+    if _is_adult_or_nsfw_profile(org_name, combined_bio, hrefs, socials, extra_geo_chunks):
+        return None
+    if _is_franchise_or_media_entity(org_name, combined_bio, hrefs, socials, emails):
+        return None
+
+    return populate_partner_follower_counts({
+        "partner_id": f"eb_{org_id}",
+        "name": org_name,
+        "handle": f"eventbrite/{org_id}",
+        "primary_platform": "eventbrite",
+        "profile_url": org_url,
+        "country": "Canada",
+        "province_state": seed.get("state") or "Ontario",
+        "city": seed.get("city") or "Toronto",
+        "_extra_geo_text": "\n".join(extra_geo_chunks)[:6000],
+        "audience_count": 0,
+        "audience_text": "Eventbrite Organizer",
+        "default_sport": seed["default_sport"],
+        "seed_topic": seed["default_sport"],
+        "bio": re.sub(r"\s+", " ", combined_bio)[:580],
+        "business_email": ", ".join(emails[:2]),
+        "website": socials["website"] or (socials["link_hubs"][0] if socials["link_hubs"] else ""),
+        "youtube_url": socials["youtube_url"],
+        "instagram_url": socials["instagram_url"],
+        "tiktok_url": socials["tiktok_url"],
+        "facebook_url": socials["facebook_url"],
+        "x_url": socials["x_url"],
+        "threads_url": socials["threads_url"],
+        "linkedin_url": socials["linkedin_url"],
+        "pinterest_url": socials["pinterest_url"],
+        "reddit_url": socials["reddit_url"],
+        "strava_url": socials["strava_url"],
+        "bluesky_url": socials["bluesky_url"],
+        "meetup_url": socials["meetup_url"],
+        "eventbrite_url": org_url,
+    })
+
+
+def _scrape_eventbrite_toronto_organizers(
+    existing_ids: Optional[Set[str]] = None,
+    max_new_eb: int = 25,
+) -> List[Dict[str, Any]]:
+    by_org: Dict[str, Dict[str, Any]] = {}
+    with ThreadPoolExecutor(max_workers=5) as ex:
+        futs = [ex.submit(_search_eventbrite_toronto_seed, sl, sp) for sl, sp in EVENTBRITE_TORONTO_SEEDS]
+        for fut in as_completed(futs):
+            try:
+                for item in fut.result():
+                    pid = f"eb_{item['org_id']}"
+                    if existing_ids and pid in existing_ids:
+                        continue
+                    by_org.setdefault(item["org_id"], item)
+            except Exception:
+                pass
+
+    targets = list(by_org.values())[:max_new_eb]
+    results: List[Dict[str, Any]] = []
+    if not targets:
+        return results
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        futs = [ex.submit(_enrich_eventbrite_organizer, t) for t in targets]
+        for fut in as_completed(futs):
+            try:
+                res = fut.result()
+                if res:
+                    results.append(res)
+            except Exception:
+                pass
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Channel 6: Web-Indexed Toronto / GTA Instagram & TikTok Sports Creators
+# ---------------------------------------------------------------------------
+
+_TORONTO_OR_CANADA_HINT_RE = re.compile(
+    r"\b(toronto|gta|ontario|mississauga|brampton|markham|vaughan|richmond\s*hill|oakville|"
+    r"burlington|pickering|ajax|whitby|oshawa|scarborough|north\s*york|etobicoke|east\s*york|"
+    r"yorkville|parkdale|6ix|yyz|canada|canadian)\b",
+    re.IGNORECASE,
+)
+
+
+def _search_ddg_lite_social_handles(query: str, platform: str) -> List[str]:
+    time.sleep(0.35)
+    try:
+        data = urllib.parse.urlencode({"q": query}).encode("utf-8")
+        req = urllib.request.Request(
+            "https://lite.duckduckgo.com/lite/",
+            data=data,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept-Language": "en-US,en;q=0.9",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            raw = resp.read().decode("utf-8", errors="ignore")
+    except Exception:
+        return []
+
+    unesc = urllib.parse.unquote(html_lib.unescape(raw))
+    handles: List[str] = []
+    if platform == "instagram":
+        for m in re.finditer(r"instagram\.com/([A-Za-z0-9_.]{3,30})(?:[/?\"'\s<]|$)", unesc, re.I):
+            slug = m.group(1).strip(".")
+            low = slug.lower()
+            if low in ("p", "reel", "reels", "tv", "stories", "explore", "accounts", "about", "blog", "rsrc.php", "legal", "developer"):
+                continue
+            if low in _BLOCKED_SOCIAL_HANDLES or _is_excluded_slug(slug, slug):
+                continue
+            if slug not in handles:
+                handles.append(slug)
+    elif platform == "tiktok":
+        for m in re.finditer(r"tiktok\.com/@([A-Za-z0-9_.]{3,30})(?:[/?\"'\s<]|$)", unesc, re.I):
+            slug = m.group(1).strip(".")
+            low = slug.lower()
+            if low in ("discover", "tag", "music", "video", "live") or low in _BLOCKED_SOCIAL_HANDLES or _is_excluded_slug(slug, slug):
+                continue
+            if slug not in handles:
+                handles.append(slug)
+    return handles[:10]
+
+
+def _enrich_social_creator_seed(seed: Dict[str, str]) -> Optional[Dict[str, Any]]:
+    plat = seed["platform"]
+    slug = seed["handle"]
+    default_sport = seed["default_sport"]
+    seed_ptype = seed["seed_partner_type"]
+
+    if plat == "instagram":
+        prof = _fetch_instagram_profile_details(slug)
+        followers = int(prof.get("followers") or 0)
+        name = (prof.get("name") or slug).strip()
+        bio = (prof.get("bio") or "").strip()
+        profile_url = f"https://www.instagram.com/{slug}"
+        raw_urls = re.findall(r"https?://[^\s)<\]\"']+", bio, re.I)
+        pid = f"ig_{re.sub(r'[^A-Za-z0-9_.-]', '_', slug.lower())}"
+        disp_handle = f"@{slug}"
+    else:
+        prof = _fetch_tiktok_profile_details(slug)
+        followers = int(prof.get("followers") or 0)
+        name = (prof.get("name") or slug).strip()
+        bio = (prof.get("bio") or "").strip()
+        profile_url = f"https://www.tiktok.com/@{slug.lstrip('@')}"
+        raw_urls = re.findall(r"https?://[^\s)<\]\"']+", bio, re.I)
+        if prof.get("bio_link"):
+            raw_urls.append(prof["bio_link"])
+        pid = f"tt_{re.sub(r'[^A-Za-z0-9_.-]', '_', slug.lstrip('@').lower())}"
+        disp_handle = f"@{slug.lstrip('@')}"
+
+    if followers < 120 or (not bio and followers < 500):
+        return None
+    if name.lower().startswith("user") and re.match(r"^user\d{6,}$", name.lower()):
+        return None
+
+    socials = _classify_partner_links(raw_urls)
+    if plat == "instagram":
+        socials["instagram_url"] = profile_url
+    else:
+        socials["tiktok_url"] = profile_url
+
+    emails = _extract_clean_emails(bio)
+    extra_geo_chunks: List[str] = []
+    site_domain = _root_domain(socials["website"]) if socials.get("website") else ""
+
+    for hub_url in socials["link_hubs"][:2]:
+        he, hs, ht = _extract_page_signals(hub_url, timeout=5, allowed_site_domain=site_domain)
+        if ht:
+            extra_geo_chunks.append(ht)
+        for em in he:
+            if em not in emails:
+                emails.append(em)
+        _merge_socials_into(socials, hs)
+        if not site_domain and socials.get("website"):
+            site_domain = _root_domain(socials["website"])
+
+    if socials["website"] and not emails:
+        se, ss, st, _ = _crawl_partner_website(socials["website"], need_email=True, need_geo=True)
+        if st:
+            extra_geo_chunks.append(st)
+        for em in se:
+            if em not in emails:
+                emails.append(em)
+        _merge_socials_into(socials, ss)
+
+    if not _is_authentic_sports_partner(
+        name,
+        disp_handle,
+        bio,
+        primary_platform=plat,
+        video_title=default_sport,
+        raw_urls=raw_urls,
+        country="Canada",
+    ):
+        return None
+    if _is_adult_or_nsfw_profile(name, disp_handle, bio, raw_urls, socials, extra_geo_chunks):
+        return None
+    if _is_franchise_or_media_entity(name, disp_handle, bio, raw_urls, socials, emails):
+        return None
+
+    geo_blob = f"{name} {disp_handle} {bio} {socials.get('website', '')} {' '.join(emails)} {' '.join(extra_geo_chunks[:2])}"
+    has_ca_or_gta = (
+        bool(_TORONTO_OR_CANADA_HINT_RE.search(geo_blob))
+        or site_domain.endswith(".ca")
+        or any(em.endswith(".ca") for em in emails)
+        or "toronto" in slug.lower()
+        or "gta" in slug.lower()
+        or "6ix" in slug.lower()
+    )
+    city_default = "Toronto" if has_ca_or_gta else ""
+    prov_default = "Ontario" if has_ca_or_gta else ""
+    ctry_default = "Canada" if has_ca_or_gta else ""
+
+    row: Dict[str, Any] = {
+        "partner_id": pid,
+        "name": name,
+        "handle": disp_handle,
+        "primary_platform": plat,
+        "profile_url": profile_url,
+        "country": ctry_default,
+        "province_state": prov_default,
+        "city": city_default,
+        "_extra_geo_text": "\n".join(extra_geo_chunks)[:8000],
+        "audience_count": followers,
+        "instagram_followers": followers if plat == "instagram" else 0,
+        "tiktok_followers": followers if plat == "tiktok" else 0,
+        "audience_text": f"{followers:,} followers",
+        "default_sport": default_sport,
+        "seed_topic": default_sport,
+        "seed_partner_type": seed_ptype,
+        "bio": bio[:580],
+        "business_email": ", ".join(emails[:2]),
+        "website": socials["website"] or (socials["link_hubs"][0] if socials["link_hubs"] else ""),
+        "youtube_url": socials["youtube_url"],
+        "instagram_url": socials["instagram_url"],
+        "tiktok_url": socials["tiktok_url"],
+        "facebook_url": socials["facebook_url"],
+        "x_url": socials["x_url"],
+        "threads_url": socials["threads_url"],
+        "linkedin_url": socials["linkedin_url"],
+        "pinterest_url": socials["pinterest_url"],
+        "reddit_url": socials["reddit_url"],
+        "strava_url": socials["strava_url"],
+        "bluesky_url": socials["bluesky_url"],
+        "meetup_url": socials["meetup_url"],
+        "eventbrite_url": socials["eventbrite_url"],
+    }
+    return populate_partner_follower_counts(row)
+
+
+def _scrape_toronto_social_creators(
+    existing_ids: Optional[Set[str]] = None,
+    max_new_social: int = 35,
+) -> List[Dict[str, Any]]:
+    discovered: Dict[str, Dict[str, str]] = {}
+    with ThreadPoolExecutor(max_workers=2) as ex:
+        futs = {
+            ex.submit(_search_ddg_lite_social_handles, q, plat): (plat, sp, pt)
+            for q, plat, sp, pt in TORONTO_SOCIAL_WEB_SEEDS
+        }
+        for fut in as_completed(futs):
+            plat, sp, pt = futs[fut]
+            try:
+                for h in fut.result():
+                    prefix = "ig" if plat == "instagram" else "tt"
+                    pid = f"{prefix}_{re.sub(r'[^A-Za-z0-9_.-]', '_', h.lstrip('@').lower())}"
+                    if existing_ids and pid in existing_ids:
+                        continue
+                    key = f"{plat}:{h.lower()}"
+                    discovered.setdefault(
+                        key,
+                        {
+                            "platform": plat,
+                            "handle": h,
+                            "default_sport": sp,
+                            "seed_partner_type": pt,
+                        },
+                    )
+            except Exception:
+                pass
+
+    targets = list(discovered.values())[:max_new_social]
+    results: List[Dict[str, Any]] = []
+    if not targets:
+        return results
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        futs_enrich = [ex.submit(_enrich_social_creator_seed, s) for s in targets]
+        for fut in as_completed(futs_enrich):
+            try:
+                item = fut.result()
+                if item:
+                    results.append(item)
+            except Exception:
+                pass
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Row Sanitization, Cross-Channel Deduplication & Deep Enrichment
+# ---------------------------------------------------------------------------
+
+_MULTI_TENANT_WEBSITE_ROOTS = {
+    *_LINK_HUB_HOSTS,
+    "skool.com", "thinkific.com", "kajabi.com", "teachable.com", "substack.com",
+    "medium.com", "konnostore.ca", "shopify.com", "myshopify.com", "wixsite.com",
+    "squarespace.com", "wordpress.com", "google.com", "meetup.com",
+    "eventbrite.com", "eventbrite.ca", "rmr.training", "3hourbody.com",
+}
+
+
+def sanitize_stored_partner_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Re-validate and sanitize a stored partner row against current HTML, URL, email,
+    NSFW, franchise/media, and North America rules. Returns None if row should be pruned.
+    """
+    raw_urls_before = [row.get("website") or ""] + [row.get(k) or "" for k in _ALL_SOCIAL_FIELDS]
+    if _is_adult_or_nsfw_profile(row.get("name"), row.get("handle"), row.get("bio"), raw_urls_before):
+        return None
+    if _is_franchise_or_media_entity(row.get("name"), row.get("handle"), row.get("bio"), raw_urls_before, row.get("business_email")):
+        return None
+
+    cleaned = dict(row)
+    bio = cleaned.get("bio") or ""
+    if "<" in bio and ">" in bio:
+        bio = extract_visible_text_from_html(bio)
+    cleaned["bio"] = re.sub(r"\s+", " ", bio).strip()[:600]
+
+    # Re-validate website and all 13 social links through current link sanitizer
+    site = (cleaned.get("website") or "").strip()
+    if site:
+        if any(h in site.lower() for h in _LINK_HUB_HOSTS):
+            cleaned["website"] = _normalize_social_url(site)
+        else:
+            site_classified = _classify_partner_links([site])
+            cleaned["website"] = site_classified.get("website") or ""
+
+    for col in _ALL_SOCIAL_FIELDS:
+        val = (cleaned.get(col) or "").strip()
+        if not val:
+            continue
+        c_links = _classify_partner_links([val])
+        cleaned[col] = c_links.get(col) or ""
+
+    prim_plat = (cleaned.get("primary_platform") or "").lower()
+    if not cleaned.get("instagram_url") and prim_plat != "instagram":
+        cleaned["instagram_followers"] = 0
+    if not cleaned.get("tiktok_url") and prim_plat != "tiktok":
+        cleaned["tiktok_followers"] = 0
+    if not cleaned.get("youtube_url") and prim_plat != "youtube":
+        cleaned["youtube_followers"] = 0
+    if not cleaned.get("bluesky_url") and prim_plat != "bluesky":
+        cleaned["bluesky_followers"] = 0
+    if not cleaned.get("meetup_url") and prim_plat != "meetup":
+        cleaned["meetup_members"] = 0
+
+    re_sum = sum(
+        int(cleaned.get(fc) or 0)
+        for fc in ("youtube_followers", "instagram_followers", "tiktok_followers", "bluesky_followers", "meetup_members")
+    )
+    cleaned["audience_count"] = re_sum
+    if re_sum > 0:
+        cleaned["audience_text"] = f"{re_sum:,} followers" if prim_plat != "meetup" else f"{re_sum:,} members"
+
+    valid_emails = [
+        em.strip().lower()
+        for em in (cleaned.get("business_email") or "").split(",")
+        if _is_valid_outreach_email(em)
+    ]
+    cleaned["business_email"] = ", ".join(dict.fromkeys(valid_emails))
+
+    name = (cleaned.get("name") or "").strip()
+    if name.lower() in ("organizer", "unnamed organizer", "eventbrite", "events", "unknown"):
+        return None
+    handle = (cleaned.get("handle") or "").strip()
+    country = (cleaned.get("country") or "").strip()
+    url_list = [cleaned.get("website") or ""] + [cleaned.get(k) or "" for k in _ALL_SOCIAL_FIELDS]
+
+    if not _is_allowed_north_american_country(country):
+        return None
+    if not str(cleaned.get("partner_id") or "").startswith("org_"):
+        if not _is_authentic_sports_partner(
+            name,
+            handle,
+            cleaned["bio"],
+            primary_platform=prim_plat,
+            video_title=cleaned.get("primary_sport", ""),
+            raw_urls=url_list,
+            country=country,
+        ):
+            return None
+    return cleaned
+
+
+def _partner_identity_keys(row: Dict[str, Any]) -> List[str]:
+    keys: List[str] = []
+    site = (row.get("website") or "").strip()
+    if site:
+        dom = _root_domain(site)
+        if dom and dom not in _MULTI_TENANT_WEBSITE_ROOTS and not any(dom.endswith("." + m) for m in _MULTI_TENANT_WEBSITE_ROOTS):
+            keys.append(f"dom:{dom}")
+
+    for field, prefix in (
+        ("instagram_url", "ig"),
+        ("youtube_url", "yt"),
+        ("tiktok_url", "tt"),
+        ("meetup_url", "mu"),
+        ("eventbrite_url", "eb"),
+    ):
+        u = (row.get(field) or "").strip()
+        if u:
+            p = (urlparse(u).path or "").strip("/").lower()
+            if p:
+                keys.append(f"{prefix}:{p}")
+
+    norm_name = re.sub(r"[^a-z0-9]", "", (row.get("name") or "").lower())
+    if len(norm_name) >= 9:
+        keys.append(f"name:{norm_name}")
+    return keys
+
+
+def _partner_priority_score(row: Dict[str, Any]) -> Tuple[int, int, int, int]:
+    pid = str(row.get("partner_id") or "")
+    has_outreach = 1 if (row.get("contacted") or (row.get("outreach_notes") or "").strip()) else 0
+    is_curated = 1 if pid.startswith("org_") else 0
+    has_email = 1 if (row.get("business_email") or "").strip() else 0
+    aud = int(row.get("audience_count") or 0)
+    return (has_outreach, is_curated, has_email, aud)
+
+
+def _merge_two_partners(primary: Dict[str, Any], secondary: Dict[str, Any]) -> Dict[str, Any]:
+    merged = dict(primary)
+    for str_col in ("website", "bio", "city", "province_state", "country", *_ALL_SOCIAL_FIELDS):
+        if not (merged.get(str_col) or "").strip() and (secondary.get(str_col) or "").strip():
+            merged[str_col] = secondary[str_col]
+
+    em_list: List[str] = []
+    for src in (merged.get("business_email") or "", secondary.get("business_email") or ""):
+        for em in src.split(","):
+            e = em.strip().lower()
+            if e and e not in em_list:
+                em_list.append(e)
+    merged["business_email"] = ", ".join(em_list[:2])
+
+    for fcol in ("youtube_followers", "instagram_followers", "tiktok_followers", "bluesky_followers", "meetup_members"):
+        merged[fcol] = max(int(merged.get(fcol) or 0), int(secondary.get(fcol) or 0))
+    summed = sum(
+        int(merged.get(c) or 0)
+        for c in ("youtube_followers", "instagram_followers", "tiktok_followers", "bluesky_followers", "meetup_members")
+    )
+    merged["audience_count"] = max(summed, int(merged.get("audience_count") or 0), int(secondary.get("audience_count") or 0))
+
+    if secondary.get("contacted") and not merged.get("contacted"):
+        merged["contacted"] = 1
+        merged["contacted_at"] = secondary.get("contacted_at") or merged.get("contacted_at") or ""
+        merged["outreach_status"] = secondary.get("outreach_status") or "contacted"
+    if not (merged.get("outreach_notes") or "").strip() and (secondary.get("outreach_notes") or "").strip():
+        merged["outreach_notes"] = secondary["outreach_notes"]
+    return merged
+
+
+def deduplicate_and_merge_partners(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[str]]:
+    """
+    Merge duplicate partner records sharing the same canonical domain, social profile, or exact org name.
+    Returns (deduplicated_rows, dropped_partner_ids).
+    """
+    ordered = sorted(rows, key=_partner_priority_score, reverse=True)
+    kept: List[Dict[str, Any]] = []
+    key_to_idx: Dict[str, int] = {}
+    dropped_ids: List[str] = []
+
+    for r in ordered:
+        keys = _partner_identity_keys(r)
+        match_idx: Optional[int] = None
+        for k in keys:
+            if k in key_to_idx:
+                match_idx = key_to_idx[k]
+                break
+        if match_idx is None:
+            new_idx = len(kept)
+            kept.append(dict(r))
+            for k in keys:
+                key_to_idx[k] = new_idx
+        else:
+            prev_pid = kept[match_idx].get("partner_id")
+            dup_pid = r.get("partner_id")
+            kept[match_idx] = _merge_two_partners(kept[match_idx], r)
+            for k in _partner_identity_keys(kept[match_idx]):
+                key_to_idx[k] = match_idx
+            if dup_pid and dup_pid != prev_pid:
+                dropped_ids.append(str(dup_pid))
+
+    return kept, dropped_ids
+
 
 def enrich_partner_profile_deep(partner: Dict[str, Any]) -> Dict[str, Any]:
     """Deep-crawl website contact/about/partnership subpages, link hubs, and recent YouTube videos."""
@@ -1778,12 +2622,15 @@ def scrape_sports_partners(
     existing_ids: Optional[Set[str]] = None,
     max_new_yt: int = 75,
     max_new_meetup: int = 30,
-    max_new_bsky: int = 25,
+    max_new_bsky: int = 20,
+    max_new_eb: int = 25,
+    max_new_social: int = 35,
     include_curated_orgs: bool = True,
 ) -> Tuple[List[Dict[str, Any]], List[str]]:
     """
     Discover Toronto/GTA, Canadian & North American sports creators, pickup organizers,
-    and local sports organizations across YouTube, Meetup, Bluesky, and curated live org sites.
+    and local sports organizations across YouTube, Meetup, Eventbrite Toronto, Web-Indexed IG/TikTok,
+    Bluesky, and curated live org sites.
     """
     partners: List[Dict[str, Any]] = []
     logs: List[str] = []
@@ -1839,9 +2686,11 @@ def scrape_sports_partners(
     partners.extend(yt_results)
     logs.append(f"YouTube: {len(yt_results)} profiles")
 
-    # 2. Meetup + Bluesky + Curated Toronto/Canadian Org websites concurrently
-    with ThreadPoolExecutor(max_workers=3) as chan_exec:
+    # 2. Meetup + Eventbrite Toronto + IG/TikTok Toronto + Bluesky + Curated Canadian Orgs concurrently
+    with ThreadPoolExecutor(max_workers=5) as chan_exec:
         fut_mu = chan_exec.submit(_scrape_meetup_sports_groups, existing_ids, max_new_meetup)
+        fut_eb = chan_exec.submit(_scrape_eventbrite_toronto_organizers, existing_ids, max_new_eb)
+        fut_sc = chan_exec.submit(_scrape_toronto_social_creators, existing_ids, max_new_social)
         fut_bs = chan_exec.submit(_scrape_bluesky_sports_partners, existing_ids, max_new_bsky)
         fut_org = (
             chan_exec.submit(_scrape_curated_canadian_orgs, existing_ids)
@@ -1855,6 +2704,20 @@ def scrape_sports_partners(
             logs.append(f"Meetup: {len(mu_res)} sports groups")
         except Exception as exc:
             logs.append(f"Meetup error: {exc}")
+
+        try:
+            eb_res = fut_eb.result()
+            partners.extend(eb_res)
+            logs.append(f"Eventbrite Toronto: {len(eb_res)} organizers")
+        except Exception as exc:
+            logs.append(f"Eventbrite error: {exc}")
+
+        try:
+            sc_res = fut_sc.result()
+            partners.extend(sc_res)
+            logs.append(f"IG/TikTok Toronto: {len(sc_res)} creators")
+        except Exception as exc:
+            logs.append(f"IG/TikTok error: {exc}")
 
         try:
             bs_res = fut_bs.result()
@@ -1871,4 +2734,5 @@ def scrape_sports_partners(
             except Exception as exc:
                 logs.append(f"Canadian Orgs error: {exc}")
 
-    return partners, logs
+    deduped, _ = deduplicate_and_merge_partners(partners)
+    return deduped, logs

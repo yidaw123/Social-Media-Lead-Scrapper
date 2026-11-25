@@ -317,8 +317,22 @@ _ORG_STRONG_RE = re.compile(
     r"tennis club|pickleball club|run club|running club|run crew|roadrunners|association|federation|"
     r"sportsplex|complex|training center|training centre|academy|dojo|boxing club|fitness club|"
     r"crossfit|athletics|intramurals?|campus rec(?:reation)?|recreation department|"
+    r"jcc|ymca|ywca|community cent(?:re|er)|recreation cent(?:re|er)|"
     r"tournament\s*(?:operator|series|organizer)|tournaments|race series|running series|"
     r"operations|organization|council|non-?profit|inc\.|ltd\.|llc)\b",
+    re.IGNORECASE,
+)
+
+_SOLO_CREATOR_PERSONA_RE = re.compile(
+    r"(?:\b(?:guy|girl|bro|dad|mom|vlog|vlogs|vlogger|pov|diaries)\b|"
+    r"\bfrom\s+a\s+[\w\s]{0,25}player\b|\bsharing\s+my\s+journey\b|\bmy\s+journey\b|"
+    r"\bsubscribe\s+for\b|\bshorts\s*&\s*more\b|\blifelong\s+[\w\s]{0,20}junkie\b)",
+    re.IGNORECASE,
+)
+
+_INDIVIDUAL_PICKUP_HOST_CUE_RE = re.compile(
+    r"(?:\bhosted\s+by\b|\borganized\s+by\b|\brun\s+by\b|\bhead\s+organizer\b|"
+    r"\bmessage\s+[A-Z][a-z]{2,}\b|\bi\s+host\b|\bdm\s+me\b)",
     re.IGNORECASE,
 )
 
@@ -404,31 +418,61 @@ def classify_partner_type(partner: Dict[str, Any]) -> Tuple[str, str]:
     elif "/in/" in linkedin:
         pro_score += 3
 
-    if primary_platform == "youtube":
+    if re.search(r"\b(jcc|ymca|ywca|community cent(?:re|er)|recreation cent(?:re|er))\b", f"{text} {handle}", re.IGNORECASE):
+        org_score += 8
+
+    is_solo_persona = bool(_SOLO_CREATOR_PERSONA_RE.search(text)) and not re.search(
+        r"\b(registration|register now|divisions?|standings|now expanding|sanctioned)\b",
+        text,
+        re.IGNORECASE,
+    )
+    if is_solo_persona:
+        pro_score += 7
+
+    if primary_platform in ("youtube", "instagram", "tiktok"):
         pro_score += 2
     elif primary_platform == "meetup":
-        # Meetup groups are pickup hosts if they emphasize pickup/drop-in without league/association/club/academy
-        if _PICKUP_HOST_RE.search(text) and not re.search(
-            r"\b(league|association|federation|academy|gym|athletics|sport\s*(?:&|and)\s*social|club)\b",
-            text,
-            re.IGNORECASE,
+        # Meetup groups only classify as individual Pickup Organizers when an explicit solo host cue is present
+        has_facility_or_org = bool(
+            re.search(
+                r"\b(league|association|federation|academy|gym|athletics|sport\s*(?:&|and)\s*social|club|jcc|ymca|community|meetup\s+group)\b",
+                f"{name} {handle}",
+                re.IGNORECASE,
+            )
+        )
+        if _PICKUP_HOST_RE.search(text) and _INDIVIDUAL_PICKUP_HOST_CUE_RE.search(text) and not has_facility_or_org:
+            pro_score += 4
+        else:
+            org_score += 4
+    elif primary_platform == "eventbrite":
+        if re.search(r"\b(head coach|coach\s+[a-z]+|trainer|instructor)\b", text, re.IGNORECASE) and not re.search(
+            r"\b(club|league|association|academy|inc|ltd)\b", name, re.IGNORECASE
         ):
-            pro_score += 3
+            pro_score += 4
         else:
             org_score += 2
 
-    if "official" in name.lower() or "ontario" in name.lower() and re.search(r"\b(association|federation|golf|baseball|tennis|volleyball|pickleball)\b", name, re.IGNORECASE):
+    if "official" in name.lower() or "ontario" in name.lower() and re.search(r"\b(association|federation|golf|baseball|tennis|volleyball|pickleball|soccer|basketball)\b", name, re.IGNORECASE):
         org_score += 4
 
-    if re.search(r"\b(club|league|academy|gym|studio|association|federation|athletics|network|tournaments?|series|marathon)\b", name, re.IGNORECASE):
+    if not is_solo_persona and re.search(
+        r"\b(club|league|academy|gym|studio|association|federation|athletics|network|tournaments?|series|marathon|combine)\b",
+        name,
+        re.IGNORECASE,
+    ):
         org_score += 3
 
     if re.search(r"\b(with\s+[A-Z][a-z]+|by\s+[A-Z][a-z]+|coach\s+[A-Z][a-z]+)\b", text):
         pro_score += 2
 
     # First-person singular strongly indicates an individual creator / coach / pickup organizer
-    if re.search(r"\b(i am|i'm|my name is|my channel|follow my|join me|28-year-old creator|personal trainer)\b", bio, re.IGNORECASE):
-        pro_score += 4
+    if re.search(
+        r"(?:\bi\s+am\b|\bi['’]m\b|\bmy\s+name\s+is\b|\bmy\s+channel\b|\bfollow\s+my\b|"
+        r"\bjoin\s+me\b|\bdocument\s+that\s+journey\b|\b28-year-old\s+creator\b|\bpersonal\s+trainer\b)",
+        bio,
+        re.IGNORECASE,
+    ):
+        pro_score += 6
 
     if org_score > pro_score:
         partner_type = "sports_org"
@@ -440,11 +484,11 @@ def classify_partner_type(partner: Dict[str, Any]) -> Tuple[str, str]:
     if partner_type == "sports_org":
         if seed_role and seed_type == "sports_org":
             role = seed_role
-        elif re.search(r"\b(university|college|campus rec|intramural|varsity|lions|blues|bold|warriors)\b", low):
+        elif re.search(r"\b(university|college|campus rec|intramural|varsity|uoft|tmu|yorku|uwaterloo)\b", low):
             role = "University Network"
         elif re.search(r"\b(tournament|tournaments|classic|showcase|series|cup|open championship)\b", low):
             role = "Tournament Operator"
-        elif re.search(r"\b(gym|dojo|academy|studio|fitness|crossfit|training cent|simulator|facilities|facility|athletic club|bjj|boxing|muay thai)\b", low):
+        elif re.search(r"\b(gym|dojo|academy|studio|fitness|crossfit|training cent|simulator|facilities|facility|athletic club|bjj|boxing|muay thai|jcc|ymca|ywca|community cent|recreation cent)\b", low):
             role = "Gym / Training Facility"
         elif re.search(r"\b(league|leagues|sport\s*(?:&|and)\s*social|beer league|slo-?pitch)\b", low):
             role = "Rec League"
@@ -514,10 +558,14 @@ TORONTO_BOROUGHS = {
     "North York": "Toronto",
     "Etobicoke": "Toronto",
     "East York": "Toronto",
+    "York": "Toronto",
+    "Willowdale": "Toronto",
     "Downtown Toronto": "Toronto",
     "Liberty Village": "Toronto",
     "Leslieville": "Toronto",
     "Yorkville": "Toronto",
+    "Unionville": "Markham",
+    "Thornhill": "Vaughan",
 }
 
 US_CA_MAJOR_CITIES: Dict[str, Tuple[str, str]] = {
@@ -534,8 +582,16 @@ US_CA_MAJOR_CITIES: Dict[str, Tuple[str, str]] = {
     "Vaughan": ("Ontario", "Canada"),
     "Richmond Hill": ("Ontario", "Canada"),
     "Oakville": ("Ontario", "Canada"),
+    "Burlington": ("Ontario", "Canada"),
     "Pickering": ("Ontario", "Canada"),
+    "Ajax": ("Ontario", "Canada"),
+    "Whitby": ("Ontario", "Canada"),
     "Oshawa": ("Ontario", "Canada"),
+    "Milton": ("Ontario", "Canada"),
+    "Newmarket": ("Ontario", "Canada"),
+    "Aurora": ("Ontario", "Canada"),
+    "Hamilton": ("Ontario", "Canada"),
+    "Cambridge": ("Ontario", "Canada"),
     "Ottawa": ("Ontario", "Canada"),
     "Waterloo": ("Ontario", "Canada"),
     "Kitchener": ("Ontario", "Canada"),
@@ -550,6 +606,7 @@ US_CA_MAJOR_CITIES: Dict[str, Tuple[str, str]] = {
     "Québec City": ("Quebec", "Canada"),
     "Calgary": ("Alberta", "Canada"),
     "Edmonton": ("Alberta", "Canada"),
+    "Canmore": ("Alberta", "Canada"),
     "Winnipeg": ("Manitoba", "Canada"),
     "Halifax": ("Nova Scotia", "Canada"),
     "Saskatoon": ("Saskatchewan", "Canada"),
@@ -635,7 +692,10 @@ _BAD_ANYWHERE_CITY_WORDS = {
     "building", "suite", "ste", "street", "avenue", "ave", "blvd", "boulevard",
     "road", "rd", "drive", "dr", "lane", "ln", "floor", "tower", "plaza",
     "llc", "inc", "corp", "ltd", "box", "po", "tatnall", "times", "centre", "center",
+    "country", "club", "resort", "academy", "university", "college", "school",
 }
+
+_AMBIGUOUS_STATE_ABBRS = {"IN", "OR", "ME", "OH", "HI", "OK", "ON", "DE", "LA", "PA"}
 
 _CITY_ABBR_RE = re.compile(
     r"\b([A-Z][a-zA-Z.'-]+(?:\s+[A-Z][a-zA-Z.'-]+){0,2}),\s*("
@@ -667,6 +727,8 @@ def is_toronto_gta(city: str, province_state: str, country: str) -> bool:
 
 def _normalize_city_name(city: str) -> str:
     clean = " ".join((city or "").strip().split())
+    if clean and (clean.islower() or clean.isupper()):
+        clean = clean.title()
     if clean in TORONTO_BOROUGHS:
         return TORONTO_BOROUGHS[clean]
     if clean in ("Montréal",):
@@ -694,6 +756,8 @@ def _is_valid_city_candidate(candidate: str) -> bool:
         return False
     words = [w.strip(".,'").lower() for w in clean.split() if w.strip(".,'")]
     if not words or len(words) > 3:
+        return False
+    if len(words) >= 2 and len(set(words)) < len(words):
         return False
     if words[0] in _FALSE_CITY_WORDS or words[-1] in _FALSE_CITY_WORDS:
         return False
@@ -730,9 +794,13 @@ def _scan_text_for_us_ca_geo(text: str, allowed_country: str) -> Tuple[str, str,
         city_cand, code = m.group(1).strip(), m.group(2).strip()
         if not _is_valid_city_candidate(city_cand):
             continue
+        norm_city = _normalize_city_name(city_cand.title() if city_cand.isupper() else city_cand)
+        if code in _AMBIGUOUS_STATE_ABBRS and norm_city not in US_CA_MAJOR_CITIES:
+            tail = text[m.end():m.end() + 18]
+            if re.match(r"^\s+[A-Za-z]{2,}", tail) and not re.match(r"^\s+(?:Canada|USA|United\s+States)\b", tail, re.I):
+                continue
         prov, ctry = _resolve_region(code, allowed_country)
         if prov:
-            norm_city = _normalize_city_name(city_cand.title() if city_cand.isupper() else city_cand)
             return norm_city, prov, ctry
 
     for m in _CITY_FULL_RE.finditer(text):
@@ -863,8 +931,8 @@ def classify_partner(partner: Dict[str, Any]) -> Dict[str, Any]:
     raw_aud = int(partner.get("audience_count") or 0)
     prim_plat = (partner.get("primary_platform") or "").lower()
     yt_f = int(partner.get("youtube_followers") or (raw_aud if prim_plat == "youtube" else 0))
-    ig_f = int(partner.get("instagram_followers") or 0)
-    tt_f = int(partner.get("tiktok_followers") or 0)
+    ig_f = int(partner.get("instagram_followers") or (raw_aud if prim_plat == "instagram" else 0))
+    tt_f = int(partner.get("tiktok_followers") or (raw_aud if prim_plat == "tiktok" else 0))
     bs_f = int(partner.get("bluesky_followers") or (raw_aud if prim_plat == "bluesky" else 0))
     mu_m = int(partner.get("meetup_members") or (raw_aud if prim_plat == "meetup" else 0))
     total_followers = yt_f + ig_f + tt_f + bs_f + mu_m
@@ -875,19 +943,10 @@ def classify_partner(partner: Dict[str, Any]) -> Dict[str, Any]:
     generic_role_labels = {
         "", "Rec League", "Sports Club / Run Club", "Gym / Training Facility",
         "University Network", "Tournament Operator", "Sports Organization",
-        "YouTube Channel", "Bluesky Profile", "Meetup Group",
+        "YouTube Channel", "Bluesky Profile", "Meetup Group", "Eventbrite Organizer",
     }
     if audience_count > 0 and aud_text in generic_role_labels:
         aud_text = f"{audience_count:,} followers"
-
-    city, province_state, country = extract_partner_location(
-        name=name,
-        bio=bio,
-        country=partner.get("country") or "",
-        extra_text=partner.get("_extra_geo_text") or "",
-        website=partner.get("website") or "",
-        business_email=partner.get("business_email") or "",
-    )
 
     existing_city = _normalize_city_name(partner.get("city") or "")
     existing_prov = (partner.get("province_state") or "").strip()
@@ -895,15 +954,44 @@ def classify_partner(partner: Dict[str, Any]) -> Dict[str, Any]:
         existing_prov = CA_PROV_ABBR_TO_NAME[existing_prov]
     elif existing_prov in US_STATE_ABBR_TO_NAME:
         existing_prov = US_STATE_ABBR_TO_NAME[existing_prov]
+    existing_country = _normalize_country_name(partner.get("country") or "")
 
-    if country in ("United States", "Canada"):
-        if not city and existing_city and _is_valid_city_candidate(existing_city):
-            city = existing_city
-        if not province_state and existing_prov:
-            province_state = existing_prov
+    has_structured_loc = (
+        existing_country in ("United States", "Canada")
+        and bool(existing_city)
+        and _is_valid_city_candidate(existing_city)
+        and bool(existing_prov)
+        and (
+            str(partner.get("partner_id") or "").startswith(("org_", "mu_", "eb_", "ig_", "tt_"))
+            or prim_plat in ("website", "meetup", "eventbrite", "instagram", "tiktok")
+        )
+    )
+
+    if has_structured_loc:
+        city, province_state, country = existing_city, existing_prov, existing_country
     else:
-        city = ""
-        province_state = ""
+        city, province_state, country = extract_partner_location(
+            name=name,
+            bio=bio,
+            country=partner.get("country") or "",
+            extra_text=partner.get("_extra_geo_text") or "",
+            website=partner.get("website") or "",
+            business_email=partner.get("business_email") or "",
+        )
+        if country in ("United States", "Canada"):
+            if not city and existing_city and _is_valid_city_candidate(existing_city):
+                city = existing_city
+            if not province_state and existing_prov:
+                province_state = existing_prov
+        else:
+            city = ""
+            province_state = ""
+
+    # Enforce canonical province/state when city is an unambiguous major metro (e.g., prevents 'Toronto, British Columbia')
+    if country in ("United States", "Canada") and city in US_CA_MAJOR_CITIES:
+        canon_prov, canon_ctry = US_CA_MAJOR_CITIES[city]
+        if canon_ctry == country:
+            province_state = canon_prov
 
     cleaned = {
         k: v

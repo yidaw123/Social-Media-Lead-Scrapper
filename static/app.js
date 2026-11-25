@@ -7,6 +7,8 @@ let staticSnapshot = null;
 let localBridgeAvailable = null;
 
 const PARTNER_CONTACTED_STORAGE_KEY = "crews_partners_contacted_v1";
+const PARTNER_HIDDEN_STORAGE_KEY = "crews_partners_hidden_v1";
+const VALID_OUTREACH_STAGES = new Set(["not_contacted", "contacted", "replied", "signed"]);
 const DEFAULT_GTA_CITIES = new Set([
   "Toronto", "Mississauga", "Brampton", "Markham", "Vaughan",
   "Richmond Hill", "Oakville", "Burlington", "Pickering", "Ajax",
@@ -95,7 +97,7 @@ async function fetchJsonWithFallback(url, fallbackFn) {
   }
 }
 
-// ==================== Contacted Persistence (SQLite + localStorage) ====================
+// ==================== Outreach & Hidden Persistence (SQLite + localStorage) ====================
 function _getStaticContactedMap() {
   try {
     return JSON.parse(localStorage.getItem(PARTNER_CONTACTED_STORAGE_KEY) || "{}");
@@ -104,15 +106,53 @@ function _getStaticContactedMap() {
   }
 }
 
-function _isPartnerContacted(p) {
+function _getStaticHiddenMap() {
+  try {
+    return JSON.parse(localStorage.getItem(PARTNER_HIDDEN_STORAGE_KEY) || "{}");
+  } catch (_) {
+    return {};
+  }
+}
+
+function _isPartnerDismissed(p) {
   if (!p) return false;
-  if (isStaticHost()) {
-    const m = _getStaticContactedMap();
-    if (Object.prototype.hasOwnProperty.call(m, p.partner_id)) {
-      return Boolean(m[p.partner_id] && m[p.partner_id].contacted);
+  if (isStaticHost() && localBridgeAvailable !== true) {
+    const hm = _getStaticHiddenMap();
+    if (Object.prototype.hasOwnProperty.call(hm, p.partner_id)) {
+      return Boolean(hm[p.partner_id]);
     }
   }
-  return Boolean(p.contacted);
+  return Boolean(p.is_dismissed);
+}
+
+function _getPartnerOutreachStatus(p) {
+  if (!p) return "not_contacted";
+  if (isStaticHost() && localBridgeAvailable !== true) {
+    const m = _getStaticContactedMap();
+    if (Object.prototype.hasOwnProperty.call(m, p.partner_id) && m[p.partner_id]) {
+      const st = String(m[p.partner_id].outreach_status || "").toLowerCase();
+      if (VALID_OUTREACH_STAGES.has(st)) return st;
+      return m[p.partner_id].contacted ? "contacted" : "not_contacted";
+    }
+  }
+  const raw = String(p.outreach_status || "").toLowerCase();
+  if (VALID_OUTREACH_STAGES.has(raw)) return raw;
+  return p.contacted ? "contacted" : "not_contacted";
+}
+
+function _getPartnerOutreachNotes(p) {
+  if (!p) return "";
+  if (isStaticHost() && localBridgeAvailable !== true) {
+    const m = _getStaticContactedMap();
+    if (Object.prototype.hasOwnProperty.call(m, p.partner_id) && m[p.partner_id] && typeof m[p.partner_id].outreach_notes === "string") {
+      return m[p.partner_id].outreach_notes;
+    }
+  }
+  return String(p.outreach_notes || "");
+}
+
+function _isPartnerContacted(p) {
+  return _getPartnerOutreachStatus(p) !== "not_contacted";
 }
 
 function _isPartnerGta(p, gtaSet = DEFAULT_GTA_CITIES) {
@@ -122,9 +162,17 @@ function _isPartnerGta(p, gtaSet = DEFAULT_GTA_CITIES) {
 
 // ==================== Static Snapshot Client-Side Summary ====================
 function computeStaticPartnersSummary(snap) {
-  const partners = snap.partners || [];
+  const allSnapPartners = snap.partners || [];
   const gtaSet = new Set(snap.gta_cities || Array.from(DEFAULT_GTA_CITIES));
-  let proCandidates = 0, sportsOrgs = 0, withEmail = 0, contactedCount = 0;
+  let dismissedCount = 0;
+  const partners = allSnapPartners.filter(p => {
+    if (_isPartnerDismissed(p)) {
+      dismissedCount++;
+      return false;
+    }
+    return true;
+  });
+  let proCandidates = 0, sportsOrgs = 0, withEmail = 0, contactedCount = 0, repliedCount = 0, signedCount = 0;
   let torontoGta = 0, canadaCount = 0, northAm = 0, microMid = 0;
   let onYt = 0, onIg = 0, onTt = 0, onFb = 0, onX = 0, onThr = 0;
   let onLi = 0, onPin = 0, onRed = 0, onStrava = 0, onBsky = 0, onMu = 0, onEb = 0;
@@ -143,7 +191,10 @@ function computeStaticPartnersSummary(snap) {
 
     const hasEmail = Boolean((p.business_email || "").trim());
     if (hasEmail) withEmail++;
-    if (_isPartnerContacted(p)) contactedCount++;
+    const stage = _getPartnerOutreachStatus(p);
+    if (stage !== "not_contacted") contactedCount++;
+    if (stage === "replied") repliedCount++;
+    if (stage === "signed") signedCount++;
     if (_isPartnerGta(p, gtaSet)) torontoGta++;
 
     const hasYt = Boolean((p.youtube_url || "").trim());
@@ -234,6 +285,9 @@ function computeStaticPartnersSummary(snap) {
       sports_orgs: sportsOrgs,
       with_email: withEmail,
       contacted_count: contactedCount,
+      replied_count: repliedCount,
+      signed_count: signedCount,
+      dismissed_count: dismissedCount,
       toronto_gta: torontoGta,
       canada_count: canadaCount,
       north_america: northAm,
@@ -474,6 +528,12 @@ function renderPartnersKPIs(kpis, tierCounts = {}) {
   setVal("pkpi-email", kpis.with_email);
   setVal("pkpi-gta", kpis.toronto_gta);
   setVal("pkpi-contacted", kpis.contacted_count);
+  const subEl = document.getElementById("pkpi-contacted-sub");
+  if (subEl) {
+    const rep = Number(kpis.replied_count || 0);
+    const sig = Number(kpis.signed_count || 0);
+    subEl.textContent = (rep > 0 || sig > 0) ? `${rep} Replied · ${sig} Signed` : "Outreach tracked";
+  }
 
   setVal("splat-count-all", kpis.total_partners);
   setVal("splat-count-youtube", kpis.on_youtube);
@@ -729,6 +789,12 @@ async function loadPartners() {
       strava: "strava_url", bluesky: "bluesky_url", meetup: "meetup_url", eventbrite: "eventbrite_url",
     };
     const filtered = (snap.partners || []).filter(p => {
+      const dismissed = _isPartnerDismissed(p);
+      if (contacted_filter === "dismissed") {
+        if (!dismissed) return false;
+      } else {
+        if (dismissed) return false;
+      }
       if (partner_type !== "all" && p.partner_type !== partner_type) return false;
       if (sport !== "all" && p.primary_sport !== sport) return false;
       if (sub_niche !== "all" && p.sub_niche !== sub_niche) return false;
@@ -743,8 +809,12 @@ async function loadPartners() {
       }
       if (contact_filter === "has_email" && !String(p.business_email || "").trim()) return false;
       if (contact_filter === "has_contact" && !String(p.business_email || "").trim() && !String(p.website || "").trim()) return false;
-      if (contacted_filter === "contacted" && !_isPartnerContacted(p)) return false;
-      if (contacted_filter === "not_contacted" && _isPartnerContacted(p)) return false;
+
+      const stage = _getPartnerOutreachStatus(p);
+      if (contacted_filter === "contacted" && stage === "not_contacted") return false;
+      if (contacted_filter === "not_contacted" && stage !== "not_contacted") return false;
+      if (contacted_filter === "stage_contacted" && stage !== "contacted") return false;
+      if ((contacted_filter === "replied" || contacted_filter === "signed") && stage !== contacted_filter) return false;
 
       if (country === "Toronto / GTA") {
         if (!_isPartnerGta(p, gtaSet)) return false;
@@ -759,7 +829,8 @@ async function loadPartners() {
       if (city !== "all" && p.city !== city) return false;
 
       if (q) {
-        const hay = `${p.name || ""} ${p.handle || ""} ${p.partner_role || ""} ${p.primary_sport || ""} ${p.sub_niche || ""} ${p.bio || ""} ${p.business_email || ""} ${p.website || ""} ${p.country || ""} ${p.province_state || ""} ${p.city || ""}`.toLowerCase();
+        const notes = _getPartnerOutreachNotes(p);
+        const hay = `${p.name || ""} ${p.handle || ""} ${p.partner_role || ""} ${p.primary_sport || ""} ${p.sub_niche || ""} ${p.bio || ""} ${p.business_email || ""} ${p.website || ""} ${p.country || ""} ${p.province_state || ""} ${p.city || ""} ${notes}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -771,9 +842,32 @@ async function loadPartners() {
   applyPartnersSortAndRender();
 }
 
+function _computeCrewsFitScore(p) {
+  let score = 0;
+  if (_isPartnerGta(p)) score += 60;
+  else if (p.country === "Canada" && p.province_state === "Ontario") score += 35;
+  else if (p.country === "Canada") score += 20;
+  else if (p.country === "United States") score += 5;
+
+  if (String(p.business_email || "").trim()) score += 35;
+  else if (String(p.website || "").trim()) score += 8;
+
+  if (p.partner_type === "pro_candidate") score += 10;
+  else if (p.partner_role === "Sports Club / Run Club" || p.partner_role === "Rec League") score += 8;
+
+  const aud = Math.max(0, Number(p.audience_count || 0));
+  score += Math.log10(aud + 10) * 6;
+  return score;
+}
+
 function applyPartnersSortAndRender() {
-  const sortBy = document.getElementById("partner-sort")?.value || "email_first";
+  const sortBy = document.getElementById("partner-sort")?.value || "best_fit";
   allFilteredPartners.sort((a, b) => {
+    if (sortBy === "best_fit") {
+      const diff = _computeCrewsFitScore(b) - _computeCrewsFitScore(a);
+      if (Math.abs(diff) > 0.001) return diff;
+      return (b.audience_count || 0) - (a.audience_count || 0);
+    }
     if (sortBy === "toronto_first") {
       const ga = _isPartnerGta(a) ? 0 : (a.country === "Canada" ? 1 : 2);
       const gb = _isPartnerGta(b) ? 0 : (b.country === "Canada" ? 1 : 2);
@@ -937,7 +1031,10 @@ function renderPartnersPage() {
       .map(([field, lbl]) => `<span class="f-chip">${lbl}: ${formatCompactCount(p[field])}</span>`)
       .join("");
     const locLabel = formatPartnerLocationText(p);
-    const isContacted = _isPartnerContacted(p);
+    const stage = _getPartnerOutreachStatus(p);
+    const isContacted = stage !== "not_contacted";
+    const notesText = _getPartnerOutreachNotes(p);
+    const isDismissed = _isPartnerDismissed(p);
 
     const socialHtml = socialLinkSpecs
       .filter(([field]) => String(p[field] || "").trim())
@@ -961,13 +1058,35 @@ function renderPartnersPage() {
     const siteBlock = siteStr
       ? `<div style="margin-top:5px;"><a href="${esc(safeUrl(siteStr))}" target="_blank" rel="noopener noreferrer" style="color:#60a5fa;font-size:0.77rem;word-break:break-all;">${esc(siteStr)}</a></div>`
       : "";
+
+    const stageOptionsHtml = [
+      ["not_contacted", "To Contact"],
+      ["contacted", "Contacted"],
+      ["replied", "Replied"],
+      ["signed", "Signed"],
+    ].map(([val, lbl]) => `<option value="${val}"${stage === val ? " selected" : ""}>${lbl}</option>`).join("");
+
+    const hideOrRestoreBtn = isDismissed
+      ? `<button type="button" class="restore-partner-btn" data-partner-id="${esc(p.partner_id)}" onclick="setPartnerDismissed(this.dataset.partnerId, false)" title="Restore partner to active list">Restore</button>`
+      : `<button type="button" class="dismiss-partner-btn" data-partner-id="${esc(p.partner_id)}" onclick="setPartnerDismissed(this.dataset.partnerId, true)" title="Hide / Not a fit">&#10005; Hide</button>`;
+
+    const noteChipHtml = notesText
+      ? `<div class="partner-note-chip" data-partner-id="${esc(p.partner_id)}" onclick="editPartnerNote(this.dataset.partnerId)" title="Click to edit note"><strong>Note:</strong> ${esc(notesText)}</div>`
+      : "";
+
     const contactedBlock = `
-      <div style="margin-top:8px;">
+      <div class="outreach-controls-row">
         <button type="button" class="contacted-toggle-btn${isContacted ? " is-contacted" : ""}" role="checkbox" aria-checked="${isContacted ? "true" : "false"}" data-partner-id="${esc(p.partner_id)}" onclick="togglePartnerContacted(this.dataset.partnerId)">
           <span class="contacted-box" aria-hidden="true">${isContacted ? "&#10003;" : ""}</span>
           <span>${isContacted ? "Contacted" : "Mark Contacted"}</span>
         </button>
-      </div>`;
+        <select class="stage-select stage-${esc(stage)}" aria-label="Outreach Stage" data-partner-id="${esc(p.partner_id)}" onchange="setPartnerOutreachStage(this.dataset.partnerId, this.value)">
+          ${stageOptionsHtml}
+        </select>
+        <button type="button" class="note-btn" data-partner-id="${esc(p.partner_id)}" onclick="editPartnerNote(this.dataset.partnerId)">${notesText ? "Edit Note" : "+ Note"}</button>
+        ${hideOrRestoreBtn}
+      </div>
+      ${noteChipHtml}`;
 
     return `
       <tr>
@@ -1004,48 +1123,110 @@ function renderPartnersPage() {
   if (pagBar) pagBar.innerHTML = _buildPaginationHtml(total, partnersCurrentPage, partnersPageSize);
 }
 
-async function togglePartnerContacted(partnerId, forceState = null) {
+async function _persistPartnerOutreachPatch(partnerId, patch) {
   const row = (allFilteredPartners || []).find(p => String(p.partner_id) === String(partnerId));
-  const current = row ? _isPartnerContacted(row) : false;
-  const nextState = forceState === null ? !current : Boolean(forceState);
-  const nowIso = nextState ? new Date().toISOString() : "";
+  const map = _getStaticContactedMap();
+  const prevEntry = map[partnerId] || {};
+  const prevStage = row ? _getPartnerOutreachStatus(row) : (prevEntry.outreach_status || "not_contacted");
+  const prevNotes = row ? _getPartnerOutreachNotes(row) : (prevEntry.outreach_notes || "");
+
+  let nextStage = prevStage;
+  if (patch.outreach_status && VALID_OUTREACH_STAGES.has(patch.outreach_status)) {
+    nextStage = patch.outreach_status;
+  } else if (typeof patch.contacted === "boolean") {
+    nextStage = patch.contacted ? (prevStage !== "not_contacted" ? prevStage : "contacted") : "not_contacted";
+  }
+  const nextContacted = nextStage !== "not_contacted";
+  const nowIso = nextContacted ? ((row && row.contacted_at) || prevEntry.contacted_at || new Date().toISOString()) : "";
+  const nextNotes = typeof patch.outreach_notes === "string" ? patch.outreach_notes.trim().slice(0, 500) : prevNotes;
 
   if (row) {
-    row.contacted = nextState ? 1 : 0;
+    row.contacted = nextContacted ? 1 : 0;
     row.contacted_at = nowIso;
+    row.outreach_status = nextStage;
+    row.outreach_notes = nextNotes;
+    if (typeof patch.is_dismissed === "boolean") {
+      row.is_dismissed = patch.is_dismissed ? 1 : 0;
+    }
   }
-  const map = _getStaticContactedMap();
-  map[partnerId] = { contacted: nextState, contacted_at: nowIso };
+
+  map[partnerId] = {
+    contacted: nextContacted,
+    contacted_at: nowIso,
+    outreach_status: nextStage,
+    outreach_notes: nextNotes,
+  };
   try {
     localStorage.setItem(PARTNER_CONTACTED_STORAGE_KEY, JSON.stringify(map));
   } catch (_) {}
 
-  renderPartnersPage();
-
-  if (!isStaticHost()) {
+  if (typeof patch.is_dismissed === "boolean") {
+    const hm = _getStaticHiddenMap();
+    if (patch.is_dismissed) hm[partnerId] = true;
+    else delete hm[partnerId];
     try {
-      await fetch("/api/partners/contacted", {
+      localStorage.setItem(PARTNER_HIDDEN_STORAGE_KEY, JSON.stringify(hm));
+    } catch (_) {}
+  }
+
+  const apiBase = isStaticHost() ? (localBridgeAvailable === true ? "http://127.0.0.1:8766" : null) : "";
+  if (apiBase !== null) {
+    try {
+      await fetch(`${apiBase}/api/partners/outreach`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ partner_id: partnerId, contacted: nextState }),
+        body: JSON.stringify({ partner_id: partnerId, ...patch }),
       });
     } catch (_) {}
   }
 
+  if (typeof patch.is_dismissed === "boolean") {
+    await Promise.all([loadPartnersSummary(), loadPartners()]);
+    return;
+  }
+
+  renderPartnersPage();
   if (partnersSummaryData && partnersSummaryData.kpis) {
-    if (isStaticHost() && staticSnapshot && staticSnapshot.partners) {
+    if (isStaticHost() && localBridgeAvailable !== true && staticSnapshot && staticSnapshot.partners) {
       const snapRow = staticSnapshot.partners.find(p => String(p.partner_id) === String(partnerId));
       if (snapRow) {
-        snapRow.contacted = nextState ? 1 : 0;
+        snapRow.contacted = nextContacted ? 1 : 0;
         snapRow.contacted_at = nowIso;
+        snapRow.outreach_status = nextStage;
+        snapRow.outreach_notes = nextNotes;
       }
       const nextSum = computeStaticPartnersSummary(staticSnapshot);
       partnersSummaryData = nextSum;
       renderPartnersKPIs(nextSum.kpis, nextSum.tier_counts);
-    } else if (!isStaticHost()) {
+    } else {
       loadPartnersSummary();
     }
   }
+}
+
+async function togglePartnerContacted(partnerId, forceState = null) {
+  const row = (allFilteredPartners || []).find(p => String(p.partner_id) === String(partnerId));
+  const current = row ? _isPartnerContacted(row) : false;
+  const nextState = forceState === null ? !current : Boolean(forceState);
+  await _persistPartnerOutreachPatch(partnerId, { contacted: nextState });
+}
+
+async function setPartnerOutreachStage(partnerId, stageVal) {
+  if (!VALID_OUTREACH_STAGES.has(stageVal)) return;
+  await _persistPartnerOutreachPatch(partnerId, { outreach_status: stageVal });
+}
+
+async function editPartnerNote(partnerId) {
+  const row = (allFilteredPartners || []).find(p => String(p.partner_id) === String(partnerId));
+  const prev = row ? _getPartnerOutreachNotes(row) : "";
+  const label = row ? row.name : partnerId;
+  const next = window.prompt(`Outreach note for ${label} (leave empty to clear):`, prev);
+  if (next === null) return;
+  await _persistPartnerOutreachPatch(partnerId, { outreach_notes: next });
+}
+
+async function setPartnerDismissed(partnerId, dismissed) {
+  await _persistPartnerOutreachPatch(partnerId, { is_dismissed: Boolean(dismissed) });
 }
 
 function onMailtoDraftClick() {
@@ -1063,7 +1244,7 @@ async function resetPartnerFilters() {
   const sEl = document.getElementById("partner-search");
   if (sEl) sEl.value = "";
   const sortEl = document.getElementById("partner-sort");
-  if (sortEl) sortEl.value = "email_first";
+  if (sortEl) sortEl.value = "best_fit";
   syncActivePartnerKpiCard("all");
   updatePartnerSubNicheOptions();
   updatePartnerGeoOptions(false);
@@ -1108,14 +1289,16 @@ function handleExportPartnersCsv(evt) {
     "City", "Province / State", "Country",
     "Total Followers", "YouTube Subscribers", "Instagram Followers", "TikTok Followers",
     "Bluesky Followers", "Meetup Members", "Audience Tier",
-    "Sport Category", "Activity / Sub-Niche", "Verified Email", "Contacted", "Contacted At",
+    "Sport Category", "Activity / Sub-Niche", "Verified Email", "Contacted", "Outreach Status", "Outreach Notes", "Contacted At",
     "Website / Link Hub", "YouTube URL", "Instagram URL", "TikTok URL", "Facebook URL",
     "X / Twitter URL", "Threads URL", "LinkedIn URL", "Pinterest URL", "Reddit URL",
     "Strava URL", "Bluesky URL", "Meetup URL", "Eventbrite URL", "Bio",
   ];
   const rowArrays = rows.map(p => {
     const isUsOrCa = p.country === "United States" || p.country === "Canada";
-    const isContacted = _isPartnerContacted(p);
+    const stage = _getPartnerOutreachStatus(p);
+    const isContacted = stage !== "not_contacted";
+    const notes = _getPartnerOutreachNotes(p);
     const ptypeLabel = p.partner_type === "sports_org" ? "Sports Organization" : "Pro Candidate";
     return [
       p.partner_id, p.name, p.handle, ptypeLabel, p.partner_role || "", p.primary_platform,
@@ -1129,7 +1312,7 @@ function handleExportPartnersCsv(evt) {
       p.bluesky_followers || 0,
       p.meetup_members || 0,
       p.audience_tier, p.primary_sport, p.sub_niche,
-      p.business_email || "", isContacted ? "Yes" : "No", p.contacted_at || "",
+      p.business_email || "", isContacted ? "Yes" : "No", stage, notes, p.contacted_at || "",
       p.website || "", p.youtube_url || "", p.instagram_url || "", p.tiktok_url || "",
       p.facebook_url || "", p.x_url || "", p.threads_url || "", p.linkedin_url || "",
       p.pinterest_url || "", p.reddit_url || "", p.strava_url || "", p.bluesky_url || "",
@@ -1276,10 +1459,27 @@ function closeEmailTemplateModal() {
   if (modal) modal.classList.remove("open");
 }
 
+function _buildPartnerBranchLink(baseLink, partner) {
+  const cleanBase = String(baseLink || "").trim();
+  if (!cleanBase || !partner) return cleanBase;
+  if (/[?&]partner=/i.test(cleanBase)) return cleanBase;
+  const rawSlug = String(partner.handle || partner.partner_id || partner.name || "")
+    .replace(/^@+/, "")
+    .replace(/^(?:meetup|eventbrite)\//i, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40);
+  if (!rawSlug) return cleanBase;
+  const sep = cleanBase.includes("?") ? "&" : "?";
+  return `${cleanBase}${sep}partner=${encodeURIComponent(rawSlug)}`;
+}
+
 function _applyEmailMergeTags(text, partner, tpl) {
   const def = DEFAULT_CREWS_EMAIL_TEMPLATES[activeTemplatePreset] || DEFAULT_CREWS_EMAIL_TEMPLATES.pro;
   const sample = partner || (allFilteredPartners && allFilteredPartners[0]) || {
     name: activeTemplatePreset === "org" ? "Toronto Sport & Social Club" : "Alex Hoops",
+    handle: activeTemplatePreset === "org" ? "xtsc" : "alexhoops",
     partner_role: activeTemplatePreset === "org" ? "Rec League" : "Pickup Organizer",
     primary_sport: "Basketball",
     sub_niche: "Pickup Runs & Streetball",
@@ -1288,13 +1488,14 @@ function _applyEmailMergeTags(text, partner, tpl) {
     country: "Canada",
   };
   const loc = formatPartnerLocationText(sample) || "Toronto, Ontario, Canada";
+  const trackedBranch = _buildPartnerBranchLink(tpl.branchLink || def.branchLink, sample);
   return String(text || "")
     .replaceAll("{{partner_name}}", sample.name || "there")
     .replaceAll("{{partner_role}}", sample.partner_role || "Partner")
     .replaceAll("{{sport_category}}", sample.primary_sport || "Sports")
     .replaceAll("{{sub_niche}}", sample.sub_niche || "Community Sessions")
     .replaceAll("{{location}}", loc)
-    .replaceAll("{{branch_link}}", tpl.branchLink || def.branchLink)
+    .replaceAll("{{branch_link}}", trackedBranch)
     .replaceAll("{{your_brand}}", tpl.brand || def.brand)
     .replaceAll("{{offer_details}}", tpl.offer || def.offer)
     .replaceAll("{{sender_name}}", tpl.sender || def.sender);

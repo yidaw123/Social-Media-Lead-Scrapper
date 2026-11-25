@@ -14,7 +14,8 @@ from database import (
     get_partners_summary,
     init_db,
     query_partners,
-    set_partner_contacted,
+    sync_db_with_snapshot_and_local_outreach,
+    update_partner_outreach,
 )
 from pipeline import (
     enrich_all_partner_followers,
@@ -24,14 +25,39 @@ from pipeline import (
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(ROOT_DIR, "static")
+SNAPSHOT_PATH = os.path.join(STATIC_DIR, "snapshot.json")
 SCRAPE_LOCK = threading.Lock()
+
+ALLOWED_CORS_ORIGINS = {
+    "http://localhost:8766",
+    "http://127.0.0.1:8766",
+    "https://yidaw123.github.io",
+}
+
+
+def _clean_snapshot_partner(p: Dict[str, Any]) -> Dict[str, Any]:
+    """Strip local-only outreach state from public snapshot rows so Git snapshots stay conflict-free."""
+    out = dict(p)
+    out["contacted"] = 0
+    out["contacted_at"] = ""
+    out["outreach_status"] = "not_contacted"
+    out["outreach_notes"] = ""
+    out["is_dismissed"] = 0
+    return out
+
+
+def _resolve_cors_origin(origin_header: str) -> str:
+    clean = (origin_header or "").strip().rstrip("/")
+    if clean in ALLOWED_CORS_ORIGINS:
+        return clean
+    return "http://localhost:8766"
 
 
 def export_static_snapshot() -> None:
-    """Writes static/snapshot.json and syncs root index.html for GitHub Pages static hosting."""
+    """Writes static/snapshot.json (multi-line diff-friendly JSON) and syncs root index.html for GitHub Pages."""
     try:
         os.makedirs(STATIC_DIR, exist_ok=True)
-        partners = query_partners(limit=5000)
+        partners = [_clean_snapshot_partner(p) for p in query_partners(limit=5000)]
         summary = get_partners_summary()
         sub_map = {k: [t[0] for t in v] for k, v in SPORT_SUB_NICHES.items()}
         snap = {
@@ -42,9 +68,8 @@ def export_static_snapshot() -> None:
             "recent_runs": summary.get("recent_runs", []),
             "exported_at": datetime.now(timezone.utc).isoformat(),
         }
-        snap_path = os.path.join(STATIC_DIR, "snapshot.json")
-        with open(snap_path, "w", encoding="utf-8") as f:
-            json.dump(snap, f)
+        with open(SNAPSHOT_PATH, "w", encoding="utf-8") as f:
+            json.dump(snap, f, indent=2)
         src_idx = os.path.join(STATIC_DIR, "index.html")
         dst_idx = os.path.join(ROOT_DIR, "index.html")
         if os.path.exists(src_idx):
@@ -71,25 +96,27 @@ class DashboardHandler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args: Any) -> None:
         pass
 
+    def _cors_headers(self) -> None:
+        origin = _resolve_cors_origin(self.headers.get("Origin", ""))
+        self.send_header("Access-Control-Allow-Origin", origin)
+        self.send_header("Vary", "Origin")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+
     def _send_json(self, data: Any, status: int = 200) -> None:
         body = json.dumps(data).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Access-Control-Allow-Private-Network", "true")
+        self._cors_headers()
         self.end_headers()
         self.wfile.write(body)
 
     def do_OPTIONS(self) -> None:
         self.send_response(204)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Access-Control-Allow-Private-Network", "true")
+        self._cors_headers()
         self.end_headers()
 
     def _read_json_body(self) -> Dict[str, Any]:
@@ -201,8 +228,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     "Total Followers", "YouTube Subscribers", "Instagram Followers",
                     "TikTok Followers", "Bluesky Followers", "Meetup Members",
                     "Audience Tier", "Sport Category", "Activity / Sub-Niche",
-                    "Verified Email", "Contacted", "Contacted At", "Website / Link Hub",
-                    "YouTube URL", "Instagram URL", "TikTok URL", "Facebook URL",
+                    "Verified Email", "Contacted", "Outreach Status", "Outreach Notes", "Contacted At",
+                    "Website / Link Hub", "YouTube URL", "Instagram URL", "TikTok URL", "Facebook URL",
                     "X / Twitter URL", "Threads URL", "LinkedIn URL", "Pinterest URL",
                     "Reddit URL", "Strava URL", "Bluesky URL", "Meetup URL", "Eventbrite URL",
                     "Bio",
@@ -232,6 +259,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
                         p.get("sub_niche"),
                         p.get("business_email"),
                         "Yes" if p.get("contacted") else "No",
+                        p.get("outreach_status") or ("contacted" if p.get("contacted") else "not_contacted"),
+                        p.get("outreach_notes") or "",
                         p.get("contacted_at") or "",
                         p.get("website"),
                         p.get("youtube_url"),
@@ -255,6 +284,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "text/csv; charset=utf-8")
             self.send_header("Content-Disposition", 'attachment; filename="crews_sports_partners.csv"')
             self.send_header("Content-Length", str(len(csv_bytes)))
+            self._cors_headers()
             self.end_headers()
             self.wfile.write(csv_bytes)
             return
@@ -262,6 +292,11 @@ class DashboardHandler(BaseHTTPRequestHandler):
         self._send_json({"error": "Not found"}, 404)
 
     def do_POST(self) -> None:
+        origin = (self.headers.get("Origin") or "").strip().rstrip("/")
+        if origin and origin not in ALLOWED_CORS_ORIGINS:
+            self._send_json({"error": "Origin not allowed"}, 403)
+            return
+
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         body = self._read_json_body()
@@ -273,11 +308,15 @@ class DashboardHandler(BaseHTTPRequestHandler):
             try:
                 max_yt = max(10, min(150, int(body.get("max_new_yt") or 75)))
                 max_mu = max(5, min(60, int(body.get("max_new_meetup") or 30)))
-                max_bs = max(5, min(60, int(body.get("max_new_bsky") or 25)))
+                max_bs = max(5, min(60, int(body.get("max_new_bsky") or 20)))
+                max_eb = max(5, min(60, int(body.get("max_new_eb") or 25)))
+                max_sc = max(5, min(80, int(body.get("max_new_social") or 35)))
                 res = run_partners_scrape_pipeline(
                     max_new_yt=max_yt,
                     max_new_meetup=max_mu,
                     max_new_bsky=max_bs,
+                    max_new_eb=max_eb,
+                    max_new_social=max_sc,
                     include_curated_orgs=bool(body.get("include_curated_orgs", True)),
                 )
                 export_static_snapshot()
@@ -286,17 +325,25 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
-        if path == "/api/partners/contacted":
+        if path in ("/api/partners/contacted", "/api/partners/outreach"):
             pid = str(body.get("partner_id") or "").strip()
             if not pid:
                 self._send_json({"error": "partner_id is required"}, 400)
                 return
-            contacted = bool(body.get("contacted", True))
-            res = set_partner_contacted(pid, contacted)
+            contacted_arg = body["contacted"] if "contacted" in body else None
+            status_arg = body.get("outreach_status")
+            notes_arg = body.get("outreach_notes") if "outreach_notes" in body else None
+            dismissed_arg = body.get("is_dismissed") if "is_dismissed" in body else None
+            res = update_partner_outreach(
+                partner_id=pid,
+                outreach_status=status_arg,
+                contacted=bool(contacted_arg) if contacted_arg is not None else None,
+                outreach_notes=notes_arg,
+                is_dismissed=bool(dismissed_arg) if dismissed_arg is not None else None,
+            )
             if not res.get("updated"):
                 self._send_json({"error": "Partner not found"}, 404)
                 return
-            export_static_snapshot()
             self._send_json(res)
             return
 
@@ -311,6 +358,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
 def run_server(port: int = 8766) -> None:
     init_db()
+    sync_db_with_snapshot_and_local_outreach(SNAPSHOT_PATH)
     summary = get_partners_summary()
     if summary["kpis"]["total_partners"] == 0:
         print("Database is empty — running initial live Crews sports partner scrape...")
@@ -343,11 +391,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Crews Sports Creator & Partner Scraper Dashboard")
     parser.add_argument("--port", type=int, default=8766, help="Port to run the web dashboard on")
     parser.add_argument("--scrape-only", action="store_true", help="Run live sports partner scrape, update snapshot, and exit")
-    parser.add_argument("--reclassify", action="store_true", help="Reclassify all stored partners, update snapshot, and exit")
+    parser.add_argument("--reclassify", action="store_true", help="Audit, deduplicate & reclassify all stored partners, update snapshot, and exit")
     parser.add_argument("--enrich-followers", action="store_true", help="Fetch live Instagram & TikTok follower counts for stored partners and exit")
     args = parser.parse_args()
 
     init_db()
+    sync_db_with_snapshot_and_local_outreach(SNAPSHOT_PATH)
     if args.enrich_followers:
         res = enrich_all_partner_followers()
         export_static_snapshot()

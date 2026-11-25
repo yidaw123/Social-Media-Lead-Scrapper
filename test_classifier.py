@@ -24,7 +24,10 @@ from scrapers.sports_scraper import (
     _is_authentic_sports_partner,
     _parse_html_page_signals,
     _parse_instagram_followers_html,
+    _parse_instagram_profile_html,
     _parse_tiktok_followers_html,
+    deduplicate_and_merge_partners,
+    sanitize_stored_partner_row,
 )
 
 
@@ -189,6 +192,35 @@ class PartnerTypeTests(unittest.TestCase):
         })
         self.assertEqual(tourney, ("sports_org", "Tournament Operator"))
 
+    def test_audit_partner_type_edge_cases(self):
+        # Solo creator with 'Beer League' in channel name stays Pro Candidate
+        blhg = classify_partner_type({
+            "name": "Beer League Hockey Guy",
+            "bio": "SUBSCRIBE for Cool NHL Stories, Documentaries, Crazy Shorts & More. From a beer league hockey player & lifelong hockey junkie!",
+            "primary_platform": "youtube",
+        })
+        self.assertEqual(blhg, ("pro_candidate", "Sports Creator / Athlete"))
+
+        # JCC facility Meetup is Sports Org (Gym / Training Facility), not Pickup Organizer
+        jcc = classify_partner_type({
+            "name": "Drop-in Recreation - Volleyball, Basketball, Pickleball",
+            "handle": "meetup/downtown-miles-nadal-jcc-sports-and-recreation",
+            "bio": "Drop-in sports at the Miles Nadal JCC in Downtown Toronto.",
+            "primary_platform": "meetup",
+            "meetup_url": "https://www.meetup.com/downtown-miles-nadal-jcc-sports-and-recreation",
+        })
+        self.assertEqual(jcc, ("sports_org", "Gym / Training Facility"))
+
+        # Generic Meetup Group without individual host cue is Sports Club / Run Club
+        w_hoops = classify_partner_type({
+            "name": "Toronto Women's Basketball Meetup Group",
+            "handle": "meetup/Toronto-Womens-Basketball-Meetup-Group",
+            "bio": "Weekly pickup basketball sessions for women in Toronto.",
+            "primary_platform": "meetup",
+            "meetup_url": "https://www.meetup.com/Toronto-Womens-Basketball-Meetup-Group",
+        })
+        self.assertEqual(w_hoops, ("sports_org", "Sports Club / Run Club"))
+
 
 class GeoAndTierTests(unittest.TestCase):
     def test_audience_tiers(self):
@@ -238,6 +270,15 @@ class GeoAndTierTests(unittest.TestCase):
         self.assertEqual(
             extract_partner_location("Coach", "Virtual Clinics Charlotte, North Carolina", "United States"),
             ("Charlotte", "North Carolina", "United States"),
+        )
+        # Reject repeated-word and venue-prefix false cities ('Kris Kris', 'Country Club Canmore')
+        self.assertEqual(
+            extract_partner_location("TPA tennis", "SIGN UP WITH KRIS KRIS, OR JOIN TODAY", "United States"),
+            ("", "", "United States"),
+        )
+        self.assertEqual(
+            extract_partner_location("Beat the Course", "Filmed at Country Club Canmore, AB", "Canada"),
+            ("Canmore", "Alberta", "Canada"),
         )
 
 
@@ -418,20 +459,28 @@ class EmailAndLinksTests(unittest.TestCase):
         self.assertEqual(links["website"], "")
 
     def test_authentic_sports_and_fitness_verification(self):
-        # Reject casual hobbyists, politicians, journalists, tech reviewers, non-sports Meetups
-        for name, handle, bio, plat in [
-            ("Max Scott", "@maxscott.bsky.social", "Addicted to fitness, gaming, outdoors and https://onlyfans.com/maxscott2022/c3", "bluesky"),
-            ("Holly R. Valakresch", "@hollyvalakresch.bsky.social", "Author & Screenwriter | Cooking, Baking, Fashion, Fitness, Fairytales", "bluesky"),
-            ("Jane Fonda", "@janefonda.com", "Official account for the Actress, Author, Activist, Fitness Advocate", "bluesky"),
-            ("Liz Cheney", "@lizcheney.bsky.social", "Proud rodeo mom, soccer mom, baseball mom, hockey mom, constitutional conservative.", "bluesky"),
-            ("Rep. Jason Crow", "@crow.house.gov", "Dad. Little League Baseball Coach. Colorado Congressman.", "bluesky"),
-            ("Mike Vorkunov", "@mikevorkunov.bsky.social", "National NBA + basketball reporter at The Athletic", "bluesky"),
-            ("Aesthetic AL", "@Aesthetic_Al", "Home of the Tech Reviews for the Fitness Enthusiast", "youtube"),
-            ("Mississauga Girls Out At Events", "meetup/mississauga-girls", "Women who love trying new things and going to events", "meetup"),
-            ("Etobicoke Weekend Walks", "meetup/etobicoke-walks", "Simple weekend walks around Toronto west end", "meetup"),
+        # Reject casual hobbyists, politicians, journalists, tech reviewers, franchises, media/stats sites, non-NA
+        for name, handle, bio, plat, ctry in [
+            ("Max Scott", "@maxscott.bsky.social", "Addicted to fitness, gaming, outdoors and https://onlyfans.com/maxscott22/c3", "bluesky", ""),
+            ("Holly R. Valakresch", "@hollyvalakresch.bsky.social", "Author & Screenwriter | Cooking, Baking, Fashion, Fitness, Fairytales", "bluesky", ""),
+            ("Jane Fonda", "@janefonda.com", "Official account for the Actress, Author, Activist, Fitness Advocate", "bluesky", ""),
+            ("Liz Cheney", "@lizcheney.bsky.social", "Proud rodeo mom, soccer mom, baseball mom, hockey mom, constitutional conservative.", "bluesky", ""),
+            ("Rep. Jason Crow", "@crow.house.gov", "Dad. Little League Baseball Coach. Colorado Congressman.", "bluesky", ""),
+            ("Mike Vorkunov", "@mikevorkunov.bsky.social", "National NBA + basketball reporter at The Athletic", "bluesky", ""),
+            ("Aesthetic AL", "@Aesthetic_Al", "Home of the Tech Reviews for the Fitness Enthusiast", "youtube", ""),
+            ("Mississauga Girls Out At Events", "meetup/mississauga-girls", "Women who love trying new things and going to events", "meetup", "Canada"),
+            ("Etobicoke Weekend Walks", "meetup/etobicoke-walks", "Simple weekend walks around Toronto west end", "meetup", "Canada"),
+            ("PlayYourCourt Greater Toronto Group", "meetup/playyourcourt-toronto", "At PlayYourCourt we connect tennis players https://www.playyourcourt.com", "meetup", "Canada"),
+            ("Basketball Reference", "@basketball-reference.com", "Basketball stats and history for the NBA, WNBA, European Leagues.", "bluesky", "United States"),
+            ("Bill Simmons", "@billsimmons.bsky.social", "The Bill Simmons Podcast, The Rewatchables, The Ringer, Spotify, 30 for 30, ESPN.", "bluesky", ""),
+            ("Sam Vecenie", "@samvecenie.bsky.social", "I talk about basketball and movies. Host of the Game Theory Podcast.", "bluesky", ""),
+            ("Kai Ryssdal", "@kairyssdal.bsky.social", "Dad, husband. IPAs. Soccer referee, trail runner, mountain biker. Veteran.", "bluesky", ""),
+            ("SCOREGolf", "@SCOREGolf", "All of SCOREGolf.com's video from the PGA Tour and Canadian Golf Course rankings.", "youtube", "Canada"),
+            ("Top Tennis Training", "@TopTennisTraining", "Tennis coaching drills and lessons.", "youtube", "United Kingdom"),
+            ("Wanhee 완희", "@wanheekim", "Hi I'm Wanhee. I started my fitness journey at university.", "youtube", ""),
         ]:
             self.assertFalse(
-                _is_authentic_sports_partner(name, handle, bio, primary_platform=plat),
+                _is_authentic_sports_partner(name, handle, bio, primary_platform=plat, country=ctry),
                 msg=f"Should reject {name}",
             )
 
@@ -442,11 +491,81 @@ class EmailAndLinksTests(unittest.TestCase):
             ("BodyBusterFitness", "@Bodybusterfitnessbootcamp", "Group fitness bootcamp and obstacle conditioning workouts.", "youtube"),
             ("Lauren Mantha", "@LaurenMantha", "Personal trainer and runner based in Toronto sharing half marathon workouts.", "youtube"),
             ("Downtown Toronto Fitness & Wellness", "meetup/downtown-toronto-fitness", "Join Toronto's group fitness & longevity community workouts.", "meetup"),
+            ("Nick Bare", "@nickbarefitness", "Hybrid athlete marathon and strength workouts.", "youtube"),
         ]:
             self.assertTrue(
                 _is_authentic_sports_partner(name, handle, bio, primary_platform=plat),
                 msg=f"Should accept {name}",
             )
+
+    def test_facebook_profile_id_meetup_html_and_cross_channel_dedup(self):
+        links = _classify_partner_links([
+            "https://www.facebook.com/profile.php",
+            "https://secure.meetupstatic.com/photos/event/123.jpeg",
+        ])
+        self.assertEqual(links["facebook_url"], "")
+        self.assertEqual(links["website"], "")
+
+        links_with_id = _classify_partner_links(["https://www.facebook.com/profile.php?id=61550987654321&sk=about"])
+        self.assertEqual(links_with_id["facebook_url"], "https://www.facebook.com/profile.php?id=61550987654321")
+
+        # Sanitize Meetup HTML bio and bare profile.php on stored rows
+        dirty_row = {
+            "partner_id": "mu_toronto_soccer",
+            "name": "Toronto Pickup Soccer Club",
+            "handle": "meetup/toronto-soccer",
+            "primary_platform": "meetup",
+            "country": "Canada",
+            "bio": "<p>Weekly <strong>pickup soccer</strong> games in Downtown Toronto!</p>",
+            "website": "https://secure.meetupstatic.com",
+            "facebook_url": "https://www.facebook.com/profile.php",
+        }
+        clean_row = sanitize_stored_partner_row(dirty_row)
+        self.assertIsNotNone(clean_row)
+        self.assertEqual(clean_row["bio"], "Weekly pickup soccer games in Downtown Toronto!")
+        self.assertEqual(clean_row["website"], "")
+        self.assertEqual(clean_row["facebook_url"], "")
+
+        # Cross-channel deduplication merges Ontario Soccer website + YouTube channel
+        org_web = {
+            "partner_id": "org_ontariosoccer_net",
+            "name": "Ontario Soccer",
+            "primary_platform": "website",
+            "website": "https://www.ontariosoccer.net",
+            "instagram_url": "https://www.instagram.com/ontariosoccer",
+            "instagram_followers": 18000,
+            "audience_count": 18000,
+            "business_email": "info@ontariosoccer.net",
+            "city": "Vaughan",
+            "province_state": "Ontario",
+            "country": "Canada",
+        }
+        org_yt = {
+            "partner_id": "yt__Ontario_soccer",
+            "name": "Ontario Soccer",
+            "primary_platform": "youtube",
+            "website": "https://ontariosoccer.net",
+            "youtube_url": "https://www.youtube.com/@Ontario_soccer",
+            "youtube_followers": 4200,
+            "audience_count": 4200,
+            "country": "Canada",
+        }
+        deduped, dropped = deduplicate_and_merge_partners([org_yt, org_web])
+        self.assertEqual(len(deduped), 1)
+        self.assertEqual(dropped, ["yt__Ontario_soccer"])
+        self.assertEqual(deduped[0]["partner_id"], "org_ontariosoccer_net")
+        self.assertEqual(deduped[0]["youtube_url"], "https://www.youtube.com/@Ontario_soccer")
+        self.assertEqual(deduped[0]["audience_count"], 22200)
+
+        # Instagram meta parser extracts followers, display name & bio
+        ig_meta_html = (
+            '<meta property="og:title" content="TORONTO HOOPSTARS (@torontohoopstars) • Instagram photos and videos" />'
+            '<meta content="2,953 Followers, 100 Following, 50 Posts - TORONTO HOOPSTARS (@torontohoopstars) on Instagram: &quot;Elite Basketball Skills Training in Toronto&quot;" />'
+        )
+        ig_prof = _parse_instagram_profile_html(ig_meta_html)
+        self.assertEqual(ig_prof["followers"], 2953)
+        self.assertEqual(ig_prof["name"], "TORONTO HOOPSTARS")
+        self.assertIn("Elite Basketball Skills Training", ig_prof["bio"])
 
 
 class DatabaseAndCsvTests(unittest.TestCase):
@@ -548,6 +667,29 @@ class DatabaseAndCsvTests(unittest.TestCase):
         self.assertEqual(summary["kpis"]["on_strava"], 1)
         self.assertEqual(summary["kpis"]["on_meetup"], 1)
         self.assertEqual(summary["kpis"]["on_eventbrite"], 1)
+
+        # Test outreach stages, notes, and dismiss/restore blocklist
+        st_res = database.update_partner_outreach(
+            "yt_to_hoops",
+            outreach_status="replied",
+            outreach_notes="Interested in Founding Pro cohort",
+        )
+        self.assertTrue(st_res["updated"])
+        self.assertEqual(st_res["outreach_status"], "replied")
+        self.assertEqual(st_res["contacted"], True)
+        self.assertEqual(len(database.query_partners(contacted_filter="replied")), 1)
+        self.assertEqual(len(database.query_partners(search="Founding Pro cohort")), 1)
+
+        database.update_partner_outreach("yt_uk_fc", is_dismissed=True)
+        self.assertIn("yt_uk_fc", database.get_dismissed_partner_ids())
+        self.assertEqual(database.get_partners_summary()["kpis"]["total_partners"], 2)
+        self.assertEqual(database.get_partners_summary()["kpis"]["dismissed_count"], 1)
+        self.assertEqual(len(database.query_partners(contacted_filter="dismissed")), 1)
+
+    def test_cors_origin_lockdown(self):
+        self.assertEqual(app_mod._resolve_cors_origin("https://yidaw123.github.io"), "https://yidaw123.github.io")
+        self.assertEqual(app_mod._resolve_cors_origin("http://localhost:8766"), "http://localhost:8766")
+        self.assertEqual(app_mod._resolve_cors_origin("https://evil.example.com"), "http://localhost:8766")
 
     def test_csv_formula_injection_guard(self):
         self.assertEqual(app_mod._csv_safe("=HYPERLINK(\"http://bad\")"), "'=HYPERLINK(\"http://bad\")")

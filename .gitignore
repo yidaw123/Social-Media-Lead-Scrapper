@@ -3,3 +3,7 @@ __pycache__/
 *$py.class
 .env
 .DS_Store
+.venv/
+crews_partners.db
+crews_partners.db-*
+crews_outreach_local.json
