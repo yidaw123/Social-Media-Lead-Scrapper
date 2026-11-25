@@ -1,0 +1,36 @@
+name: Twice-Daily Crews Sports Partner Scrape & Archive
+
+on:
+  schedule:
+    - cron: '30 15 * * *' # Morning window: 10:30 AM EST / 7:30 AM PST (staggered from other repo)
+    - cron: '30 2 * * *'  # Evening window: 9:30 PM EST / 6:30 PM PST (staggered from other repo)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run live Crews Sports Partners scrape & update snapshot
+        run: python app.py --scrape-only
+
+      - name: Commit and push updated datapoints
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add crews_partners.db static/snapshot.json index.html
+          git diff --staged --quiet || git commit -m "Automated daily scrape: archive Crews sports creators & partner orgs"
+          git push origin main

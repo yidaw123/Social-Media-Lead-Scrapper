@@ -1,0 +1,27 @@
+from .sports_scraper import (
+    CURATED_CANADIAN_ORG_SEEDS,
+    YOUTUBE_SPORTS_SEEDS,
+    _classify_partner_links,
+    _decode_cfemail,
+    _extract_clean_emails,
+    _parse_html_page_signals,
+    _parse_instagram_followers_html,
+    _parse_tiktok_followers_html,
+    enrich_partner_profile_deep,
+    populate_partner_follower_counts,
+    scrape_sports_partners,
+)
+
+__all__ = [
+    "CURATED_CANADIAN_ORG_SEEDS",
+    "YOUTUBE_SPORTS_SEEDS",
+    "_classify_partner_links",
+    "_decode_cfemail",
+    "_extract_clean_emails",
+    "_parse_html_page_signals",
+    "_parse_instagram_followers_html",
+    "_parse_tiktok_followers_html",
+    "enrich_partner_profile_deep",
+    "populate_partner_follower_counts",
+    "scrape_sports_partners",
+]

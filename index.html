@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crews — Sports Creator &amp; Partner Scraper</title>
+  <link rel="stylesheet" href="./static/styles.css?v=2" />
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-row">
+          <h1>Crews — Sports Creator &amp; Partner Scraper</h1>
+          <span class="brand-pill">Toronto / GTA Launch</span>
+        </div>
+        <p>Find your crew. Play your game. &middot; 60% social player matching &amp; 40% organized sports &middot; Pro Candidates &amp; Local Sports Organizations</p>
+      </div>
+      <div class="actions">
+        <button id="scrape-partners-btn" onclick="triggerPartnersScrape()">Scrape Sports Partners</button>
+        <button class="secondary" onclick="triggerReclassify()">Reclassify</button>
+        <button class="secondary" id="email-template-btn" onclick="openEmailTemplateModal()">Email Templates</button>
+        <button class="secondary" id="export-partners-btn" onclick="handleExportPartnersCsv(event)">Export CSV</button>
+      </div>
+    </header>
+
+    <!-- Section 1: KPI Cards + Interactive Strips + Sport Chart -->
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+      <h2 style="font-size:0.95rem;font-weight:600;color:var(--text);">Section 1: Partner Outreach Summary &amp; Quick Filters</h2>
+      <span style="font-size:0.76rem;color:var(--muted);">Click any KPI card, social platform, audience tier, or sport bar to filter partners below</span>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-card active" id="pkpi-card-all" onclick="quickFilterPartners('all')">
+        <div class="kpi-label">All Partners</div>
+        <div class="kpi-val" id="pkpi-total" style="color:#60a5fa">0</div>
+        <div class="kpi-sub">Total creators &amp; orgs</div>
+      </div>
+      <div class="kpi-card" id="pkpi-card-pro_candidate" onclick="quickFilterPartners('pro_candidate')">
+        <div class="kpi-label">Pro Candidates</div>
+        <div class="kpi-val" id="pkpi-pro" style="color:#34d399">0</div>
+        <div class="kpi-sub">Creators, coaches, pickup hosts</div>
+      </div>
+      <div class="kpi-card" id="pkpi-card-sports_org" onclick="quickFilterPartners('sports_org')">
+        <div class="kpi-label">Sports Organizations</div>
+        <div class="kpi-val" id="pkpi-org" style="color:#d8b4fe">0</div>
+        <div class="kpi-sub">Leagues, clubs, gyms, uni</div>
+      </div>
+      <div class="kpi-card" id="pkpi-card-email" onclick="quickFilterPartners('email')">
+        <div class="kpi-label">Has Verified Email</div>
+        <div class="kpi-val" id="pkpi-email" style="color:#38bdf8">0</div>
+        <div class="kpi-sub">Direct outreach ready</div>
+      </div>
+      <div class="kpi-card" id="pkpi-card-toronto_gta" onclick="quickFilterPartners('toronto_gta')">
+        <div class="kpi-label">Toronto / GTA</div>
+        <div class="kpi-val" id="pkpi-gta" style="color:#fbbf24">0</div>
+        <div class="kpi-sub">Grassroots launch market</div>
+      </div>
+      <div class="kpi-card" id="pkpi-card-contacted" onclick="quickFilterPartners('contacted')">
+        <div class="kpi-label">Contacted</div>
+        <div class="kpi-val" id="pkpi-contacted" style="color:#fb7185">0</div>
+        <div class="kpi-sub">Outreach tracked</div>
+      </div>
+    </div>
+
+    <!-- Interactive Social & Community Platforms Strip (All 13 Platforms) -->
+    <div class="quick-strip-card">
+      <div class="quick-strip-header">
+        <span class="quick-strip-title">Social &amp; Community Platforms</span>
+        <span style="font-size:0.74rem;color:var(--muted);">Filter by any linked social profile, Strava club, or Meetup / Eventbrite organizer page</span>
+      </div>
+      <div class="quick-pill-strip" id="partner-platform-strip">
+        <button type="button" class="quick-pill active" data-plat="all" onclick="setPartnerPlatformQuick('all')">
+          All Platforms <span class="quick-pill-count" id="splat-count-all">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="youtube" onclick="setPartnerPlatformQuick('youtube')">
+          YouTube <span class="quick-pill-count" id="splat-count-youtube">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="instagram" onclick="setPartnerPlatformQuick('instagram')">
+          Instagram <span class="quick-pill-count" id="splat-count-instagram">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="tiktok" onclick="setPartnerPlatformQuick('tiktok')">
+          TikTok <span class="quick-pill-count" id="splat-count-tiktok">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="facebook" onclick="setPartnerPlatformQuick('facebook')">
+          Facebook <span class="quick-pill-count" id="splat-count-facebook">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="x" onclick="setPartnerPlatformQuick('x')">
+          X / Twitter <span class="quick-pill-count" id="splat-count-x">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="threads" onclick="setPartnerPlatformQuick('threads')">
+          Threads <span class="quick-pill-count" id="splat-count-threads">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="linkedin" onclick="setPartnerPlatformQuick('linkedin')">
+          LinkedIn <span class="quick-pill-count" id="splat-count-linkedin">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="pinterest" onclick="setPartnerPlatformQuick('pinterest')">
+          Pinterest <span class="quick-pill-count" id="splat-count-pinterest">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="reddit" onclick="setPartnerPlatformQuick('reddit')">
+          Reddit <span class="quick-pill-count" id="splat-count-reddit">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="strava" onclick="setPartnerPlatformQuick('strava')">
+          Strava <span class="quick-pill-count" id="splat-count-strava">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="bluesky" onclick="setPartnerPlatformQuick('bluesky')">
+          Bluesky <span class="quick-pill-count" id="splat-count-bluesky">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="meetup" onclick="setPartnerPlatformQuick('meetup')">
+          Meetup <span class="quick-pill-count" id="splat-count-meetup">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-plat="eventbrite" onclick="setPartnerPlatformQuick('eventbrite')">
+          Eventbrite <span class="quick-pill-count" id="splat-count-eventbrite">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Total Audience Tier Strip -->
+    <div class="quick-strip-card" style="margin-bottom:18px;">
+      <div class="quick-strip-header">
+        <span class="quick-strip-title">Total Audience Tier</span>
+        <span style="font-size:0.74rem;color:var(--muted);">Filter creators, clubs &amp; leagues by follower / member size</span>
+      </div>
+      <div class="quick-pill-strip" id="partner-tier-strip">
+        <button type="button" class="quick-pill active" data-tier="all" onclick="setPartnerTierQuick('all')">
+          All Sizes <span class="quick-pill-count" id="stier-count-all">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-tier="nano" onclick="setPartnerTierQuick('nano')">
+          Nano (&lt;10K) <span class="quick-pill-count" id="stier-count-nano">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-tier="micro" onclick="setPartnerTierQuick('micro')">
+          Micro (10K&ndash;100K) <span class="quick-pill-count" id="stier-count-micro">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-tier="mid" onclick="setPartnerTierQuick('mid')">
+          Mid (100K&ndash;500K) <span class="quick-pill-count" id="stier-count-mid">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-tier="macro" onclick="setPartnerTierQuick('macro')">
+          Macro (500K&ndash;1M) <span class="quick-pill-count" id="stier-count-macro">0</span>
+        </button>
+        <button type="button" class="quick-pill" data-tier="mega" onclick="setPartnerTierQuick('mega')">
+          Mega (1M+) <span class="quick-pill-count" id="stier-count-mega">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sport Category Breakdown Chart -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-header">
+        <h2>Sport Category Breakdown (12 Sports &middot; Pro Candidates vs. Sports Orgs)</h2>
+        <span style="font-size:0.76rem;color:var(--muted);">Click any sport bar to filter the partners directory below</span>
+      </div>
+      <div class="card-body" id="partners-sport-chart"></div>
+    </div>
+
+    <!-- Section 2: Filter Panel -->
+    <div class="filter-panel" id="partners-filter-panel">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:6px;">
+        <h2 style="font-size:0.95rem;font-weight:600;color:var(--text);">Section 2: Filter Sports Partners &amp; Export Outreach List</h2>
+        <span style="font-size:0.76rem;color:var(--muted);">Search by partner type, sport, activity niche, platform, audience tier, outreach status, or US/Canada location</span>
+      </div>
+      <div class="filter-grid">
+        <div class="field">
+          <label for="partner-search">Keyword Search</label>
+          <input type="text" id="partner-search" placeholder="Search name, handle, role, sport, email, or city..." oninput="debouncedLoadPartners()" />
+        </div>
+        <div class="field">
+          <label for="partner-type">Partner Type</label>
+          <select id="partner-type" onchange="onPartnerTypeSelectChange()">
+            <option value="all">All Partner Types</option>
+            <option value="pro_candidate">Pro Candidates (Founding / Regular Pro)</option>
+            <option value="sports_org">Sports Organizations (Leagues, Clubs, Gyms, Uni)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-sport">Sport Category</label>
+          <select id="partner-sport" onchange="onPartnerSportChange()">
+            <option value="all">All 12 Sports</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-sub-niche">Activity / Sub-Niche</label>
+          <select id="partner-sub-niche" onchange="loadPartners()">
+            <option value="all">All Activity Niches</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-platform">Social / Event Platform</label>
+          <select id="partner-platform" onchange="onPartnerPlatformSelectChange()">
+            <option value="all">Any Platform</option>
+            <option value="youtube">YouTube</option>
+            <option value="instagram">Instagram</option>
+            <option value="tiktok">TikTok</option>
+            <option value="facebook">Facebook</option>
+            <option value="x">X / Twitter</option>
+            <option value="threads">Threads</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="pinterest">Pinterest</option>
+            <option value="reddit">Reddit</option>
+            <option value="strava">Strava</option>
+            <option value="bluesky">Bluesky</option>
+            <option value="meetup">Meetup</option>
+            <option value="eventbrite">Eventbrite</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-tier">Total Audience Tier</label>
+          <select id="partner-tier" onchange="onPartnerTierSelectChange()">
+            <option value="all">All Sizes</option>
+            <option value="micro_mid">Micro + Mid (10K &ndash; 500K)</option>
+            <option value="mega">Mega (1M+)</option>
+            <option value="macro">Macro (500K &ndash; 1M)</option>
+            <option value="mid">Mid (100K &ndash; 500K)</option>
+            <option value="micro">Micro (10K &ndash; 100K)</option>
+            <option value="nano">Nano (&lt;10K)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-grid-secondary">
+        <div class="field">
+          <label for="partner-contact">Contact Info</label>
+          <select id="partner-contact" onchange="loadPartners()">
+            <option value="all">All Partners</option>
+            <option value="has_email">Has Verified Email</option>
+            <option value="has_contact">Has Email or Website</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-contacted">Outreach Status</label>
+          <select id="partner-contacted" onchange="loadPartners()">
+            <option value="all">All Statuses</option>
+            <option value="not_contacted">Not Contacted Yet</option>
+            <option value="contacted">Contacted</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-country">Country / Region</label>
+          <select id="partner-country" onchange="onPartnerCountryChange()">
+            <option value="all">All Countries</option>
+            <option value="Toronto / GTA">Toronto / GTA (Launch Market)</option>
+            <option value="North America">US &amp; Canada</option>
+            <option value="Canada">Canada</option>
+            <option value="United States">United States</option>
+            <option value="Other">Other / Unlisted</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-province">Province / State (US &amp; CA)</label>
+          <select id="partner-province" onchange="onPartnerProvinceChange()">
+            <option value="all">All States &amp; Provinces</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-city">City (US &amp; CA)</label>
+          <select id="partner-city" onchange="loadPartners()">
+            <option value="all">All Cities</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="partner-sort">Sort By</label>
+          <select id="partner-sort" onchange="applyPartnersSortAndRender()">
+            <option value="email_first">Verified Email First + Followers</option>
+            <option value="toronto_first">Toronto / GTA First + Followers</option>
+            <option value="audience_desc">Most Followers First</option>
+            <option value="audience_asc">Fewest Followers First</option>
+            <option value="name_asc">Name (A to Z)</option>
+          </select>
+        </div>
+        <div style="align-self:end;">
+          <button type="button" class="secondary" onclick="resetPartnerFilters()">Reset Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partners Table -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Crews Sports Creators, Pickup Organizers &amp; Partner Organizations</h2>
+        <div id="partners-results-count" style="font-size:0.82rem;color:var(--muted);font-weight:500;">0 matching partners</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Partner &amp; Bio</th>
+              <th style="width:225px;">Sport &amp; Activity</th>
+              <th style="width:185px;">Follower Count</th>
+              <th style="width:235px;">Social &amp; Community Links</th>
+              <th style="width:255px;">Verified Contact &amp; Outreach</th>
+            </tr>
+          </thead>
+          <tbody id="partners-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar" id="partners-pagination-bar"></div>
+    </div>
+  </div>
+
+  <!-- Crews Outreach Email Template Modal (Two Presets: Founding Pro Partner + Sports Org / League) -->
+  <div class="modal-backdrop" id="email-template-modal">
+    <div class="modal">
+      <div class="card-header" style="padding:0 0 14px 0;margin-bottom:14px;">
+        <div>
+          <h2 id="email-modal-title">Crews Outreach Email Templates</h2>
+          <div id="email-modal-recipient" style="font-size:0.77rem;color:var(--muted);margin-top:3px;">Switch between Founding Pro Partner &amp; Sports Organization / League presets</div>
+        </div>
+        <button type="button" class="secondary" onclick="closeEmailTemplateModal()">Close</button>
+      </div>
+
+      <div class="preset-tabs" role="tablist" aria-label="Email Template Presets">
+        <button type="button" class="preset-tab active" id="preset-btn-pro" onclick="switchTemplatePreset('pro')">Founding Pro Partner</button>
+        <button type="button" class="preset-tab" id="preset-btn-org" onclick="switchTemplatePreset('org')">Sports Organization / League</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group">
+          <label for="tpl-brand-name">Your Brand</label>
+          <input type="text" id="tpl-brand-name" oninput="renderEmailDraftPreview()" />
+        </div>
+        <div class="form-group">
+          <label for="tpl-branch-link">Branch.io Attribution Link (<code>{{branch_link}}</code>)</label>
+          <input type="text" id="tpl-branch-link" oninput="renderEmailDraftPreview()" placeholder="https://crews.app.link/..." />
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group">
+          <label for="tpl-offer">Partner Offer / Program Hook</label>
+          <input type="text" id="tpl-offer" oninput="renderEmailDraftPreview()" />
+        </div>
+        <div class="form-group">
+          <label for="tpl-sender-name">Your Name / Title</label>
+          <input type="text" id="tpl-sender-name" oninput="renderEmailDraftPreview()" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tpl-subject">Email Subject Template</label>
+        <input type="text" id="tpl-subject" oninput="renderEmailDraftPreview()" />
+      </div>
+      <div class="form-group">
+        <label for="tpl-body">Email Body Template</label>
+        <textarea id="tpl-body" rows="7" style="resize:vertical;" oninput="renderEmailDraftPreview()"></textarea>
+        <div class="merge-tags-row">
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{partner_name}}')">{{partner_name}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{partner_role}}')">{{partner_role}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{sport_category}}')">{{sport_category}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{sub_niche}}')">{{sub_niche}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{location}}')">{{location}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{branch_link}}')">{{branch_link}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{your_brand}}')">{{your_brand}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{offer_details}}')">{{offer_details}}</button>
+          <button type="button" class="merge-tag-chip" onclick="insertTemplateTag('{{sender_name}}')">{{sender_name}}</button>
+        </div>
+      </div>
+
+      <div class="email-preview-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;color:#93c5fd;">Live Draft Preview</span>
+          <span id="draft-preview-to" style="font-size:0.76rem;color:var(--muted);"></span>
+        </div>
+        <div style="margin-top:6px;font-size:0.82rem;color:#e2e8f0;"><strong>Subject:</strong> <span id="draft-preview-subject"></span></div>
+        <pre class="email-preview-body" id="draft-preview-body"></pre>
+      </div>
+
+      <label style="display:inline-flex;align-items:center;gap:8px;font-size:0.79rem;color:var(--text-secondary);margin-top:12px;cursor:pointer;">
+        <input type="checkbox" id="draft-auto-contacted" checked style="width:auto;" />
+        Automatically mark partner as <strong>Contacted</strong> when clicking Open in Mail App
+      </label>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="secondary" onclick="resetEmailTemplate()">Reset Preset Default</button>
+          <button type="button" class="secondary" id="tpl-save-btn" onclick="saveEmailTemplate()">Save Preset Default</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="secondary" id="draft-copy-btn" onclick="copyRenderedDraft(false)">Copy Body</button>
+          <button type="button" id="draft-copy-all-btn" onclick="copyRenderedDraft(true)">Copy Subject + Body</button>
+          <a id="draft-mailto-link" href="#" onclick="onMailtoDraftClick()" class="badge b-cat" style="display:inline-flex;align-items:center;padding:8px 13px;font-size:0.82rem;font-weight:600;text-decoration:none;border-radius:7px;" target="_blank" rel="noopener noreferrer">Open in Mail App</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./static/app.js?v=2"></script>
+</body>
+</html>
