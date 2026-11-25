@@ -110,16 +110,16 @@ MEETUP_SEARCH_SEEDS: List[Tuple[str, str, str]] = [
 ]
 
 BLUESKY_SEARCH_SEEDS: List[Tuple[str, str, str]] = [
-    ("toronto basketball pickup", "Basketball", "pro_candidate"),
+    ("basketball skills coach trainer", "Basketball", "pro_candidate"),
     ("toronto run club", "Running & Run Clubs", "sports_org"),
     ("pickleball coach", "Tennis & Pickleball", "pro_candidate"),
-    ("soccer training futsal", "Soccer", "pro_candidate"),
+    ("soccer coach futsal", "Soccer", "pro_candidate"),
     ("volleyball club league", "Volleyball", "sports_org"),
-    ("boxing bjj muay thai", "Combat & Martial Arts", "pro_candidate"),
-    ("hyrox fitness coach", "Fitness & Cross-Training", "pro_candidate"),
-    ("golf swing coach", "Golf", "pro_candidate"),
-    ("hockey skills skating", "Hockey & Ice Sports", "pro_candidate"),
-    ("rec league sports", "Multi-Sport & Rec Leagues", "sports_org"),
+    ("boxing coach bjj gym", "Combat & Martial Arts", "pro_candidate"),
+    ("hyrox crossfit personal trainer", "Fitness & Cross-Training", "pro_candidate"),
+    ("golf swing coach instructor", "Golf", "pro_candidate"),
+    ("hockey skills skating coach", "Hockey & Ice Sports", "pro_candidate"),
+    ("adult rec league sports club", "Multi-Sport & Rec Leagues", "sports_org"),
 ]
 
 # Curated real public Toronto/GTA & Canadian Sports Organizations, Clubs & University Networks
@@ -219,6 +219,122 @@ _OFF_TOPIC_CHANNEL_RE = re.compile(
     re.IGNORECASE,
 )
 
+_ADULT_DOMAINS = (
+    "onlyfans.com", "fansly.com", "justfor.fans", "loyalfans.com", "fanvue.com",
+    "manyvids.com", "chaturbate.com", "pornhub.com", "xvideos.com", "xnxx.com",
+    "cam4.com", "stripchat.com", "myfreecams.com", "camsoda.com", "brazzers.com",
+    "fapello.com", "erome.com",
+)
+
+_ADULT_NSFW_RE = re.compile(
+    r"(?:onlyfans|fansly|justfor\.?fans|loyalfans|fanvue|manyvids|chaturbate|pornhub|xvideos|xnxx|"
+    r"\bporn\w*\b|\bnsfw\b|🔞|🍆|💦|cam\s*model|"
+    r"adult\s*(?:actor|actress|performer|content|creator|entertainer|film|star)|"
+    r"spicy\s*(?:link|page|content|site)|erotica|fetish|\bxxx\b|xxx(?=/|\s|$))",
+    re.IGNORECASE,
+)
+
+_NON_SPORTS_IDENTITY_RE = re.compile(
+    r"(?:\b(?:congressman|congresswoman|senator|member of parliament|u\.s\. representative|"
+    r"representing\s+\w+(?:'s)?\s+\d+\w*\s+district|house\s+appropriations|"
+    r"constitutional conservative|political junkie|politologist|far-right politics|people over politics|"
+    r"editor-in-chief|columnist|reporter|journalist|(?:senior\s+)?(?:nba|nfl|nhl|mlb)\s+writer|"
+    r"screenwriter|novelist|author\s*&|comic artist|storyboards?|illustration|"
+    r"game design lecturer|improv coach|comedy doer|actress,|actor,|"
+    r"professor of|associate prof|researcher of|write code for a living|"
+    r"tech reviews?\s+for|pok[eé]mon|retro trophy hunter|consumer of basketball|"
+    r"soccer mom|baseball mom|hockey mom|rodeo mom|basketball nerd|basketball enjoyer|"
+    r"tennis fan|sports fan|cubs fan|premier league and tennis fan|fitness advocate|"
+    r"girls out at events|weekend walks|weight loss challenge|lose pounds)\b|"
+    r"\.house\.gov\b|\.senate\.gov\b)",
+    re.IGNORECASE,
+)
+
+_CONCRETE_NON_FITNESS_SPORT_RE = re.compile(
+    r"\b(basketball|hoops|streetball|soccer|futsal|footy|volleyball|beach volleyball|"
+    r"tennis|pickleball|padel|squash|badminton|flag football|touch football|ultimate frisbee|"
+    r"rugby|lacrosse|hockey|shinny|power skating|running|run club|run crew|marathon|5k|10k|trail running|"
+    r"baseball|softball|slowpitch|slo-pitch|golf|boxing|kickboxing|muay thai|bjj|jiu-jitsu|jiu jitsu|"
+    r"mma|wrestling|martial arts|dodgeball|kickball|rec league|intramural|pickup|drop-in)\b",
+    re.IGNORECASE,
+)
+
+_FITNESS_CREDENTIAL_RE = re.compile(
+    r"\b(personal trainer|fitness coach|strength coach|certified trainer|cscs|"
+    r"hyrox|crossfit|calisthenics|hybrid athlete|functional fitness|group fitness|"
+    r"bootcamp|boot camp|training tips|workouts?|conditioning|powerlifting|weightlifting|"
+    r"olympic lifting|bodybuilding|fitness studio|fitness box|athletic club|fitness club|"
+    r"longevity community|yoga|pilates|fitness creator|fitness influencer|fitness channel|fitness journey)\b",
+    re.IGNORECASE,
+)
+
+_FITNESS_CASUAL_DISQUALIFIER_RE = re.compile(
+    r"\b(gaming|cooking|baking|fashion|screenwriter|fairytales|actress|activist|congressman|whiskey|tech reviews)\b",
+    re.IGNORECASE,
+)
+
+
+def _is_adult_or_nsfw_profile(*parts: Any) -> bool:
+    """Return True if any profile text, handle, or extracted URL references OnlyFans/NSFW content."""
+    chunks: List[str] = []
+    for p in parts:
+        if isinstance(p, (list, tuple, set)):
+            chunks.extend(str(x or "") for x in p)
+        elif isinstance(p, dict):
+            chunks.extend(str(v or "") for v in p.values())
+        elif p:
+            chunks.append(str(p))
+    blob = "\n".join(chunks)
+    if not blob.strip():
+        return False
+    low = blob.lower()
+    if any(dom in low for dom in _ADULT_DOMAINS):
+        return True
+    return bool(_ADULT_NSFW_RE.search(blob))
+
+
+def _is_authentic_sports_partner(
+    name: str,
+    handle: str,
+    bio: str,
+    primary_platform: str = "",
+    video_title: str = "",
+    raw_urls: Optional[List[str]] = None,
+) -> bool:
+    """
+    Ensure discovered profiles are genuine sports/fitness creators, coaches, pickup hosts,
+    or organizations — rejecting OnlyFans/NSFW, politicians, journalists, gamers, and casual hobby bios.
+    """
+    if _is_excluded_slug(name, handle):
+        return False
+    combined = f"{name} {handle} {bio}".strip()
+    if _is_adult_or_nsfw_profile(name, handle, bio, raw_urls or []):
+        return False
+    if _GAMING_OR_BETTING_RE.search(combined) or _OFF_TOPIC_CHANNEL_RE.search(combined):
+        return False
+    if _NON_SPORTS_IDENTITY_RE.search(combined):
+        return False
+
+    if primary_platform == "youtube" and len((bio or "").strip()) < 10:
+        if not (_CONCRETE_NON_FITNESS_SPORT_RE.search(name) or _FITNESS_CREDENTIAL_RE.search(name)):
+            return False
+
+    search_text = combined if (bio or "").strip() else f"{combined} {video_title}".strip()
+    if not _SPORTS_RELEVANCE_RE.search(search_text):
+        return False
+
+    # Dedicated check when profile lacks a concrete sport and relies on fitness/gym/workout
+    if not _CONCRETE_NON_FITNESS_SPORT_RE.search(search_text):
+        if _FITNESS_CASUAL_DISQUALIFIER_RE.search(combined):
+            return False
+        has_cred = bool(_FITNESS_CREDENTIAL_RE.search(search_text))
+        has_fit_brand = bool(re.search(r"\b(fitness|fit|gym|crossfit|hyrox|lifting|calisthenics|bootcamp)\b", f"{name} {handle}", re.IGNORECASE))
+        if not (has_cred or has_fit_brand):
+            return False
+
+    return True
+
+
 _SPORTS_RELEVANCE_RE = re.compile(
     r"\b(basketball|hoops|streetball|soccer|futsal|footy|volleyball|beach volleyball|"
     r"tennis|pickleball|padel|squash|badminton|flag football|touch football|ultimate frisbee|"
@@ -266,6 +382,8 @@ _BAD_EMAIL_DOMAINS = (
     "amilia.com", "ezfacility.com", "active.com", "clubready.com",
     "glofox.com", "zenplanner.com", "pushpress.com", "wodify.com",
     "opensports.net", "playyon.com", "teamlinkt.com", "sportsillustrated.com",
+    # Adult / NSFW platforms
+    *_ADULT_DOMAINS,
     # Major sports retail, gear, supplement & betting sponsor brands + affiliate trackers
     "nike.com", "adidas.com", "lululemon.com", "gymshark.com", "underarmour.com",
     "puma.com", "reebok.com", "newbalance.com", "asics.com", "hoka.com",
@@ -325,7 +443,24 @@ _AFFILIATE_OR_RETAIL_HOSTS = (
     "pntrac.com", "avantlink.com", "shareasale.com", "awin1.com", "howl.me",
     "sjv.io", "pxf.io", "dpbolvw.net", "tkqlhce.com", "jdoqocy.com",
     "anrdoezrs.net", "draftkings.", "fanduel.", "betmgm.",
+    "onlyfans.", "fansly.", "justfor.fans", "loyalfans.", "fanvue.", "manyvids.",
+    "pornhub.", "xvideos.", "xnxx.", "chaturbate.",
+    "jotform.com", "typeform.com", "docs.google.com", "forms.gle", "surveymonkey.com", "wufoo.com",
 )
+
+_BLOCKED_SOCIAL_HANDLES = {
+    "onlyfans", "fansly", "justforfans", "loyalfans", "fanvue", "manyvids",
+    "meetup", "meetuphq", "wix", "wixstudio", "squarespace", "shopify", "wordpress",
+    "webflow", "godaddy", "canva", "linktr", "linktree", "beacons", "stanstore",
+    "carrd", "eventbrite", "strava", "youtube", "instagram", "tiktok", "facebook",
+    "twitter", "x", "threads", "linkedin", "pinterest", "reddit", "bsky", "bluesky",
+    "google", "apple", "meta", "amazon", "nike", "adidas", "spotify", "discord",
+    "patreon", "substack", "mailchimp", "hubspot", "stripe", "cloudflare",
+    "teamsnap", "leagueapps", "sportsengine", "mindbody", "raceroster", "active",
+    "jotform", "jotform_official", "typeform", "mapbox", "mapbox-gl-js",
+    "home", "share", "sharer", "intent", "explore", "search", "login", "signup",
+    "watch", "shorts", "privacy", "terms", "about", "help",
+}
 
 _LINK_HUB_HOSTS = (
     "linktr.ee", "beacons.ai", "stan.store", "bio.site", "linkin.bio",
@@ -507,30 +642,33 @@ def _classify_partner_links(raw_urls: List[str]) -> Dict[str, Any]:
         ):
             continue
 
+        first_seg = (low_path.split("/")[0] if low_path else "").lstrip("@")
+        second_seg = (low_path.split("/")[1] if len(low_path.split("/")) > 1 else "").lstrip("@")
+        if first_seg in _BLOCKED_SOCIAL_HANDLES:
+            continue
+        if first_seg in ("c", "user", "company", "school", "u") and second_seg in _BLOCKED_SOCIAL_HANDLES:
+            continue
+
         if ("youtube.com" in host or host == "youtu.be") and not res["youtube_url"]:
-            if low_path.startswith(("@", "channel/", "c/", "user/")) and low_path.strip("/") not in ("@meetup", "c/meetup", "user/meetup"):
+            if low_path.startswith(("@", "channel/", "c/", "user/")):
                 res["youtube_url"] = norm
         elif "instagram.com" in host and not res["instagram_url"]:
-            first_seg = low_path.split("/")[0] if low_path else ""
-            if first_seg != "meetup" and not any(low_path.startswith(skip) for skip in ("p/", "reel/", "explore/", "accounts/")):
+            if not any(low_path.startswith(skip) for skip in ("p/", "reel/", "explore/", "accounts/")):
                 res["instagram_url"] = norm
         elif "tiktok.com" in host and not res["tiktok_url"]:
-            first_seg = low_path.split("/")[0] if low_path else ""
-            if first_seg != "@meetup" and not low_path.startswith(("discover/", "tag/", "music/")):
+            if not low_path.startswith(("discover/", "tag/", "music/")):
                 res["tiktok_url"] = norm
         elif ("facebook.com" in host or "fb.com" in host) and not res["facebook_url"]:
-            first_seg = low_path.split("/")[0] if low_path else ""
-            if first_seg != "meetup" and not any(low_path.startswith(skip) for skip in ("sharer", "share.php", "privacy", "policies", "tr")):
+            if not any(low_path.startswith(skip) for skip in ("sharer", "share.php", "share/", "privacy", "policies", "tr")):
                 res["facebook_url"] = norm
         elif ("twitter.com" in host or host == "x.com" or host == "www.x.com") and not res["x_url"]:
-            first_seg = low_path.split("/")[0] if low_path else ""
-            if first_seg != "meetup" and not any(low_path.startswith(skip) for skip in ("intent/", "share", "search")):
+            if not any(low_path.startswith(skip) for skip in ("intent/", "share", "search")):
                 res["x_url"] = norm
         elif ("threads.net" in host or "threads.com" in host) and not res["threads_url"]:
-            if "/post/" not in low_path and low_path.split("/")[0] != "@meetup":
+            if "/post/" not in low_path:
                 res["threads_url"] = norm
         elif "linkedin.com" in host and not res["linkedin_url"]:
-            if low_path.startswith(("in/", "company/", "school/")) and not low_path.startswith("company/meetup"):
+            if low_path.startswith(("in/", "company/", "school/")):
                 res["linkedin_url"] = norm
         elif ("pinterest.com" in host or "pinterest.ca" in host) and not res["pinterest_url"]:
             if not any(low_path.startswith(skip) for skip in ("pin/", "search/", "_/", "ideas/")):
@@ -771,7 +909,7 @@ def _parse_html_page_signals(
                     if em not in emails:
                         emails.append(em)
                 continue
-            if _SOCIAL_URL_SCAN_RE.search(href):
+            if _SOCIAL_URL_SCAN_RE.search(href) or any(dom in low_href for dom in _ADULT_DOMAINS):
                 social_urls.append(href)
                 continue
             if page_url and base_root:
@@ -1070,10 +1208,12 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
     desc = (about.get("description") or "").strip()
     if re.search(r"[\u0900-\u097f\u0600-\u06ff\u0400-\u04ff]", f"{seed['name']} {desc}"):
         return None
-    if _GAMING_OR_BETTING_RE.search(f"{seed['name']} {desc}") or _OFF_TOPIC_CHANNEL_RE.search(f"{seed['name']} {desc}"):
-        return None
-    if not _SPORTS_RELEVANCE_RE.search(f"{seed['name']} {desc}") and not (
-        len(desc) < 40 and _SPORTS_RELEVANCE_RE.search(seed.get("video_title", ""))
+    if not _is_authentic_sports_partner(
+        seed["name"],
+        nav_url,
+        desc,
+        primary_platform="youtube",
+        video_title=seed.get("video_title", ""),
     ):
         return None
 
@@ -1116,6 +1256,7 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
         )
         if hub_text:
             extra_geo_chunks.append(hub_text)
+        raw_links.extend(hub_socials)
         for em in hub_emails:
             if em not in emails:
                 emails.append(em)
@@ -1148,6 +1289,9 @@ def _fetch_youtube_partner_profile(seed: Dict[str, str]) -> Optional[Dict[str, A
             if em not in emails:
                 emails.append(em)
         _merge_socials_into(socials, site_socials)
+
+    if _is_adult_or_nsfw_profile(seed["name"], nav_url, desc, raw_links, socials, extra_geo_chunks):
+        return None
 
     handle = nav_url.lstrip("/")
     slug_id = re.sub(r"[^A-Za-z0-9_-]", "_", handle)
@@ -1219,9 +1363,7 @@ def _search_meetup_seed(keyword: str, location: str, default_sport: str) -> List
         desc = (grp.get("description") or "").strip()
         if not name or not link or "meetup.com/" not in link:
             continue
-        if _is_excluded_slug(name, link) or _GAMING_OR_BETTING_RE.search(f"{name} {desc}"):
-            continue
-        if not _SPORTS_RELEVANCE_RE.search(f"{name} {desc}"):
+        if not _is_authentic_sports_partner(name, link, desc, primary_platform="meetup"):
             continue
 
         members = int(((grp.get("stats") or {}).get("memberCounts") or {}).get("all") or 0)
@@ -1253,20 +1395,8 @@ def _enrich_meetup_group(grp: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     desc = grp.get("description") or ""
     emails = _extract_clean_emails(desc, require_context_for_third_party=False)
     raw_urls = list(_SOCIAL_URL_SCAN_RE.findall(desc)) + re.findall(r"https?://[^\s)<\]\"']+", desc, re.IGNORECASE)
+    # Extract external URLs & emails strictly from the group's own description (not Meetup site chrome)
     extra_geo_chunks: List[str] = []
-
-    try:
-        grp_html = _fetch_text(link, timeout=7)
-        pe, ps, pt, _ = _parse_html_page_signals(grp_html, page_url=link, require_context_for_third_party=True)
-        for em in pe:
-            if em not in emails:
-                emails.append(em)
-        raw_urls.extend(ps)
-        if pt:
-            extra_geo_chunks.append(pt[:3000])
-    except Exception:
-        pass
-
     socials = _classify_partner_links([u for u in raw_urls if u and "meetup.com" not in u.lower()])
     site_domain = _root_domain(socials["website"]) if socials.get("website") else ""
 
@@ -1289,6 +1419,9 @@ def _enrich_meetup_group(grp: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             if em not in emails:
                 emails.append(em)
         _merge_socials_into(socials, ss)
+
+    if _is_adult_or_nsfw_profile(grp["name"], grp["slug"], desc, raw_urls, socials, extra_geo_chunks):
+        return None
 
     members = int(grp.get("members") or 0)
     slug = grp["slug"]
@@ -1372,11 +1505,8 @@ def _fetch_bluesky_partner(
     handle = (actor.get("handle") or "").strip()
     name = (actor.get("displayName") or handle).strip()
     bio = (actor.get("description") or "").strip()
-    if not handle or _is_excluded_slug(name, handle):
-        return None
-    if _GAMING_OR_BETTING_RE.search(f"{name} {bio}") or _OFF_TOPIC_CHANNEL_RE.search(f"{name} {bio}"):
-        return None
-    if not _SPORTS_RELEVANCE_RE.search(f"{name} {bio}"):
+    raw_urls = re.findall(r"https?://[^\s)<\]\"']+", bio, re.IGNORECASE)
+    if not handle or not _is_authentic_sports_partner(name, handle, bio, primary_platform="bluesky", raw_urls=raw_urls):
         return None
 
     followers = 0
@@ -1394,7 +1524,6 @@ def _fetch_bluesky_partner(
         return None
 
     emails = _extract_clean_emails(bio)
-    raw_urls = re.findall(r"https?://[^\s)<\]\"']+", bio, re.IGNORECASE)
     socials = _classify_partner_links(raw_urls)
     extra_geo_chunks: List[str] = []
     site_domain = _root_domain(socials["website"]) if socials.get("website") else ""
@@ -1403,6 +1532,7 @@ def _fetch_bluesky_partner(
         he, hs, ht = _extract_page_signals(hub_url, timeout=4, allowed_site_domain=site_domain)
         if ht:
             extra_geo_chunks.append(ht)
+        raw_urls.extend(hs)
         for em in he:
             if em not in emails:
                 emails.append(em)
@@ -1418,6 +1548,9 @@ def _fetch_bluesky_partner(
             if em not in emails:
                 emails.append(em)
         _merge_socials_into(socials, ss)
+
+    if _is_adult_or_nsfw_profile(name, handle, bio, raw_urls, socials, extra_geo_chunks):
+        return None
 
     bsky_url = f"https://bsky.app/profile/{handle}"
     slug_id = re.sub(r"[^A-Za-z0-9_.-]", "_", handle)
@@ -1471,13 +1604,9 @@ def _scrape_bluesky_sports_partners(
                 pid = f"bsky_{re.sub(r'[^A-Za-z0-9_.-]', '_', h)}"
                 if existing_ids and pid in existing_ids:
                     continue
-                txt = f"{a.get('displayName', '')} {a.get('description', '')}"
-                if (
-                    h not in candidates
-                    and _SPORTS_RELEVANCE_RE.search(txt)
-                    and not _GAMING_OR_BETTING_RE.search(txt)
-                    and not _OFF_TOPIC_CHANNEL_RE.search(txt)
-                ):
+                bname = (a.get("displayName") or h).strip()
+                bbio = a.get("description", "")
+                if h not in candidates and _is_authentic_sports_partner(bname, h, bbio, primary_platform="bluesky"):
                     candidates[h] = (a, default_sport, query, seed_ptype)
         except Exception:
             continue

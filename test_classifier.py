@@ -20,6 +20,8 @@ from scrapers.sports_scraper import (
     _classify_partner_links,
     _decode_cfemail,
     _extract_clean_emails,
+    _is_adult_or_nsfw_profile,
+    _is_authentic_sports_partner,
     _parse_html_page_signals,
     _parse_instagram_followers_html,
     _parse_tiktok_followers_html,
@@ -366,6 +368,85 @@ class EmailAndLinksTests(unittest.TestCase):
         self.assertEqual(c["audience_count"], 12768)
         self.assertEqual(c["audience_tier"], "micro")
         self.assertEqual(c["audience_text"], "12,768 followers")
+
+    def test_nsfw_onlyfans_and_corporate_social_links_rejected(self):
+        self.assertTrue(
+            _is_adult_or_nsfw_profile(
+                "Max Scott",
+                "@maxscott.bsky.social",
+                "Addicted to fitness, gaming, outdoors and 🍆🎮😈🔞 https://onlyfans.com/maxscott2022/c3",
+            )
+        )
+        self.assertTrue(
+            _is_adult_or_nsfw_profile(
+                "Hazel Hoffman",
+                "@hazelhoffman.bsky.social",
+                "Fitness and fashion",
+                ["https://x.com/hazelhoffmanxxx"],
+            )
+        )
+        # Hidden OnlyFans inside a Linktree page HTML
+        lt_html = '<html><body><a href="https://onlyfans.com/vipclub">VIP Page</a></body></html>'
+        _, lt_urls, _, _ = _parse_html_page_signals(lt_html, page_url="https://linktr.ee/someone")
+        self.assertTrue(_is_adult_or_nsfw_profile("Creator", "@creator", "Fitness", lt_urls))
+
+        # Legitimate adult rec league must NOT trigger adult NSFW filter
+        self.assertFalse(
+            _is_adult_or_nsfw_profile(
+                "Ontario Volleyball Association",
+                "ontariovolleyball.org",
+                "Adult 18+ Co-Ed Indoor & Beach Volleyball Leagues across Ontario.",
+            )
+        )
+
+        # Corporate handles & Facebook share links blocked
+        links = _classify_partner_links([
+            "https://instagram.com/onlyfans",
+            "https://x.com/onlyfans",
+            "https://www.tiktok.com/@wix",
+            "https://www.instagram.com/meetup",
+            "https://www.instagram.com/jotform_official",
+            "https://x.com/mapbox-gl-js",
+            "https://form.jotform.com/253594642023254",
+            "https://www.facebook.com/share/1tvtmzfa6t",
+            "https://www.instagram.com/academyoflions",
+        ])
+        self.assertEqual(links["instagram_url"], "https://www.instagram.com/academyoflions")
+        self.assertEqual(links["x_url"], "")
+        self.assertEqual(links["tiktok_url"], "")
+        self.assertEqual(links["facebook_url"], "")
+        self.assertEqual(links["website"], "")
+
+    def test_authentic_sports_and_fitness_verification(self):
+        # Reject casual hobbyists, politicians, journalists, tech reviewers, non-sports Meetups
+        for name, handle, bio, plat in [
+            ("Max Scott", "@maxscott.bsky.social", "Addicted to fitness, gaming, outdoors and https://onlyfans.com/maxscott2022/c3", "bluesky"),
+            ("Holly R. Valakresch", "@hollyvalakresch.bsky.social", "Author & Screenwriter | Cooking, Baking, Fashion, Fitness, Fairytales", "bluesky"),
+            ("Jane Fonda", "@janefonda.com", "Official account for the Actress, Author, Activist, Fitness Advocate", "bluesky"),
+            ("Liz Cheney", "@lizcheney.bsky.social", "Proud rodeo mom, soccer mom, baseball mom, hockey mom, constitutional conservative.", "bluesky"),
+            ("Rep. Jason Crow", "@crow.house.gov", "Dad. Little League Baseball Coach. Colorado Congressman.", "bluesky"),
+            ("Mike Vorkunov", "@mikevorkunov.bsky.social", "National NBA + basketball reporter at The Athletic", "bluesky"),
+            ("Aesthetic AL", "@Aesthetic_Al", "Home of the Tech Reviews for the Fitness Enthusiast", "youtube"),
+            ("Mississauga Girls Out At Events", "meetup/mississauga-girls", "Women who love trying new things and going to events", "meetup"),
+            ("Etobicoke Weekend Walks", "meetup/etobicoke-walks", "Simple weekend walks around Toronto west end", "meetup"),
+        ]:
+            self.assertFalse(
+                _is_authentic_sports_partner(name, handle, bio, primary_platform=plat),
+                msg=f"Should reject {name}",
+            )
+
+        # Accept real fitness & sports creators/orgs
+        for name, handle, bio, plat in [
+            ("Rich Ryan", "@RichRyan", "HYROX Elite 15 athlete delivers training tips and workouts.", "youtube"),
+            ("Lucy Davis Fit", "@LucyDavisFit", "Hybrid athlete and strength conditioning coach sharing marathon and gym workouts.", "youtube"),
+            ("BodyBusterFitness", "@Bodybusterfitnessbootcamp", "Group fitness bootcamp and obstacle conditioning workouts.", "youtube"),
+            ("Lauren Mantha", "@LaurenMantha", "Personal trainer and runner based in Toronto sharing half marathon workouts.", "youtube"),
+            ("Downtown Toronto Fitness & Wellness", "meetup/downtown-toronto-fitness", "Join Toronto's group fitness & longevity community workouts.", "meetup"),
+        ]:
+            self.assertTrue(
+                _is_authentic_sports_partner(name, handle, bio, primary_platform=plat),
+                msg=f"Should accept {name}",
+            )
 
 
 class DatabaseAndCsvTests(unittest.TestCase):
