@@ -962,9 +962,10 @@ function renderPartnersPage() {
       ? `<div style="margin-top:5px;"><a href="${esc(safeUrl(siteStr))}" target="_blank" rel="noopener noreferrer" style="color:#60a5fa;font-size:0.77rem;word-break:break-all;">${esc(siteStr)}</a></div>`
       : "";
     const contactedBlock = `
-      <div style="margin-top:6px;">
-        <button type="button" class="contacted-toggle-btn${isContacted ? " is-contacted" : ""}" data-partner-id="${esc(p.partner_id)}" onclick="togglePartnerContacted(this.dataset.partnerId)">
-          ${isContacted ? "&#10003; Contacted" : "&#9675; Mark Contacted"}
+      <div style="margin-top:8px;">
+        <button type="button" class="contacted-toggle-btn${isContacted ? " is-contacted" : ""}" role="checkbox" aria-checked="${isContacted ? "true" : "false"}" data-partner-id="${esc(p.partner_id)}" onclick="togglePartnerContacted(this.dataset.partnerId)">
+          <span class="contacted-box" aria-hidden="true">${isContacted ? "&#10003;" : ""}</span>
+          <span>${isContacted ? "Contacted" : "Mark Contacted"}</span>
         </button>
       </div>`;
 
