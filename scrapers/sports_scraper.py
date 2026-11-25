@@ -459,7 +459,8 @@ _BLOCKED_SOCIAL_HANDLES = {
     "teamsnap", "leagueapps", "sportsengine", "mindbody", "raceroster", "active",
     "jotform", "jotform_official", "typeform", "mapbox", "mapbox-gl-js",
     "home", "share", "sharer", "intent", "explore", "search", "login", "signup",
-    "watch", "shorts", "privacy", "terms", "about", "help",
+    "watch", "shorts", "privacy", "privacy-policy", "terms", "terms-of-service",
+    "terms-of-use", "cookie-policy", "about", "help",
 }
 
 _LINK_HUB_HOSTS = (
