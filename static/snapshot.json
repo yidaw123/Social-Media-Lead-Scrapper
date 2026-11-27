@@ -165,7 +165,7 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.717267+00:00"
+      "scraped_at": "2026-11-27T11:08:18.683018+00:00"
     },
     {
       "id": 2,
@@ -211,7 +211,7 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.719585+00:00"
+      "scraped_at": "2026-11-27T11:08:18.685352+00:00"
     },
     {
       "id": 3,
@@ -257,7 +257,7 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.723190+00:00"
+      "scraped_at": "2026-11-27T11:08:18.689098+00:00"
     },
     {
       "id": 4,
@@ -303,7 +303,7 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.725622+00:00"
+      "scraped_at": "2026-11-27T11:08:18.691618+00:00"
     },
     {
       "id": 5,
@@ -349,10 +349,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.727717+00:00"
+      "scraped_at": "2026-11-27T11:08:18.693669+00:00"
     },
     {
-      "id": 239,
+      "id": 6,
       "partner_id": "yt__ByAnyMeansBasketball",
       "name": "By Any Means Basketball",
       "handle": "@ByAnyMeansBasketball",
@@ -395,10 +395,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.731833+00:00"
+      "scraped_at": "2026-11-27T11:08:18.697704+00:00"
     },
     {
-      "id": 6,
+      "id": 7,
       "partner_id": "yt__CoachAnthonyBoxing",
       "name": "Coach Anthony",
       "handle": "@CoachAnthonyBoxing",
@@ -441,10 +441,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.735272+00:00"
+      "scraped_at": "2026-11-27T11:08:18.701120+00:00"
     },
     {
-      "id": 7,
+      "id": 8,
       "partner_id": "yt__ProlificSoccer",
       "name": "Prolific Soccer",
       "handle": "@ProlificSoccer",
@@ -487,10 +487,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.739389+00:00"
+      "scraped_at": "2026-11-27T11:08:18.705379+00:00"
     },
     {
-      "id": 8,
+      "id": 255,
+      "partner_id": "yt__dtvolleyball",
+      "name": "DTvolleyball",
+      "handle": "@dtvolleyball",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@dtvolleyball",
+      "country": "Canada",
+      "province_state": "",
+      "city": "",
+      "audience_count": 512100,
+      "audience_text": "512,100 followers",
+      "audience_tier": "macro",
+      "youtube_followers": 189000,
+      "instagram_followers": 0,
+      "tiktok_followers": 323100,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Volleyball",
+      "sub_niche": "Beach Volleyball",
+      "secondary_sports": [],
+      "bio": "Family Friendly POV Volleyball!",
+      "business_email": "dtvolleyballofficial@gmail.com",
+      "website": "https://dtvolleyball.com/linkinbio",
+      "youtube_url": "https://www.youtube.com/@dtvolleyball",
+      "instagram_url": "https://www.instagram.com/dtvolleyballofficial",
+      "tiktok_url": "https://www.tiktok.com/@dtvolleyball",
+      "facebook_url": "https://www.facebook.com/dtvolleyballofficial",
+      "x_url": "https://x.com/bolt-performance",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.706685+00:00"
+    },
+    {
+      "id": 9,
       "partner_id": "yt__JordanTeachesJiujitsu",
       "name": "Jordan Teaches Jiujitsu",
       "handle": "@JordanTeachesJiujitsu",
@@ -533,10 +579,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.743482+00:00"
+      "scraped_at": "2026-11-27T11:08:18.710870+00:00"
     },
     {
-      "id": 9,
+      "id": 10,
       "partner_id": "yt__ultiworld",
       "name": "Ultiworld - Ultimate Frisbee",
       "handle": "@ultiworld",
@@ -581,10 +627,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.745979+00:00"
+      "scraped_at": "2026-11-27T11:08:18.713318+00:00"
     },
     {
-      "id": 10,
+      "id": 11,
       "partner_id": "yt__EssentialTennis",
       "name": "Essential Tennis - Lessons and Instruction for Passionate Players",
       "handle": "@EssentialTennis",
@@ -627,10 +673,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.749747+00:00"
+      "scraped_at": "2026-11-27T11:08:18.717000+00:00"
     },
     {
-      "id": 11,
+      "id": 12,
       "partner_id": "yt__WorldClassBoxingChannel",
       "name": "World Class Boxing Channel",
       "handle": "@WorldClassBoxingChannel",
@@ -673,10 +719,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.753520+00:00"
+      "scraped_at": "2026-11-27T11:08:18.720781+00:00"
     },
     {
-      "id": 240,
+      "id": 13,
       "partner_id": "yt__YouGoPro",
       "name": "YouGoProBaseball",
       "handle": "@YouGoPro",
@@ -719,10 +765,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.757165+00:00"
+      "scraped_at": "2026-11-27T11:08:18.724405+00:00"
     },
     {
-      "id": 12,
+      "id": 14,
       "partner_id": "yt__micawoodruns",
       "name": "Mica Rivera Wood",
       "handle": "@micawoodruns",
@@ -765,10 +811,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.759647+00:00"
+      "scraped_at": "2026-11-27T11:08:18.726967+00:00"
     },
     {
-      "id": 241,
+      "id": 15,
       "partner_id": "yt__arod_0313",
       "name": "Alex Rodriguez",
       "handle": "@arod_0313",
@@ -811,10 +857,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.760980+00:00"
+      "scraped_at": "2026-11-27T11:08:18.728406+00:00"
     },
     {
-      "id": 13,
+      "id": 16,
       "partner_id": "yt__hockeytraining",
       "name": "Hockey Training",
       "handle": "@hockeytraining",
@@ -857,10 +903,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.762604+00:00"
+      "scraped_at": "2026-11-27T11:08:18.729955+00:00"
     },
     {
-      "id": 242,
+      "id": 17,
       "partner_id": "yt__TreyDrechsel5",
       "name": "Trey Drechsel",
       "handle": "@TreyDrechsel5",
@@ -903,10 +949,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.764996+00:00"
+      "scraped_at": "2026-11-27T11:08:18.732372+00:00"
     },
     {
-      "id": 14,
+      "id": 18,
       "partner_id": "yt__Karue-Sell",
       "name": "Karue Sell",
       "handle": "@Karue-Sell",
@@ -949,10 +995,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.767667+00:00"
+      "scraped_at": "2026-11-27T11:08:18.734989+00:00"
     },
     {
-      "id": 15,
+      "id": 257,
+      "partner_id": "yt__BrionesPickleball",
+      "name": "Briones Pickleball Academy",
+      "handle": "@BrionesPickleball",
+      "partner_type": "sports_org",
+      "partner_role": "Gym / Training Facility",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@BrionesPickleball",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 134018,
+      "audience_text": "134,018 followers",
+      "audience_tier": "mid",
+      "youtube_followers": 125000,
+      "instagram_followers": 0,
+      "tiktok_followers": 9018,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Tennis & Pickleball",
+      "sub_niche": "Pickleball Clubs & Open Play",
+      "secondary_sports": [],
+      "bio": "Welcome to Briones Pickleball Academy! My name is Jordan Briones, and I am dedicated to helping you elevate your pickleball game. With a decade of experience and a passion for coaching, I have assisted tens of thousands of players worldwide in transforming their skills and reaching their full potential on the court. On this channel, you will find a wealth of resources designed to enhance your technique, strategy, and overall performance. Explore our comprehensive video library, share your journey with fellow enthusiasts, and take your game to the next level. Thank you for joining the Briones P",
+      "business_email": "support@brionespickleball.com",
+      "website": "https://linktr.ee/BrionesPickleball",
+      "youtube_url": "https://www.youtube.com/@BrionesPickleball",
+      "instagram_url": "https://instagram.com/brionespickleball",
+      "tiktok_url": "https://tiktok.com/@brionespickleball",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.738644+00:00"
+    },
+    {
+      "id": 19,
       "partner_id": "yt__swingcartel_softball",
       "name": "SwingCartel",
       "handle": "@swingcartel_softball",
@@ -995,10 +1087,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.771071+00:00"
+      "scraped_at": "2026-11-27T11:08:18.743123+00:00"
     },
     {
-      "id": 16,
+      "id": 20,
       "partner_id": "yt__TennisEvolution",
       "name": "Tennis Evolution",
       "handle": "@TennisEvolution",
@@ -1041,10 +1133,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.774728+00:00"
+      "scraped_at": "2026-11-27T11:08:18.746721+00:00"
     },
     {
-      "id": 17,
+      "id": 21,
       "partner_id": "yt__CUTTERNATIONBSB",
       "name": "CUTTERNATION",
       "handle": "@CUTTERNATIONBSB",
@@ -1090,10 +1182,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.778186+00:00"
+      "scraped_at": "2026-11-27T11:08:18.750215+00:00"
     },
     {
-      "id": 18,
+      "id": 22,
       "partner_id": "yt__ISTSoccer",
       "name": "IST",
       "handle": "@ISTSoccer",
@@ -1136,10 +1228,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.779524+00:00"
+      "scraped_at": "2026-11-27T11:08:18.751611+00:00"
     },
     {
-      "id": 244,
+      "id": 23,
       "partner_id": "yt__WorldDodgeball",
       "name": "World Dodgeball Federation",
       "handle": "@WorldDodgeball",
@@ -1182,10 +1274,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.780771+00:00"
+      "scraped_at": "2026-11-27T11:08:18.752797+00:00"
     },
     {
-      "id": 245,
+      "id": 24,
       "partner_id": "yt__AoCVB",
       "name": "The Art of Coaching Volleyball",
       "handle": "@AoCVB",
@@ -1228,10 +1320,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.784688+00:00"
+      "scraped_at": "2026-11-27T11:08:18.756705+00:00"
     },
     {
-      "id": 19,
+      "id": 25,
       "partner_id": "yt__roadtotheshow",
       "name": "My Road to the Show",
       "handle": "@roadtotheshow",
@@ -1274,10 +1366,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.786383+00:00"
+      "scraped_at": "2026-11-27T11:08:18.758336+00:00"
     },
     {
-      "id": 20,
+      "id": 26,
       "partner_id": "org_torontomu_ca",
       "name": "TMU Recreation (Toronto Metropolitan University)",
       "handle": "torontomu.ca",
@@ -1320,10 +1412,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.629536+00:00"
+      "scraped_at": "2026-11-27T11:08:18.600303+00:00"
     },
     {
-      "id": 21,
+      "id": 27,
       "partner_id": "yt__RichRyan",
       "name": "Rich Ryan",
       "handle": "@RichRyan",
@@ -1366,10 +1458,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.787623+00:00"
+      "scraped_at": "2026-11-27T11:08:18.759676+00:00"
     },
     {
-      "id": 22,
+      "id": 28,
       "partner_id": "yt__TomAllsopp",
       "name": "TPA tennis",
       "handle": "@TomAllsopp",
@@ -1412,10 +1504,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.788842+00:00"
+      "scraped_at": "2026-11-27T11:08:18.760968+00:00"
     },
     {
-      "id": 23,
+      "id": 29,
       "partner_id": "org_on_ca",
       "name": "Ontario Basketball",
       "handle": "on.ca",
@@ -1458,10 +1550,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.631236+00:00"
+      "scraped_at": "2026-11-27T11:08:18.602079+00:00"
     },
     {
-      "id": 24,
+      "id": 30,
       "partner_id": "yt__zander_yates",
       "name": "Zander Yates",
       "handle": "@zander_yates",
@@ -1504,10 +1596,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.791839+00:00"
+      "scraped_at": "2026-11-27T11:08:18.763893+00:00"
     },
     {
-      "id": 25,
+      "id": 259,
+      "partner_id": "yt__beastmodesoccer",
+      "name": "Beast Mode Soccer",
+      "handle": "@beastmodesoccer",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@beastmodesoccer",
+      "country": "United States",
+      "province_state": "California",
+      "city": "Locations Los Angeles",
+      "audience_count": 43487,
+      "audience_text": "43,487 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 36300,
+      "instagram_followers": 0,
+      "tiktok_followers": 7187,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Soccer",
+      "sub_niche": "Soccer Training & Footwork",
+      "secondary_sports": [],
+      "bio": "Welcome to Beast Mode Soccer, established by David Copeland Smith, where we sculpt The Complete Player. Our holistic training approach emphasizes TECHNICAL, MENTAL, PHYSICAL, and TACTICAL development, propelling your soccer skills to elite levels. Our program nurtures 1v1 masters who are mentally resilient, physically robust, and tactically versatile. Trusted by World Cup winners like Alex Morgan, Mallory Pugh, Kelley O\u2019Hara, and England superstar Rachel Daly, we serve all levels: from youth to international. Embrace the #CHAMPIONSDOMORE ethos with our global network of soccer specialists. Tra",
+      "business_email": "train@beastmodesoccer.com, vancouver@beastmodesoccer.net",
+      "website": "https://beastmodesoccer.com",
+      "youtube_url": "https://www.youtube.com/@beastmodesoccer",
+      "instagram_url": "https://instagram.com/beastmodesoccer",
+      "tiktok_url": "https://tiktok.com/i18n/pixel/events.js",
+      "facebook_url": "https://facebook.com/BeastModeSoccer",
+      "x_url": "https://twitter.com/beastmodesoccer",
+      "threads_url": "",
+      "linkedin_url": "https://www.linkedin.com/in/beastmodesoccer",
+      "pinterest_url": "https://www.pinterest.com/beastmodescr",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.767567+00:00"
+    },
+    {
+      "id": 31,
       "partner_id": "yt__GetThePancake",
       "name": "Get The Pancake - Volleyball Coaching Tips",
       "handle": "@GetThePancake",
@@ -1550,10 +1688,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.795675+00:00"
+      "scraped_at": "2026-11-27T11:08:18.771273+00:00"
     },
     {
-      "id": 26,
+      "id": 32,
       "partner_id": "yt__jiujitsubreakdowns",
       "name": "Jiu-Jitsu Breakdowns",
       "handle": "@jiujitsubreakdowns",
@@ -1596,10 +1734,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.797206+00:00"
+      "scraped_at": "2026-11-27T11:08:18.772695+00:00"
     },
     {
-      "id": 27,
+      "id": 33,
       "partner_id": "yt__VNDLJiuJitsu",
       "name": "VNDL Jiu-Jitsu",
       "handle": "@VNDLJiuJitsu",
@@ -1642,10 +1780,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.801196+00:00"
+      "scraped_at": "2026-11-27T11:08:18.776723+00:00"
     },
     {
-      "id": 28,
+      "id": 34,
       "partner_id": "yt__SWINGMAKEOVER",
       "name": "SWING MAKEOVER",
       "handle": "@SWINGMAKEOVER",
@@ -1688,10 +1826,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.804603+00:00"
+      "scraped_at": "2026-11-27T11:08:18.780092+00:00"
     },
     {
-      "id": 29,
+      "id": 35,
       "partner_id": "org_canadarunningseries_com",
       "name": "Canada Running Series",
       "handle": "canadarunningseries.com",
@@ -1734,10 +1872,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.632865+00:00"
+      "scraped_at": "2026-11-27T11:08:18.603666+00:00"
     },
     {
-      "id": 30,
+      "id": 36,
       "partner_id": "org_torontomarathon_com",
       "name": "Toronto Marathon",
       "handle": "torontomarathon.com",
@@ -1780,10 +1918,102 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.635486+00:00"
+      "scraped_at": "2026-11-27T11:08:18.606340+00:00"
     },
     {
-      "id": 31,
+      "id": 260,
+      "partner_id": "yt__TopicFight",
+      "name": "Ognjen Topi\u0107",
+      "handle": "@TopicFight",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@TopicFight",
+      "country": "",
+      "province_state": "",
+      "city": "",
+      "audience_count": 19000,
+      "audience_text": "19,000 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 19000,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Combat & Martial Arts",
+      "sub_niche": "Muay Thai & Striking",
+      "secondary_sports": [],
+      "bio": "Educational channel for Muay Thai by Omnoi Stadium and 3x World Champion Ognjen Topi\u0107",
+      "business_email": "info@topicfight.com",
+      "website": "https://topicfight.com/online-muay-thai-training-courses",
+      "youtube_url": "https://www.youtube.com/@TopicFight",
+      "instagram_url": "https://instagram.com/topicfight",
+      "tiktok_url": "",
+      "facebook_url": "https://facebook.com/TopicFight",
+      "x_url": "https://twitter.com/TopicFight",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.781686+00:00"
+    },
+    {
+      "id": 261,
+      "partner_id": "yt__congarnett",
+      "name": "Connor Garnett Pickleball",
+      "handle": "@congarnett",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@congarnett",
+      "country": "United States",
+      "province_state": "California",
+      "city": "Los Angeles",
+      "audience_count": 17800,
+      "audience_text": "17,800 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 17800,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Tennis & Pickleball",
+      "sub_niche": "Pickleball Clubs & Open Play",
+      "secondary_sports": [],
+      "bio": "Official YouTube channel of Pro Pickleball Athlete on the PPA Tour, Connor Garnett 6x\ud83e\udd4712x\ud83e\udd48 7x\ud83e\udd49 -- Home of the TWOEY and all things pickleball. Subscribe for bi-weekly video drops, highlighting match play, tips, drills, and more. For any pickleball and business inquiries please contact: congar97@gmail.com #pickleball #athlete #sports",
+      "business_email": "congar97@gmail.com",
+      "website": "https://skool.com/twoey-pickleball/about",
+      "youtube_url": "https://www.youtube.com/@congarnett",
+      "instagram_url": "https://instagram.com/congarnett",
+      "tiktok_url": "",
+      "facebook_url": "https://facebook.com/congarnett",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.784490+00:00"
+    },
+    {
+      "id": 37,
       "partner_id": "yt__BeattheCourseGolfChannel",
       "name": "Beat the Course Golf Channel",
       "handle": "@BeattheCourseGolfChannel",
@@ -1826,10 +2056,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.806504+00:00"
+      "scraped_at": "2026-11-27T11:08:18.786354+00:00"
     },
     {
-      "id": 32,
+      "id": 38,
       "partner_id": "org_visitfairgrounds_com",
       "name": "Fairgrounds Public Racket Club",
       "handle": "visitfairgrounds.com",
@@ -1872,10 +2102,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.637214+00:00"
+      "scraped_at": "2026-11-27T11:08:18.608028+00:00"
     },
     {
-      "id": 33,
+      "id": 39,
       "partner_id": "org_gao_ca",
       "name": "Golf Ontario",
       "handle": "gao.ca",
@@ -1918,10 +2148,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.638819+00:00"
+      "scraped_at": "2026-11-27T11:08:18.609697+00:00"
     },
     {
-      "id": 34,
+      "id": 40,
       "partner_id": "yt__hockeymanitoba",
       "name": "hockeymanitoba",
       "handle": "@hockeymanitoba",
@@ -1964,10 +2194,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.807973+00:00"
+      "scraped_at": "2026-11-27T11:08:18.787825+00:00"
     },
     {
-      "id": 35,
+      "id": 41,
       "partner_id": "org_calgarysportsclub_com",
       "name": "Calgary Sport & Social Club",
       "handle": "calgarysportsclub.com",
@@ -2010,10 +2240,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.640586+00:00"
+      "scraped_at": "2026-11-27T11:08:18.611388+00:00"
     },
     {
-      "id": 36,
+      "id": 42,
       "partner_id": "org_edmontonsportsclub_com",
       "name": "Edmonton Sport & Social Club",
       "handle": "edmontonsportsclub.com",
@@ -2056,10 +2286,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.642292+00:00"
+      "scraped_at": "2026-11-27T11:08:18.613062+00:00"
     },
     {
-      "id": 37,
+      "id": 43,
       "partner_id": "org_cultureathletics_com",
       "name": "Culture Athletics",
       "handle": "cultureathletics.com",
@@ -2104,10 +2334,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.644124+00:00"
+      "scraped_at": "2026-11-27T11:08:18.614849+00:00"
     },
     {
-      "id": 248,
+      "id": 44,
       "partner_id": "yt__baseballfactoryTV",
       "name": "Baseball Factory",
       "handle": "@baseballfactoryTV",
@@ -2150,10 +2380,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.811344+00:00"
+      "scraped_at": "2026-11-27T11:08:18.791219+00:00"
     },
     {
-      "id": 38,
+      "id": 45,
       "partner_id": "ig_proballfit",
       "name": "\ud83c\udfc0Pro Basketball Trainer",
       "handle": "@proballfit",
@@ -2198,10 +2428,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.813066+00:00"
+      "scraped_at": "2026-11-27T11:08:18.793020+00:00"
     },
     {
-      "id": 39,
+      "id": 46,
       "partner_id": "org_torontobjj_com",
       "name": "Toronto BJJ",
       "handle": "torontobjj.com",
@@ -2244,10 +2474,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.646800+00:00"
+      "scraped_at": "2026-11-27T11:08:18.617507+00:00"
     },
     {
-      "id": 40,
+      "id": 47,
       "partner_id": "org_academyoflions_com",
       "name": "Academy of Lions",
       "handle": "academyoflions.com",
@@ -2290,10 +2520,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.649410+00:00"
+      "scraped_at": "2026-11-27T11:08:18.635390+00:00"
     },
     {
-      "id": 41,
+      "id": 48,
       "partner_id": "org_siamno1_com",
       "name": "Siam No. 1 Muay Thai Toronto",
       "handle": "siamno1.com",
@@ -2338,10 +2568,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.651146+00:00"
+      "scraped_at": "2026-11-27T11:08:18.637171+00:00"
     },
     {
-      "id": 42,
+      "id": 262,
+      "partner_id": "yt__CoachDonnyOfficial",
+      "name": "Coach Donny",
+      "handle": "@CoachDonnyOfficial",
+      "partner_type": "pro_candidate",
+      "partner_role": "Coach / Trainer",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@CoachDonnyOfficial",
+      "country": "United States",
+      "province_state": "California",
+      "city": "Hayward",
+      "audience_count": 4480,
+      "audience_text": "4,480 followers",
+      "audience_tier": "nano",
+      "youtube_followers": 4480,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Volleyball",
+      "sub_niche": "Volleyball Coaching & Drills",
+      "secondary_sports": [],
+      "bio": "Welcome to the personal channel of Coach Donny from Elevate Yourself, where you can follow my life journey as I workout, play volleyball, eat, travel, play music, and strive to live my life to the fullest!",
+      "business_email": "coachdonny@elevateyourself.org",
+      "website": "https://elevateyourself.org/training-programs1.html",
+      "youtube_url": "https://www.youtube.com/@CoachDonnyOfficial",
+      "instagram_url": "https://instagram.com/coachdonny",
+      "tiktok_url": "",
+      "facebook_url": "https://facebook.com/coachdonnyofficial",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.795132+00:00"
+    },
+    {
+      "id": 49,
       "partner_id": "org_utoronto_ca",
       "name": "UofT Sport & Rec",
       "handle": "utoronto.ca",
@@ -2384,10 +2660,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.653893+00:00"
+      "scraped_at": "2026-11-27T11:08:18.639903+00:00"
     },
     {
-      "id": 43,
+      "id": 263,
+      "partner_id": "yt__GemmaLee11",
+      "name": "\ud835\udc6e\ud835\udc6c\ud835\udc74\ud835\udc74\ud835\udc68 \ud835\udc74\ud835\udc76\ud835\udc79\ud835\udc79\ud835\udc70\ud835\udc7a",
+      "handle": "@GemmaLee11",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@GemmaLee11",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 4270,
+      "audience_text": "4,270 followers",
+      "audience_tier": "nano",
+      "youtube_followers": 4270,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Volleyball",
+      "sub_niche": "Beach Volleyball",
+      "secondary_sports": [],
+      "bio": "Welcome to my channel!! My name is Gemma:) I play volleyball at Jax State and I have a chaotic but epic life! Enjoy\u2728 tiktok- @gemma.morris instagram- gemma.502 \ud83d\udc8c gemmaleellc@gmail.com",
+      "business_email": "gemmaleellc@gmail.com",
+      "website": "",
+      "youtube_url": "https://www.youtube.com/@GemmaLee11",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.797181+00:00"
+    },
+    {
+      "id": 50,
       "partner_id": "org_yorkulions_ca",
       "name": "York University Lions Athletics & Rec",
       "handle": "yorkulions.ca",
@@ -2430,10 +2752,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.655356+00:00"
+      "scraped_at": "2026-11-27T11:08:18.641363+00:00"
     },
     {
-      "id": 44,
+      "id": 51,
       "partner_id": "yt__eddiewgolf",
       "name": "Eddie W Golf",
       "handle": "@eddiewgolf",
@@ -2476,10 +2798,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.814389+00:00"
+      "scraped_at": "2026-11-27T11:08:18.798545+00:00"
     },
     {
-      "id": 45,
+      "id": 52,
       "partner_id": "yt__DodgeballToronto",
       "name": "Dodgeball Toronto",
       "handle": "@DodgeballToronto",
@@ -2524,10 +2846,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.818252+00:00"
+      "scraped_at": "2026-11-27T11:08:18.802410+00:00"
     },
     {
-      "id": 46,
+      "id": 53,
       "partner_id": "yt__canadianbeerleague",
       "name": "Canadian Beer League",
       "handle": "@canadianbeerleague",
@@ -2570,10 +2892,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.819812+00:00"
+      "scraped_at": "2026-11-27T11:08:18.804016+00:00"
     },
     {
-      "id": 47,
+      "id": 54,
       "partner_id": "org_pickleballontario_org",
       "name": "Pickleball Ontario",
       "handle": "pickleballontario.org",
@@ -2616,10 +2938,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.657110+00:00"
+      "scraped_at": "2026-11-27T11:08:18.643012+00:00"
     },
     {
-      "id": 48,
+      "id": 55,
       "partner_id": "yt__TheRajanStudios",
       "name": "Akshat Rajan",
       "handle": "@TheRajanStudios",
@@ -2662,10 +2984,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.821571+00:00"
+      "scraped_at": "2026-11-27T11:08:18.805745+00:00"
     },
     {
-      "id": 49,
+      "id": 56,
       "partner_id": "org_openmat_ca",
       "name": "OpenMat MMA Toronto",
       "handle": "openmat.ca",
@@ -2708,10 +3030,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.660219+00:00"
+      "scraped_at": "2026-11-27T11:08:18.644739+00:00"
     },
     {
-      "id": 50,
+      "id": 57,
       "partner_id": "org_tracergolf_ca",
       "name": "Tracer Golf Toronto",
       "handle": "tracergolf.ca",
@@ -2754,10 +3076,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.661885+00:00"
+      "scraped_at": "2026-11-27T11:08:18.646413+00:00"
     },
     {
-      "id": 51,
+      "id": 58,
       "partner_id": "eb_113590640231",
       "name": "Zak Drake, Head Coach at CANXL Soccer Training",
       "handle": "eventbrite/113590640231",
@@ -2800,10 +3122,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.824668+00:00"
+      "scraped_at": "2026-11-27T11:08:18.808880+00:00"
     },
     {
-      "id": 52,
+      "id": 59,
       "partner_id": "mu_maple-leaf-pickleball",
       "name": "Maple Leaf Pickleball & Racquet Sports Club",
       "handle": "meetup/maple-leaf-pickleball",
@@ -2848,10 +3170,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.828241+00:00"
+      "scraped_at": "2026-11-27T11:08:18.812462+00:00"
     },
     {
-      "id": 53,
+      "id": 60,
       "partner_id": "yt__MadT18",
       "name": "MadT18",
       "handle": "@MadT18",
@@ -2894,10 +3216,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.829357+00:00"
+      "scraped_at": "2026-11-27T11:08:18.813669+00:00"
     },
     {
-      "id": 54,
+      "id": 61,
       "partner_id": "org_uwaterloo_ca",
       "name": "Waterloo Warriors Athletics & Rec",
       "handle": "uwaterloo.ca",
@@ -2940,10 +3262,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.682448+00:00"
+      "scraped_at": "2026-11-27T11:08:18.647836+00:00"
     },
     {
-      "id": 55,
+      "id": 62,
       "partner_id": "org_hoopdome_com",
       "name": "HoopDome Toronto",
       "handle": "hoopdome.com",
@@ -2986,10 +3308,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.685410+00:00"
+      "scraped_at": "2026-11-27T11:08:18.650708+00:00"
     },
     {
-      "id": 56,
+      "id": 63,
       "partner_id": "org_alteaactive_com",
       "name": "Altea Active Toronto",
       "handle": "alteaactive.com",
@@ -3032,10 +3354,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.686963+00:00"
+      "scraped_at": "2026-11-27T11:08:18.652328+00:00"
     },
     {
-      "id": 57,
+      "id": 64,
       "partner_id": "mu_sunday-morning-soccer-meetup",
       "name": "Sunday Morning Men's Pickup Soccer",
       "handle": "meetup/sunday-morning-soccer-meetup",
@@ -3078,10 +3400,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.833104+00:00"
+      "scraped_at": "2026-11-27T11:08:18.817446+00:00"
     },
     {
-      "id": 58,
+      "id": 65,
       "partner_id": "mu_onec-rowing",
       "name": "ONEC Rowing",
       "handle": "meetup/onec-rowing",
@@ -3124,10 +3446,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.836658+00:00"
+      "scraped_at": "2026-11-27T11:08:18.821011+00:00"
     },
     {
-      "id": 59,
+      "id": 66,
       "partner_id": "mu_vanguard-quidditch",
       "name": "Vanguard Quidditch",
       "handle": "meetup/vanguard-quidditch",
@@ -3172,10 +3494,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.839442+00:00"
+      "scraped_at": "2026-11-27T11:08:18.823906+00:00"
     },
     {
-      "id": 60,
+      "id": 67,
       "partner_id": "yt__unccampusrec",
       "name": "UNC Campus Recreation",
       "handle": "@unccampusrec",
@@ -3220,10 +3542,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.842757+00:00"
+      "scraped_at": "2026-11-27T11:08:18.827386+00:00"
     },
     {
-      "id": 61,
+      "id": 68,
       "partner_id": "org_beachblast_ca",
       "name": "Beach Blast Toronto",
       "handle": "beachblast.ca",
@@ -3266,10 +3588,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.688934+00:00"
+      "scraped_at": "2026-11-27T11:08:18.654349+00:00"
     },
     {
-      "id": 62,
+      "id": 69,
       "partner_id": "mu_founders-running-club-montreal",
       "name": "Founders Running Club :: Montreal",
       "handle": "meetup/founders-running-club-montreal",
@@ -3312,10 +3634,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.846270+00:00"
+      "scraped_at": "2026-11-27T11:08:18.846916+00:00"
     },
     {
-      "id": 63,
+      "id": 70,
       "partner_id": "yt__LaurenMantha",
       "name": "Lauren Mantha",
       "handle": "@LaurenMantha",
@@ -3358,10 +3680,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.850002+00:00"
+      "scraped_at": "2026-11-27T11:08:18.850817+00:00"
     },
     {
-      "id": 64,
+      "id": 71,
       "partner_id": "yt__BasketballWorldToronto",
       "name": "Basketball World Toronto - Adult Programs",
       "handle": "@BasketballWorldToronto",
@@ -3404,10 +3726,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.852748+00:00"
+      "scraped_at": "2026-11-27T11:08:18.853459+00:00"
     },
     {
-      "id": 65,
+      "id": 72,
       "partner_id": "ig_torontowarriorsvb",
       "name": "Toronto Warriors Volleyball Club",
       "handle": "@torontowarriorsvb",
@@ -3450,10 +3772,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.854549+00:00"
+      "scraped_at": "2026-11-27T11:08:18.855310+00:00"
     },
     {
-      "id": 66,
+      "id": 73,
       "partner_id": "mu_50-vancouver-physical-activities-social-group",
       "name": "50 & Over Vancouver Physical Activities Social Group",
       "handle": "meetup/50-vancouver-physical-activities-social-group",
@@ -3498,10 +3820,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.858280+00:00"
+      "scraped_at": "2026-11-27T11:08:18.859125+00:00"
     },
     {
-      "id": 67,
+      "id": 74,
       "partner_id": "mu_leoevents",
       "name": "Scarborough Events & Social Club at Leo Bar & Grill",
       "handle": "meetup/leoevents",
@@ -3547,10 +3869,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.862055+00:00"
+      "scraped_at": "2026-11-27T11:08:18.863079+00:00"
     },
     {
-      "id": 68,
+      "id": 75,
       "partner_id": "mu_social-sidequests-game-nights",
       "name": "Social Sidequests - Casual Tabletop Games",
       "handle": "meetup/social-sidequests-game-nights",
@@ -3593,10 +3915,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.866306+00:00"
+      "scraped_at": "2026-11-27T11:08:18.867346+00:00"
     },
     {
-      "id": 69,
+      "id": 76,
       "partner_id": "mu_meetup-group-dadazujh",
       "name": "Co-ed Volleyball!",
       "handle": "meetup/meetup-group-dadazujh",
@@ -3641,10 +3963,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.870143+00:00"
+      "scraped_at": "2026-11-27T11:08:18.871115+00:00"
     },
     {
-      "id": 70,
+      "id": 77,
       "partner_id": "eb_116247770851",
       "name": "Clic Social Events",
       "handle": "eventbrite/116247770851",
@@ -3687,10 +4009,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.890226+00:00"
+      "scraped_at": "2026-11-27T11:08:18.874368+00:00"
     },
     {
-      "id": 71,
+      "id": 78,
       "partner_id": "yt__GolfSimulatorCanada",
       "name": "Golf Simulator Canada",
       "handle": "@GolfSimulatorCanada",
@@ -3733,10 +4055,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.893738+00:00"
+      "scraped_at": "2026-11-27T11:08:18.877905+00:00"
     },
     {
-      "id": 72,
+      "id": 79,
       "partner_id": "yt__CoachJeremy",
       "name": "Coach Jeremy",
       "handle": "@CoachJeremy",
@@ -3779,10 +4101,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.895810+00:00"
+      "scraped_at": "2026-11-27T11:08:18.880019+00:00"
     },
     {
-      "id": 73,
+      "id": 80,
       "partner_id": "yt__ElevateYourselfOfficial",
       "name": "Elevate Yourself",
       "handle": "@ElevateYourselfOfficial",
@@ -3825,10 +4147,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.899448+00:00"
+      "scraped_at": "2026-11-27T11:08:18.883677+00:00"
     },
     {
-      "id": 74,
+      "id": 81,
       "partner_id": "yt__robbyrow",
       "name": "Robby Rowland",
       "handle": "@robbyrow",
@@ -3871,10 +4193,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.903385+00:00"
+      "scraped_at": "2026-11-27T11:08:18.887647+00:00"
     },
     {
-      "id": 75,
+      "id": 82,
       "partner_id": "yt__watchUFAtv",
       "name": "UFA Ultimate Frisbee Association",
       "handle": "@watchUFAtv",
@@ -3917,10 +4239,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.906145+00:00"
+      "scraped_at": "2026-11-27T11:08:18.890313+00:00"
     },
     {
-      "id": 76,
+      "id": 83,
       "partner_id": "yt__CoachChijo",
       "name": "Coach Chijo",
       "handle": "@CoachChijo",
@@ -3963,10 +4285,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.909602+00:00"
+      "scraped_at": "2026-11-27T11:08:18.893883+00:00"
     },
     {
-      "id": 77,
+      "id": 84,
       "partner_id": "yt__DSARM",
       "name": "DSARM",
       "handle": "@DSARM",
@@ -4009,10 +4331,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.913773+00:00"
+      "scraped_at": "2026-11-27T11:08:18.898181+00:00"
     },
     {
-      "id": 78,
+      "id": 85,
       "partner_id": "yt__MMAShredded",
       "name": "Jeff Chan MMAShredded",
       "handle": "@MMAShredded",
@@ -4057,10 +4379,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.916581+00:00"
+      "scraped_at": "2026-11-27T11:08:18.901009+00:00"
     },
     {
-      "id": 79,
+      "id": 86,
       "partner_id": "yt__workoutwithgina",
       "name": "WORKOUT WITH GINA",
       "handle": "@workoutwithgina",
@@ -4103,10 +4425,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.918186+00:00"
+      "scraped_at": "2026-11-27T11:08:18.902696+00:00"
     },
     {
-      "id": 80,
+      "id": 87,
       "partner_id": "yt__ianwhietala",
       "name": "Ian Hietala",
       "handle": "@ianwhietala",
@@ -4149,10 +4471,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.919797+00:00"
+      "scraped_at": "2026-11-27T11:08:18.904198+00:00"
     },
     {
-      "id": 81,
+      "id": 266,
+      "partner_id": "yt__bauerhockey",
+      "name": "Bauer Hockey",
+      "handle": "@bauerhockey",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@bauerhockey",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 813500,
+      "audience_text": "813,500 followers",
+      "audience_tier": "macro",
+      "youtube_followers": 126000,
+      "instagram_followers": 0,
+      "tiktok_followers": 687500,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Hockey & Ice Sports",
+      "sub_niche": "Shinny & Beer League Hockey",
+      "secondary_sports": [],
+      "bio": "",
+      "business_email": "",
+      "website": "https://bauer.com",
+      "youtube_url": "https://www.youtube.com/@bauerhockey",
+      "instagram_url": "https://www.instagram.com/bauerhockey",
+      "tiktok_url": "https://www.tiktok.com/@bauerhockey",
+      "facebook_url": "https://www.facebook.com/BauerHockey",
+      "x_url": "https://twitter.com/BauerHockey",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.905447+00:00"
+    },
+    {
+      "id": 88,
       "partner_id": "yt__itrainhockey",
       "name": "iTrain Hockey",
       "handle": "@itrainhockey",
@@ -4197,10 +4565,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.922362+00:00"
+      "scraped_at": "2026-11-27T11:08:18.908113+00:00"
     },
     {
-      "id": 82,
+      "id": 89,
       "partner_id": "yt__IntuitiveTennis",
       "name": "Intuitive Tennis",
       "handle": "@IntuitiveTennis",
@@ -4243,10 +4611,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.925814+00:00"
+      "scraped_at": "2026-11-27T11:08:18.911606+00:00"
     },
     {
-      "id": 83,
+      "id": 90,
       "partner_id": "yt__Chewjitsu",
       "name": "Chewjitsu",
       "handle": "@Chewjitsu",
@@ -4289,10 +4657,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.927438+00:00"
+      "scraped_at": "2026-11-27T11:08:18.913404+00:00"
     },
     {
-      "id": 84,
+      "id": 91,
       "partner_id": "yt__ProgressiveSoccer",
       "name": "Progressive Soccer",
       "handle": "@ProgressiveSoccer",
@@ -4335,10 +4703,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.929409+00:00"
+      "scraped_at": "2026-11-27T11:08:18.915380+00:00"
     },
     {
-      "id": 85,
+      "id": 92,
       "partner_id": "yt__UltimateBaseballTraining",
       "name": "Ultimate Baseball Training",
       "handle": "@UltimateBaseballTraining",
@@ -4381,10 +4749,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.931819+00:00"
+      "scraped_at": "2026-11-27T11:08:18.917740+00:00"
     },
     {
-      "id": 86,
+      "id": 93,
       "partner_id": "yt__keithpoitierperformance",
       "name": "Keith Poitier Performance",
       "handle": "@keithpoitierperformance",
@@ -4427,10 +4795,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.933627+00:00"
+      "scraped_at": "2026-11-27T11:08:18.919591+00:00"
     },
     {
-      "id": 251,
+      "id": 267,
+      "partner_id": "yt__AntonelliBaseball",
+      "name": "Antonelli Baseball",
+      "handle": "@AntonelliBaseball",
+      "partner_type": "pro_candidate",
+      "partner_role": "Coach / Trainer",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@AntonelliBaseball",
+      "country": "United States",
+      "province_state": "California",
+      "city": "San Diego",
+      "audience_count": 286000,
+      "audience_text": "286,000 followers",
+      "audience_tier": "mid",
+      "youtube_followers": 286000,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Baseball & Softball",
+      "sub_niche": "Slowpitch & Co-Ed Softball",
+      "secondary_sports": [],
+      "bio": "\u26be\ufe0f Antonelli Baseball was founded by Matt Antonelli, 1st round pick and former MLB Player and Division 1 college coach \ud83d\udcc8 We provide the absolute best coaching to baseball and softball players \u26a1\ufe0fClick the link below to help increase your bat speed, timing, and power at the plate",
+      "business_email": "",
+      "website": "https://antonellibaseball.mykajabi.com/remote-training",
+      "youtube_url": "https://www.youtube.com/@AntonelliBaseball",
+      "instagram_url": "https://instagram.com/antonellibaseball",
+      "tiktok_url": "",
+      "facebook_url": "https://facebook.com/AntonelliBaseball",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.922042+00:00"
+    },
+    {
+      "id": 94,
       "partner_id": "yt__thatpickleballguy",
       "name": "ThatPickleballGuy - Kyle Koszuta",
       "handle": "@thatpickleballguy",
@@ -4473,10 +4887,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.935588+00:00"
+      "scraped_at": "2026-11-27T11:08:18.924042+00:00"
     },
     {
-      "id": 252,
+      "id": 95,
       "partner_id": "yt__tanner_pickleball",
       "name": "tanner.pickleball",
       "handle": "@tanner.pickleball",
@@ -4519,10 +4933,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.938275+00:00"
+      "scraped_at": "2026-11-27T11:08:18.926810+00:00"
     },
     {
-      "id": 87,
+      "id": 96,
       "partner_id": "yt__BreakthroughBBall",
       "name": "BreakthroughBBall",
       "handle": "@BreakthroughBBall",
@@ -4565,10 +4979,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.941738+00:00"
+      "scraped_at": "2026-11-27T11:08:18.930299+00:00"
     },
     {
-      "id": 88,
+      "id": 97,
       "partner_id": "yt__Isaiah_Nolan",
       "name": "Isaiah Nolan",
       "handle": "@Isaiah_Nolan",
@@ -4611,10 +5025,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.943351+00:00"
+      "scraped_at": "2026-11-27T11:08:18.932027+00:00"
     },
     {
-      "id": 89,
+      "id": 98,
       "partner_id": "yt__Hennen_Workouts",
       "name": "Hennen Workouts Basketball",
       "handle": "@Hennen_Workouts",
@@ -4659,10 +5073,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.944795+00:00"
+      "scraped_at": "2026-11-27T11:08:18.933561+00:00"
     },
     {
-      "id": 90,
+      "id": 99,
       "partner_id": "yt__thesoccertournament7v7",
       "name": "The Soccer Tournament (TST)",
       "handle": "@thesoccertournament7v7",
@@ -4707,10 +5121,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.947386+00:00"
+      "scraped_at": "2026-11-27T11:08:18.936133+00:00"
     },
     {
-      "id": 91,
+      "id": 100,
       "partner_id": "yt__MKVB_2",
       "name": "MaKuro",
       "handle": "@MKVB.2",
@@ -4753,10 +5167,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.951613+00:00"
+      "scraped_at": "2026-11-27T11:08:18.940413+00:00"
     },
     {
-      "id": 92,
+      "id": 101,
       "partner_id": "yt__OneUpBasketball",
       "name": "One Up Basketball Training",
       "handle": "@OneUpBasketball",
@@ -4799,10 +5213,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.955809+00:00"
+      "scraped_at": "2026-11-27T11:08:18.944668+00:00"
     },
     {
-      "id": 253,
+      "id": 102,
       "partner_id": "yt__CoachAshworth",
       "name": "Coach Ashworth",
       "handle": "@CoachAshworth",
@@ -4814,7 +5228,7 @@
       "province_state": "Ontario",
       "city": "Toronto",
       "audience_count": 90500,
-      "audience_text": "69,500 followers",
+      "audience_text": "90,500 followers",
       "audience_tier": "micro",
       "youtube_followers": 69500,
       "instagram_followers": 21000,
@@ -4845,10 +5259,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.967143+00:00"
+      "scraped_at": "2026-11-27T11:08:18.948315+00:00"
     },
     {
-      "id": 93,
+      "id": 268,
+      "partner_id": "yt__CanadaBasketball",
+      "name": "Canada Basketball",
+      "handle": "@CanadaBasketball",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@CanadaBasketball",
+      "country": "Canada",
+      "province_state": "Ontario",
+      "city": "Hamilton",
+      "audience_count": 88000,
+      "audience_text": "88,000 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 11200,
+      "instagram_followers": 0,
+      "tiktok_followers": 76800,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Basketball",
+      "sub_niche": "Pickup Runs & Streetball",
+      "secondary_sports": [],
+      "bio": "Canada\u2019s game. Canada\u2019s teams. \ud83c\udf41\ud83c\udfc0",
+      "business_email": "",
+      "website": "https://basketball.ca",
+      "youtube_url": "https://www.youtube.com/@CanadaBasketball",
+      "instagram_url": "https://instagram.com/canadabasketball",
+      "tiktok_url": "https://tiktok.com/@canadabasketball",
+      "facebook_url": "https://facebook.com/CanadaBasketball",
+      "x_url": "https://x.com/canbball",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.949840+00:00"
+    },
+    {
+      "id": 103,
       "partner_id": "yt__PBSportsClub",
       "name": "P.B Sports Club",
       "handle": "@PBSportsClub",
@@ -4891,10 +5351,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.959744+00:00"
+      "scraped_at": "2026-11-27T11:08:18.953661+00:00"
     },
     {
-      "id": 94,
+      "id": 104,
       "partner_id": "yt__Setup4Impact",
       "name": "Kirk Junge (Setup4impact Golf)",
       "handle": "@Setup4Impact",
@@ -4937,10 +5397,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.963648+00:00"
+      "scraped_at": "2026-11-27T11:08:18.957520+00:00"
     },
     {
-      "id": 95,
+      "id": 105,
       "partner_id": "org_sweatandtonic_com",
       "name": "Sweat and Tonic Toronto",
       "handle": "sweatandtonic.com",
@@ -4983,10 +5443,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.690725+00:00"
+      "scraped_at": "2026-11-27T11:08:18.656080+00:00"
     },
     {
-      "id": 96,
+      "id": 106,
       "partner_id": "org_ontariovolleyball_org",
       "name": "Ontario Volleyball Association",
       "handle": "ontariovolleyball.org",
@@ -5029,10 +5489,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.693442+00:00"
+      "scraped_at": "2026-11-27T11:08:18.658906+00:00"
     },
     {
-      "id": 97,
+      "id": 107,
       "partner_id": "yt__boxinghomeworkouts",
       "name": "Boxing Home Workouts",
       "handle": "@boxinghomeworkouts",
@@ -5078,10 +5538,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.970686+00:00"
+      "scraped_at": "2026-11-27T11:08:18.961076+00:00"
     },
     {
-      "id": 98,
+      "id": 108,
       "partner_id": "org_ontariosoccer_net",
       "name": "Ontario Soccer",
       "handle": "ontariosoccer.net",
@@ -5124,10 +5584,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.696164+00:00"
+      "scraped_at": "2026-11-27T11:08:18.661854+00:00"
     },
     {
-      "id": 254,
+      "id": 269,
+      "partner_id": "yt__ProSpeedBaseball",
+      "name": "Pro Speed Baseball",
+      "handle": "@ProSpeedBaseball",
+      "partner_type": "pro_candidate",
+      "partner_role": "Coach / Trainer",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@ProSpeedBaseball",
+      "country": "",
+      "province_state": "",
+      "city": "",
+      "audience_count": 61300,
+      "audience_text": "61,300 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 61300,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Baseball & Softball",
+      "sub_niche": "Baseball Training & Hitting",
+      "secondary_sports": [],
+      "bio": "Hello, and welcome to Pro Speed Baseball. Your home for high quality baseball instruction. On this channel we will review some of the best players in the game and dissect their technique and improve your game. Also giving high quality lessons on hitting, pitching, and defense. We look forward to seeing you again soon, and good luck game!!",
+      "business_email": "",
+      "website": "",
+      "youtube_url": "https://www.youtube.com/@ProSpeedBaseball",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.963665+00:00"
+    },
+    {
+      "id": 109,
       "partner_id": "yt__realcoachl",
       "name": "Coach Lyonel Anderson, CSCS",
       "handle": "@realcoachl",
@@ -5170,10 +5676,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.974315+00:00"
+      "scraped_at": "2026-11-27T11:08:18.967484+00:00"
     },
     {
-      "id": 99,
+      "id": 110,
       "partner_id": "yt__joshrutherfordgolf",
       "name": "Josh Rutherford | Golf",
       "handle": "@joshrutherfordgolf",
@@ -5216,10 +5722,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.977437+00:00"
+      "scraped_at": "2026-11-27T11:08:18.970401+00:00"
     },
     {
-      "id": 100,
+      "id": 111,
       "partner_id": "yt__BeerLeagueHockeyGuy",
       "name": "Beer League Hockey Guy",
       "handle": "@BeerLeagueHockeyGuy",
@@ -5262,10 +5768,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.979293+00:00"
+      "scraped_at": "2026-11-27T11:08:18.972263+00:00"
     },
     {
-      "id": 101,
+      "id": 112,
       "partner_id": "yt__MacBoucherGolf",
       "name": "Mac Boucher Golf",
       "handle": "@MacBoucherGolf",
@@ -5308,10 +5814,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.980955+00:00"
+      "scraped_at": "2026-11-27T11:08:18.974068+00:00"
     },
     {
-      "id": 102,
+      "id": 113,
       "partner_id": "yt__PPAxMLPasia",
       "name": "PPA x MLP Asia",
       "handle": "@PPAxMLPasia",
@@ -5354,10 +5860,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.982470+00:00"
+      "scraped_at": "2026-11-27T11:08:18.975437+00:00"
     },
     {
-      "id": 103,
+      "id": 114,
       "partner_id": "yt__tjltraining",
       "name": "TJL Training",
       "handle": "@tjltraining",
@@ -5400,10 +5906,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.985397+00:00"
+      "scraped_at": "2026-11-27T11:08:18.978542+00:00"
     },
     {
-      "id": 255,
+      "id": 270,
+      "partner_id": "yt__softballpremiertv",
+      "name": "SOFTBALL PREMIER TV",
+      "handle": "@softballpremiertv",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@softballpremiertv",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 37500,
+      "audience_text": "37,500 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 37500,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Baseball & Softball",
+      "sub_niche": "Slowpitch & Co-Ed Softball",
+      "secondary_sports": [],
+      "bio": "SOFTBALL CHANNEL #streaming #americas #production #tvproducers",
+      "business_email": "",
+      "website": "https://softballpremiertv.com",
+      "youtube_url": "https://www.youtube.com/@softballpremiertv",
+      "instagram_url": "https://www.instagram.com/softball_premier",
+      "tiktok_url": "",
+      "facebook_url": "https://www.facebook.com/profile.php?id=100085127985341",
+      "x_url": "https://x.com/bolt-performance",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:18.980012+00:00"
+    },
+    {
+      "id": 115,
       "partner_id": "yt__JermaineCurtis55",
       "name": "Jermaine Curtis",
       "handle": "@JermaineCurtis55",
@@ -5446,10 +5998,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.987675+00:00"
+      "scraped_at": "2026-11-27T11:08:18.982311+00:00"
     },
     {
-      "id": 104,
+      "id": 116,
       "partner_id": "yt__tjrugbymuscle",
       "name": "Rugby Muscle",
       "handle": "@tjrugbymuscle",
@@ -5494,10 +6046,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.990122+00:00"
+      "scraped_at": "2026-11-27T11:08:18.984782+00:00"
     },
     {
-      "id": 105,
+      "id": 117,
       "partner_id": "yt__TorontoUnitedPC",
       "name": "Toronto United Pickleball Club",
       "handle": "@TorontoUnitedPC",
@@ -5540,10 +6092,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.991967+00:00"
+      "scraped_at": "2026-11-27T11:08:18.986463+00:00"
     },
     {
-      "id": 106,
+      "id": 118,
       "partner_id": "org_blacktoerunning_com",
       "name": "BlackToe Running Toronto",
       "handle": "blacktoerunning.com",
@@ -5586,10 +6138,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.698548+00:00"
+      "scraped_at": "2026-11-27T11:08:18.664196+00:00"
     },
     {
-      "id": 107,
+      "id": 119,
       "partner_id": "mu_Toronto-Soccer-Meetup",
       "name": "Toronto Soccer Meetup",
       "handle": "meetup/Toronto-Soccer-Meetup",
@@ -5632,10 +6184,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.995499+00:00"
+      "scraped_at": "2026-11-27T11:08:18.989889+00:00"
     },
     {
-      "id": 109,
+      "id": 120,
       "partner_id": "yt__DavidvsGoliathBJJ",
       "name": "DVG JIU JITSU",
       "handle": "@DavidvsGoliathBJJ",
@@ -5678,10 +6230,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.998927+00:00"
+      "scraped_at": "2026-11-27T11:08:18.993493+00:00"
     },
     {
-      "id": 110,
+      "id": 121,
       "partner_id": "yt__ShootAWay",
       "name": "Shoot-A-Way",
       "handle": "@ShootAWay",
@@ -5724,10 +6276,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.001369+00:00"
+      "scraped_at": "2026-11-27T11:08:18.995879+00:00"
     },
     {
-      "id": 256,
+      "id": 122,
       "partner_id": "yt__standardjiujitsu",
       "name": "Standard Jiu-Jitsu",
       "handle": "@standardjiujitsu",
@@ -5770,10 +6322,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.002758+00:00"
+      "scraped_at": "2026-11-27T11:08:18.997374+00:00"
     },
     {
-      "id": 111,
+      "id": 123,
       "partner_id": "yt__TonyMillerCoach",
       "name": "Coach Tony Miller",
       "handle": "@TonyMillerCoach",
@@ -5816,10 +6368,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.004146+00:00"
+      "scraped_at": "2026-11-27T11:08:18.998810+00:00"
     },
     {
-      "id": 112,
+      "id": 124,
       "partner_id": "org_jamsports_com",
       "name": "JAM Sports Toronto",
       "handle": "jamsports.com",
@@ -5862,10 +6414,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.700444+00:00"
+      "scraped_at": "2026-11-27T11:08:18.666092+00:00"
     },
     {
-      "id": 113,
+      "id": 125,
       "partner_id": "org_parkdaleroadrunners_com",
       "name": "Parkdale Roadrunners",
       "handle": "parkdaleroadrunners.com",
@@ -5908,10 +6460,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.701824+00:00"
+      "scraped_at": "2026-11-27T11:08:18.667416+00:00"
     },
     {
-      "id": 114,
+      "id": 126,
       "partner_id": "ig_soccertoronto",
       "name": "Soccer Toronto",
       "handle": "@soccertoronto",
@@ -5956,10 +6508,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.005693+00:00"
+      "scraped_at": "2026-11-27T11:08:19.000486+00:00"
     },
     {
-      "id": 258,
+      "id": 127,
       "partner_id": "yt__Pickleball-Hub",
       "name": "Pickleball Hub",
       "handle": "@Pickleball-Hub",
@@ -6002,10 +6554,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.009635+00:00"
+      "scraped_at": "2026-11-27T11:08:19.004368+00:00"
     },
     {
-      "id": 115,
+      "id": 128,
       "partner_id": "org_canlansports_com",
       "name": "Canlan Sports",
       "handle": "canlansports.com",
@@ -6048,10 +6600,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.702910+00:00"
+      "scraped_at": "2026-11-27T11:08:18.668573+00:00"
     },
     {
-      "id": 116,
+      "id": 271,
+      "partner_id": "yt__WhoIsBritainHoops",
+      "name": "WhoIsBritainHoops",
+      "handle": "@WhoIsBritainHoops",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@WhoIsBritainHoops",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 10685,
+      "audience_text": "10,685 followers",
+      "audience_tier": "micro",
+      "youtube_followers": 7680,
+      "instagram_followers": 0,
+      "tiktok_followers": 3005,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Basketball",
+      "sub_niche": "Pickup Runs & Streetball",
+      "secondary_sports": [],
+      "bio": "Basketball Content! | Basketball Challenges | 1v1s | Everything Basketball! Psalms 27:14 CEB Hope in the LORD! Be strong! Let your heart take courage! Hope in the LORD! Amen.",
+      "business_email": "",
+      "website": "",
+      "youtube_url": "https://www.youtube.com/@WhoIsBritainHoops",
+      "instagram_url": "https://instagram.com/whoisbritainhoops",
+      "tiktok_url": "https://tiktok.com/@whoisbritainhoops",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:19.006294+00:00"
+    },
+    {
+      "id": 129,
       "partner_id": "mu_mracx-outdoor-gym",
       "name": "MRACX Hiking",
       "handle": "meetup/mracx-outdoor-gym",
@@ -6096,10 +6694,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.013127+00:00"
+      "scraped_at": "2026-11-27T11:08:19.009637+00:00"
     },
     {
-      "id": 117,
+      "id": 130,
       "partner_id": "yt__BeerLeagueBeauty311",
       "name": "Beer League Beauty",
       "handle": "@BeerLeagueBeauty311",
@@ -6142,10 +6740,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.014972+00:00"
+      "scraped_at": "2026-11-27T11:08:19.011584+00:00"
     },
     {
-      "id": 118,
+      "id": 131,
       "partner_id": "ig_futsalclubtoronto",
       "name": "Futsal Club Toronto",
       "handle": "@futsalclubtoronto",
@@ -6188,10 +6786,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.016502+00:00"
+      "scraped_at": "2026-11-27T11:08:19.013114+00:00"
     },
     {
-      "id": 119,
+      "id": 132,
       "partner_id": "mu_soccerhub",
       "name": "Soccer Hub",
       "handle": "meetup/soccerhub",
@@ -6234,10 +6832,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.020226+00:00"
+      "scraped_at": "2026-11-27T11:08:19.016863+00:00"
     },
     {
-      "id": 120,
+      "id": 133,
       "partner_id": "ig_thejarpickleball",
       "name": "The Jar Pickleball Club",
       "handle": "@thejarpickleball",
@@ -6280,10 +6878,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.022006+00:00"
+      "scraped_at": "2026-11-27T11:08:19.018734+00:00"
     },
     {
-      "id": 121,
+      "id": 134,
       "partner_id": "yt__OpenPlayPickleball",
       "name": "Open Play Pickleball",
       "handle": "@OpenPlayPickleball",
@@ -6326,10 +6924,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.023933+00:00"
+      "scraped_at": "2026-11-27T11:08:19.020799+00:00"
     },
     {
-      "id": 260,
+      "id": 135,
       "partner_id": "yt__ryan_keeping",
       "name": "Ryan Keeping",
       "handle": "@ryan.keeping",
@@ -6372,10 +6970,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.025879+00:00"
+      "scraped_at": "2026-11-27T11:08:19.022704+00:00"
     },
     {
-      "id": 122,
+      "id": 136,
       "partner_id": "yt__DelaneyHockey",
       "name": "Spectate Hockey",
       "handle": "@DelaneyHockey",
@@ -6418,10 +7016,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.029636+00:00"
+      "scraped_at": "2026-11-27T11:08:19.026492+00:00"
     },
     {
-      "id": 123,
+      "id": 137,
       "partner_id": "yt__themdmedia",
       "name": "MD Media",
       "handle": "@themdmedia",
@@ -6464,10 +7062,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.030849+00:00"
+      "scraped_at": "2026-11-27T11:08:19.027864+00:00"
     },
     {
-      "id": 124,
+      "id": 138,
       "partner_id": "eb_121271501514",
       "name": "King of Asia",
       "handle": "eventbrite/121271501514",
@@ -6510,10 +7108,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.032875+00:00"
+      "scraped_at": "2026-11-27T11:08:19.029923+00:00"
     },
     {
-      "id": 125,
+      "id": 139,
       "partner_id": "mu_metrovantennis",
       "name": "Metro Vancouver Tennis Group",
       "handle": "meetup/metrovantennis",
@@ -6556,10 +7154,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.036434+00:00"
+      "scraped_at": "2026-11-27T11:08:19.033568+00:00"
     },
     {
-      "id": 126,
+      "id": 140,
       "partner_id": "mu_ca-badminton-meetup-toronto-group-gta",
       "name": "CA Badminton Meetup Toronto Group GTA",
       "handle": "meetup/ca-badminton-meetup-toronto-group-gta",
@@ -6602,10 +7200,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.038110+00:00"
+      "scraped_at": "2026-11-27T11:08:19.051326+00:00"
     },
     {
-      "id": 127,
+      "id": 141,
       "partner_id": "yt__BaseballCanada1964",
       "name": "Baseball Canada",
       "handle": "@BaseballCanada1964",
@@ -6648,10 +7246,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.039327+00:00"
+      "scraped_at": "2026-11-27T11:08:19.052495+00:00"
     },
     {
-      "id": 128,
+      "id": 142,
       "partner_id": "yt__VideoLibrary",
       "name": "Video Library",
       "handle": "@VideoLibrary",
@@ -6694,10 +7292,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.042778+00:00"
+      "scraped_at": "2026-11-27T11:08:19.055763+00:00"
     },
     {
-      "id": 129,
+      "id": 143,
       "partner_id": "yt__beginneradulthockey",
       "name": "Beginner Adult Hockey",
       "handle": "@beginneradulthockey",
@@ -6740,10 +7338,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.046255+00:00"
+      "scraped_at": "2026-11-27T11:08:19.059168+00:00"
     },
     {
-      "id": 262,
+      "id": 144,
       "partner_id": "yt__SineadBent",
       "name": "Sin\u00e9ad Bent",
       "handle": "@SineadBent",
@@ -6788,10 +7386,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.047730+00:00"
+      "scraped_at": "2026-11-27T11:08:19.060819+00:00"
     },
     {
-      "id": 130,
+      "id": 145,
       "partner_id": "yt__Pickler-Universe",
       "name": "Pickler Universe",
       "handle": "@Pickler-Universe",
@@ -6834,10 +7432,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.051379+00:00"
+      "scraped_at": "2026-11-27T11:08:19.064405+00:00"
     },
     {
-      "id": 131,
+      "id": 146,
       "partner_id": "mu_beach-vball",
       "name": "#1 Beach Volleyball and Social Group",
       "handle": "meetup/beach-vball",
@@ -6880,10 +7478,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.055063+00:00"
+      "scraped_at": "2026-11-27T11:08:19.068460+00:00"
     },
     {
-      "id": 132,
+      "id": 147,
       "partner_id": "mu_nyo-volleyball",
       "name": "North York Outdoor Volleyball & Social Collective",
       "handle": "meetup/nyo-volleyball",
@@ -6926,10 +7524,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.061646+00:00"
+      "scraped_at": "2026-11-27T11:08:19.072335+00:00"
     },
     {
-      "id": 133,
+      "id": 148,
       "partner_id": "yt__CTHockeySchool",
       "name": "CTHockeySchool",
       "handle": "@CTHockeySchool",
@@ -6972,10 +7570,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.065420+00:00"
+      "scraped_at": "2026-11-27T11:08:19.076194+00:00"
     },
     {
-      "id": 134,
+      "id": 149,
       "partner_id": "mu_greater-toronto-ontario-area-tennis-players",
       "name": "Greater Toronto Area Racquet Players",
       "handle": "meetup/greater-toronto-ontario-area-tennis-players",
@@ -7018,10 +7616,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.069224+00:00"
+      "scraped_at": "2026-11-27T11:08:19.079871+00:00"
     },
     {
-      "id": 135,
+      "id": 150,
       "partner_id": "yt__kinetikahornets",
       "name": "Kinetika Hornets Media",
       "handle": "@kinetikahornets",
@@ -7064,10 +7662,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.070913+00:00"
+      "scraped_at": "2026-11-27T11:08:19.081560+00:00"
     },
     {
-      "id": 136,
+      "id": 151,
       "partner_id": "yt__chandlernorth",
       "name": "Chandler North",
       "handle": "@chandlernorth",
@@ -7110,10 +7708,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.072488+00:00"
+      "scraped_at": "2026-11-27T11:08:19.083093+00:00"
     },
     {
-      "id": 137,
+      "id": 152,
       "partner_id": "mu_moacmontreal",
       "name": "Montreal Outdoor Adventure Club (MOAC)",
       "handle": "meetup/moacmontreal",
@@ -7156,10 +7754,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.076201+00:00"
+      "scraped_at": "2026-11-27T11:08:19.086699+00:00"
     },
     {
-      "id": 138,
+      "id": 153,
       "partner_id": "mu_volleyball",
       "name": "Ontario Dynamic Volleyball & Indoor/Outdoor Club!",
       "handle": "meetup/volleyball",
@@ -7202,10 +7800,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.080055+00:00"
+      "scraped_at": "2026-11-27T11:08:19.090472+00:00"
     },
     {
-      "id": 139,
+      "id": 154,
       "partner_id": "org_xtsc_ca",
       "name": "XTSC (Toronto Sport & Social)",
       "handle": "xtsc.ca",
@@ -7248,10 +7846,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.704497+00:00"
+      "scraped_at": "2026-11-27T11:08:18.670219+00:00"
     },
     {
-      "id": 140,
+      "id": 155,
       "partner_id": "yt__openplay_sports",
       "name": "Open Play Sports",
       "handle": "@openplay.sports",
@@ -7294,10 +7892,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.098242+00:00"
+      "scraped_at": "2026-11-27T11:08:19.092117+00:00"
     },
     {
-      "id": 141,
+      "id": 156,
       "partner_id": "eb_103303682081",
       "name": "Tri-City Tide",
       "handle": "eventbrite/103303682081",
@@ -7340,10 +7938,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.101764+00:00"
+      "scraped_at": "2026-11-27T11:08:19.095374+00:00"
     },
     {
-      "id": 142,
+      "id": 157,
       "partner_id": "yt__thebeerleaguer",
       "name": "The Beer Leaguer",
       "handle": "@thebeerleaguer",
@@ -7386,10 +7984,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.103470+00:00"
+      "scraped_at": "2026-11-27T11:08:19.097044+00:00"
     },
     {
-      "id": 143,
+      "id": 158,
       "partner_id": "mu_ottawa-tbsp",
       "name": "Racquet Sports-Tennis/Badminton/Squash/ Pickleball/PingPong",
       "handle": "meetup/ottawa-tbsp",
@@ -7432,10 +8030,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.107320+00:00"
+      "scraped_at": "2026-11-27T11:08:19.100761+00:00"
     },
     {
-      "id": 144,
+      "id": 159,
       "partner_id": "mu_downtown-miles-nadal-jcc-sports-and-recreation",
       "name": "Drop-in Recreation - Volleyball, Basketball & Pickleball",
       "handle": "meetup/downtown-miles-nadal-jcc-sports-and-recreation",
@@ -7481,10 +8079,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.111197+00:00"
+      "scraped_at": "2026-11-27T11:08:19.104623+00:00"
     },
     {
-      "id": 145,
+      "id": 160,
       "partner_id": "mu_founders-running-club-toronto",
       "name": "Founders Running Club :: Toronto",
       "handle": "meetup/founders-running-club-toronto",
@@ -7529,10 +8127,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.114633+00:00"
+      "scraped_at": "2026-11-27T11:08:19.108022+00:00"
     },
     {
-      "id": 146,
+      "id": 161,
       "partner_id": "ig_ufootball.ca",
       "name": "UFootball | Youth Soccer Club | Toronto and GTA |\ud83c\uddfa\ud83c\udde6\ud83c\udde8\ud83c\udde6",
       "handle": "@ufootball.ca",
@@ -7575,10 +8173,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.116894+00:00"
+      "scraped_at": "2026-11-27T11:08:19.110239+00:00"
     },
     {
-      "id": 147,
+      "id": 162,
       "partner_id": "yt__jiu-jitsuwithcoachgcailey2365",
       "name": "Jiu-Jitsu with Coach G & Cailey",
       "handle": "@jiu-jitsuwithcoachgcailey2365",
@@ -7621,10 +8219,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.120634+00:00"
+      "scraped_at": "2026-11-27T11:08:19.113858+00:00"
     },
     {
-      "id": 148,
+      "id": 163,
       "partner_id": "org_tuc_org",
       "name": "Toronto Ultimate Club",
       "handle": "tuc.org",
@@ -7667,10 +8265,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.707025+00:00"
+      "scraped_at": "2026-11-27T11:08:18.672718+00:00"
     },
     {
-      "id": 149,
+      "id": 164,
       "partner_id": "ig_torontounitedfutsal",
       "name": "TORONTO UNITED FUTSAL CLUB \ud83c\udde8\ud83c\udde6",
       "handle": "@torontounitedfutsal",
@@ -7713,10 +8311,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.122244+00:00"
+      "scraped_at": "2026-11-27T11:08:19.115383+00:00"
     },
     {
-      "id": 150,
+      "id": 165,
       "partner_id": "mu_downtown-toronto-fitness",
       "name": "Downtown Toronto Fitness & Wellness Community \ud83d\udcaa\ud83c\udffb\u2728",
       "handle": "meetup/downtown-toronto-fitness",
@@ -7759,10 +8357,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.126481+00:00"
+      "scraped_at": "2026-11-27T11:08:19.119498+00:00"
     },
     {
-      "id": 151,
+      "id": 166,
       "partner_id": "mu_tuesdaynightpick-upsoccer-10-00pmto12-00pm",
       "name": "Tuesday Night Pick-up Soccer - 10:00pm to 12:00pm",
       "handle": "meetup/tuesdaynightpick-upsoccer-10-00pmto12-00pm",
@@ -7805,10 +8403,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.130484+00:00"
+      "scraped_at": "2026-11-27T11:08:19.123537+00:00"
     },
     {
-      "id": 152,
+      "id": 167,
       "partner_id": "yt__lorenzofit_mma",
       "name": "Lorenzo",
       "handle": "@lorenzofit_mma",
@@ -7851,10 +8449,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.133135+00:00"
+      "scraped_at": "2026-11-27T11:08:19.126256+00:00"
     },
     {
-      "id": 153,
+      "id": 168,
       "partner_id": "mu_ashbridgesbaybeachvolleyball",
       "name": "Ashbridges Bay Beach Volleyball",
       "handle": "meetup/ashbridgesbaybeachvolleyball",
@@ -7897,10 +8495,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.135049+00:00"
+      "scraped_at": "2026-11-27T11:08:19.128121+00:00"
     },
     {
-      "id": 154,
+      "id": 169,
       "partner_id": "mu_calgary-sportsing-meetup",
       "name": "Calgary Sportsing Meetup",
       "handle": "meetup/calgary-sportsing-meetup",
@@ -7946,10 +8544,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.138453+00:00"
+      "scraped_at": "2026-11-27T11:08:19.131610+00:00"
     },
     {
-      "id": 155,
+      "id": 170,
       "partner_id": "ig_topickleballclub",
       "name": "\ud83c\udde8\ud83c\udde6Toronto Pickleball Club",
       "handle": "@topickleballclub",
@@ -7992,10 +8590,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.139977+00:00"
+      "scraped_at": "2026-11-27T11:08:19.133178+00:00"
     },
     {
-      "id": 156,
+      "id": 171,
       "partner_id": "mu_Toronto-Volleyball-Skill-Development",
       "name": "Toronto Volleyball & Skill Development",
       "handle": "meetup/Toronto-Volleyball-Skill-Development",
@@ -8038,10 +8636,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.143644+00:00"
+      "scraped_at": "2026-11-27T11:08:19.136766+00:00"
     },
     {
-      "id": 157,
+      "id": 172,
       "partner_id": "ig_torontounitedvolleyball",
       "name": "Toronto United Volleyball Club",
       "handle": "@torontounitedvolleyball",
@@ -8084,10 +8682,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.145363+00:00"
+      "scraped_at": "2026-11-27T11:08:19.138595+00:00"
     },
     {
-      "id": 158,
+      "id": 173,
       "partner_id": "org_truenorthhockey_com",
       "name": "True North Hockey Canada",
       "handle": "truenorthhockey.com",
@@ -8130,10 +8728,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.709570+00:00"
+      "scraped_at": "2026-11-27T11:08:18.675294+00:00"
     },
     {
-      "id": 159,
+      "id": 174,
       "partner_id": "mu_Toronto-Womens-Basketball-Meetup-Group",
       "name": "Toronto Women's Basketball Meetup Group",
       "handle": "meetup/Toronto-Womens-Basketball-Meetup-Group",
@@ -8176,10 +8774,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.147528+00:00"
+      "scraped_at": "2026-11-27T11:08:19.140789+00:00"
     },
     {
-      "id": 160,
+      "id": 175,
       "partner_id": "ig_momentumbasketballgta",
       "name": "Momentum Basketball | Toronto",
       "handle": "@momentumbasketballgta",
@@ -8222,10 +8820,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.149383+00:00"
+      "scraped_at": "2026-11-27T11:08:19.142715+00:00"
     },
     {
-      "id": 161,
+      "id": 176,
       "partner_id": "mu_indoor-outdoor-ottawa",
       "name": "Ontario Dynamic Volleyball - Ottawa",
       "handle": "meetup/indoor-outdoor-ottawa",
@@ -8268,10 +8866,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.152712+00:00"
+      "scraped_at": "2026-11-27T11:08:19.145978+00:00"
     },
     {
-      "id": 162,
+      "id": 177,
       "partner_id": "mu_Scarborough-Markham-Richmond-Badminton-Meetup",
       "name": "Toronto Badminton Meetup Group (TBMG)",
       "handle": "meetup/Scarborough-Markham-Richmond-Badminton-Meetup",
@@ -8314,10 +8912,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.155542+00:00"
+      "scraped_at": "2026-11-27T11:08:19.148749+00:00"
     },
     {
-      "id": 163,
+      "id": 178,
       "partner_id": "yt__AdultBeginnerHockeyClub",
       "name": "Adult Beginner Hockey Club",
       "handle": "@AdultBeginnerHockeyClub",
@@ -8360,10 +8958,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.158869+00:00"
+      "scraped_at": "2026-11-27T11:08:19.152190+00:00"
     },
     {
-      "id": 164,
+      "id": 179,
       "partner_id": "ig_ng_futsalclub",
       "name": "Nueva Generaci\u00f3n Futsal Club Toronto",
       "handle": "@ng_futsalclub",
@@ -8406,10 +9004,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.160478+00:00"
+      "scraped_at": "2026-11-27T11:08:19.153899+00:00"
     },
     {
-      "id": 165,
+      "id": 275,
+      "partner_id": "yt__PickleballTodayCanada",
+      "name": "Pickleball Today",
+      "handle": "@PickleballTodayCanada",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@PickleballTodayCanada",
+      "country": "Canada",
+      "province_state": "",
+      "city": "",
+      "audience_count": 1030,
+      "audience_text": "1,030 followers",
+      "audience_tier": "nano",
+      "youtube_followers": 1030,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Tennis & Pickleball",
+      "sub_niche": "Pickleball Clubs & Open Play",
+      "secondary_sports": [],
+      "bio": "Pickleball Today is Canada's National Pickleball News Site. Welcome to our YouTube Channel. We talk all topics about pickleball and specifically topics of interest to Canadian pickleball players,Ca including Canadian pickleball pros, tournaments, pickleball paddles, pickleball gear, pickleball tips, training and travel. .",
+      "business_email": "",
+      "website": "https://pickleballtoday.co",
+      "youtube_url": "https://www.youtube.com/@PickleballTodayCanada",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:19.156273+00:00"
+    },
+    {
+      "id": 180,
       "partner_id": "yt__torontobigleague",
       "name": "Toronto Big League",
       "handle": "@torontobigleague",
@@ -8452,10 +9096,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.162079+00:00"
+      "scraped_at": "2026-11-27T11:08:19.157954+00:00"
     },
     {
-      "id": 166,
+      "id": 181,
       "partner_id": "ig_vballcrewto",
       "name": "VBall Crew",
       "handle": "@vballcrewto",
@@ -8498,10 +9142,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.163804+00:00"
+      "scraped_at": "2026-11-27T11:08:19.159786+00:00"
     },
     {
-      "id": 167,
+      "id": 182,
       "partner_id": "ig_malikjphillips",
       "name": "TORONTO BASKETBALL TRAINER",
       "handle": "@malikjphillips",
@@ -8544,10 +9188,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.165211+00:00"
+      "scraped_at": "2026-11-27T11:08:19.161279+00:00"
     },
     {
-      "id": 168,
+      "id": 183,
       "partner_id": "mu_badminton-enthusiast",
       "name": "Badminton Enthusiast",
       "handle": "meetup/badminton-enthusiast",
@@ -8590,10 +9234,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.167690+00:00"
+      "scraped_at": "2026-11-27T11:08:19.163780+00:00"
     },
     {
-      "id": 169,
+      "id": 184,
       "partner_id": "yt__TBV",
       "name": "Toronto Beach Volleyball",
       "handle": "@TBV",
@@ -8636,10 +9280,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.168997+00:00"
+      "scraped_at": "2026-11-27T11:08:19.165138+00:00"
     },
     {
-      "id": 170,
+      "id": 185,
       "partner_id": "eb_120659812455",
       "name": "Hammer Sports",
       "handle": "eventbrite/120659812455",
@@ -8682,10 +9326,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.172041+00:00"
+      "scraped_at": "2026-11-27T11:08:19.168218+00:00"
     },
     {
-      "id": 171,
+      "id": 186,
       "partner_id": "mu_calgary-ball-hockey-meetup",
       "name": "Calgary Ball Hockey Meetup",
       "handle": "meetup/calgary-ball-hockey-meetup",
@@ -8728,10 +9372,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.174321+00:00"
+      "scraped_at": "2026-11-27T11:08:19.170510+00:00"
     },
     {
-      "id": 172,
+      "id": 187,
       "partner_id": "yt__worldflagseriesTV",
       "name": "World Flag Series",
       "handle": "@worldflagseriesTV",
@@ -8774,10 +9418,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.176662+00:00"
+      "scraped_at": "2026-11-27T11:08:19.172916+00:00"
     },
     {
-      "id": 173,
+      "id": 188,
       "partner_id": "mu_meetup-group-xuulnjxy",
       "name": "Willowdale Badminton",
       "handle": "meetup/meetup-group-xuulnjxy",
@@ -8820,10 +9464,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.178371+00:00"
+      "scraped_at": "2026-11-27T11:08:19.174684+00:00"
     },
     {
-      "id": 174,
+      "id": 189,
       "partner_id": "ig_torontofuturephenomofficial",
       "name": "Toronto Future Phenom TFP",
       "handle": "@torontofuturephenomofficial",
@@ -8866,10 +9510,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.181985+00:00"
+      "scraped_at": "2026-11-27T11:08:19.176491+00:00"
     },
     {
-      "id": 175,
+      "id": 276,
+      "partner_id": "yt__clinchculture",
+      "name": "Clinch Culture",
+      "handle": "@clinchculture",
+      "partner_type": "pro_candidate",
+      "partner_role": "Sports Creator / Athlete",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@clinchculture",
+      "country": "",
+      "province_state": "",
+      "city": "",
+      "audience_count": 706,
+      "audience_text": "706 followers",
+      "audience_tier": "nano",
+      "youtube_followers": 706,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Combat & Martial Arts",
+      "sub_niche": "Muay Thai & Striking",
+      "secondary_sports": [],
+      "bio": "+ Muay Thai Tutorials + Motivational Content",
+      "business_email": "",
+      "website": "",
+      "youtube_url": "https://www.youtube.com/@clinchculture",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:19.177867+00:00"
+    },
+    {
+      "id": 190,
       "partner_id": "yt__yoslimbo",
       "name": "yoslimbo - mediocre beer league hockey",
       "handle": "@yoslimbo",
@@ -8912,10 +9602,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.183837+00:00"
+      "scraped_at": "2026-11-27T11:08:19.179600+00:00"
     },
     {
-      "id": 176,
+      "id": 191,
       "partner_id": "mu_playtogether",
       "name": "Play Together Pickleball GTA for all levels",
       "handle": "meetup/playtogether",
@@ -8958,10 +9648,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.186973+00:00"
+      "scraped_at": "2026-11-27T11:08:19.182820+00:00"
     },
     {
-      "id": 177,
+      "id": 192,
       "partner_id": "ig_uvctoronto",
       "name": "United Volleyball Club Toronto",
       "handle": "@uvctoronto",
@@ -9004,10 +9694,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.188349+00:00"
+      "scraped_at": "2026-11-27T11:08:19.184359+00:00"
     },
     {
-      "id": 178,
+      "id": 193,
       "partner_id": "mu_toronto-golf-for-beginners-meetup-group",
       "name": "Golf Curious Toronto Golf for Beginners Meetup Group",
       "handle": "meetup/toronto-golf-for-beginners-meetup-group",
@@ -9050,10 +9740,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.191045+00:00"
+      "scraped_at": "2026-11-27T11:08:19.187078+00:00"
     },
     {
-      "id": 179,
+      "id": 194,
       "partner_id": "yt__atlratpackruns",
       "name": "RatPackBasketBall",
       "handle": "@atlratpackruns",
@@ -9096,10 +9786,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.192512+00:00"
+      "scraped_at": "2026-11-27T11:08:19.188651+00:00"
     },
     {
-      "id": 180,
+      "id": 195,
       "partner_id": "mu_toronto-gta-badminton-meetup",
       "name": "Toronto-GTA Badminton Meetup",
       "handle": "meetup/toronto-gta-badminton-meetup",
@@ -9142,10 +9832,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.195019+00:00"
+      "scraped_at": "2026-11-27T11:08:19.191236+00:00"
     },
     {
-      "id": 181,
+      "id": 196,
       "partner_id": "mu_richmond-hill-co-ed-soccer",
       "name": "Richmond Hill Co-Ed Soccer by Frank Endean FC",
       "handle": "meetup/richmond-hill-co-ed-soccer",
@@ -9188,10 +9878,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.197487+00:00"
+      "scraped_at": "2026-11-27T11:08:19.193789+00:00"
     },
     {
-      "id": 182,
+      "id": 197,
       "partner_id": "mu_riverdale-5k",
       "name": "Riverdale Park 5K",
       "handle": "meetup/riverdale-5k",
@@ -9234,10 +9924,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.201158+00:00"
+      "scraped_at": "2026-11-27T11:08:19.197509+00:00"
     },
     {
-      "id": 183,
+      "id": 198,
       "partner_id": "mu_toronto-underwater-rugby-clu",
       "name": "Toronto Underwater Sports (Rugby and Hockey)",
       "handle": "meetup/toronto-underwater-rugby-clu",
@@ -9282,10 +9972,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.205163+00:00"
+      "scraped_at": "2026-11-27T11:08:19.201421+00:00"
     },
     {
-      "id": 184,
+      "id": 199,
       "partner_id": "mu_ready-set-trail",
       "name": "Ready, Set, Trail",
       "handle": "meetup/ready-set-trail",
@@ -9328,10 +10018,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.208821+00:00"
+      "scraped_at": "2026-11-27T11:08:19.205125+00:00"
     },
     {
-      "id": 185,
+      "id": 200,
       "partner_id": "yt__WhosNextflagfootball",
       "name": "Who's Next Flag Football",
       "handle": "@WhosNextflagfootball",
@@ -9374,10 +10064,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.210198+00:00"
+      "scraped_at": "2026-11-27T11:08:19.206656+00:00"
     },
     {
-      "id": 186,
+      "id": 201,
       "partner_id": "yt__Elevatedsoftball",
       "name": "Elevated Softball Association",
       "handle": "@Elevatedsoftball",
@@ -9420,10 +10110,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.212257+00:00"
+      "scraped_at": "2026-11-27T11:08:19.208747+00:00"
     },
     {
-      "id": 263,
+      "id": 202,
       "partner_id": "yt__AllegedlyHockey",
       "name": "Allegedly Hockey",
       "handle": "@AllegedlyHockey",
@@ -9466,10 +10156,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.214171+00:00"
+      "scraped_at": "2026-11-27T11:08:19.210650+00:00"
     },
     {
-      "id": 187,
+      "id": 203,
       "partner_id": "yt__reginarecleague1096",
       "name": "Regina Rec League",
       "handle": "@reginarecleague1096",
@@ -9512,10 +10202,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.216137+00:00"
+      "scraped_at": "2026-11-27T11:08:19.212537+00:00"
     },
     {
-      "id": 188,
+      "id": 204,
       "partner_id": "mu_ottawa-adult-playing-sports-are-fun",
       "name": "Ottawa Adults Playing Sports for Fun",
       "handle": "meetup/ottawa-adult-playing-sports-are-fun",
@@ -9560,10 +10250,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.219888+00:00"
+      "scraped_at": "2026-11-27T11:08:19.216164+00:00"
     },
     {
-      "id": 189,
+      "id": 205,
       "partner_id": "mu_north-york-co-ed-sport-group",
       "name": "North York Co-ed Sport Group - All levels welcome!",
       "handle": "meetup/north-york-co-ed-sport-group",
@@ -9609,10 +10299,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.223353+00:00"
+      "scraped_at": "2026-11-27T11:08:19.219652+00:00"
     },
     {
-      "id": 190,
+      "id": 206,
       "partner_id": "mu_gtavbca",
       "name": "GTA Volleyball Meetup Group",
       "handle": "meetup/gtavbca",
@@ -9655,10 +10345,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.225539+00:00"
+      "scraped_at": "2026-11-27T11:08:19.221731+00:00"
     },
     {
-      "id": 191,
+      "id": 207,
       "partner_id": "yt__TorontoPremierFutsalLeague",
       "name": "Toronto Premier Futsal League",
       "handle": "@TorontoPremierFutsalLeague",
@@ -9701,10 +10391,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.226722+00:00"
+      "scraped_at": "2026-11-27T11:08:19.222993+00:00"
     },
     {
-      "id": 192,
+      "id": 208,
       "partner_id": "yt__TPC_Toronto",
       "name": "TPC Toronto at Osprey Valley",
       "handle": "@TPC_Toronto",
@@ -9747,10 +10437,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.228388+00:00"
+      "scraped_at": "2026-11-27T11:08:19.224642+00:00"
     },
     {
-      "id": 193,
+      "id": 209,
       "partner_id": "mu_brampton-volleyball-meetup-group",
       "name": "Brampton Volleyball and Social Group",
       "handle": "meetup/brampton-volleyball-meetup-group",
@@ -9793,10 +10483,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.232134+00:00"
+      "scraped_at": "2026-11-27T11:08:19.228231+00:00"
     },
     {
-      "id": 194,
+      "id": 210,
       "partner_id": "yt__AdultSlowPitchSoftball",
       "name": "Adult Slow Pitch Softball",
       "handle": "@AdultSlowPitchSoftball",
@@ -9841,10 +10531,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.236088+00:00"
+      "scraped_at": "2026-11-27T11:08:19.232097+00:00"
     },
     {
-      "id": 195,
+      "id": 211,
       "partner_id": "mu_meetup-group-gjvbzkqw",
       "name": "Tennis For Beginners",
       "handle": "meetup/meetup-group-gjvbzkqw",
@@ -9887,10 +10577,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.239596+00:00"
+      "scraped_at": "2026-11-27T11:08:19.235467+00:00"
     },
     {
-      "id": 196,
+      "id": 212,
       "partner_id": "mu_meetup-group-pyrddkbc",
       "name": "Hogtown Hash House Harriers",
       "handle": "meetup/meetup-group-pyrddkbc",
@@ -9933,10 +10623,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.243299+00:00"
+      "scraped_at": "2026-11-27T11:08:19.239068+00:00"
     },
     {
-      "id": 197,
+      "id": 213,
       "partner_id": "yt__CNYAdultHockey",
       "name": "CNY Adult Hockey League",
       "handle": "@CNYAdultHockey",
@@ -9979,10 +10669,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.244542+00:00"
+      "scraped_at": "2026-11-27T11:08:19.240764+00:00"
     },
     {
-      "id": 198,
+      "id": 214,
       "partner_id": "yt__OWFL",
       "name": "Ontario Womens Futsal League",
       "handle": "@OWFL",
@@ -10025,10 +10715,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.246241+00:00"
+      "scraped_at": "2026-11-27T11:08:19.261377+00:00"
     },
     {
-      "id": 199,
+      "id": 215,
       "partner_id": "mu_golf-is-life-group",
       "name": "Golf is Life Group",
       "handle": "meetup/golf-is-life-group",
@@ -10071,10 +10761,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.249842+00:00"
+      "scraped_at": "2026-11-27T11:08:19.264930+00:00"
     },
     {
-      "id": 200,
+      "id": 216,
       "partner_id": "mu_table-tennis-toronto-gta",
       "name": "Table Tennis at Toronto GTA",
       "handle": "meetup/table-tennis-toronto-gta",
@@ -10117,10 +10807,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.253394+00:00"
+      "scraped_at": "2026-11-27T11:08:19.268305+00:00"
     },
     {
-      "id": 201,
+      "id": 217,
       "partner_id": "mu_markham-weekday-badminton-meetup-group",
       "name": "GTA Weekday Badminton",
       "handle": "meetup/markham-weekday-badminton-meetup-group",
@@ -10163,10 +10853,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.255720+00:00"
+      "scraped_at": "2026-11-27T11:08:19.270666+00:00"
     },
     {
-      "id": 202,
+      "id": 218,
       "partner_id": "ig_torontowestpickleballclub",
       "name": "Toronto West Pickleball Club",
       "handle": "@torontowestpickleballclub",
@@ -10209,10 +10899,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.257117+00:00"
+      "scraped_at": "2026-11-27T11:08:19.272186+00:00"
     },
     {
-      "id": 203,
+      "id": 219,
       "partner_id": "yt__RyliesReview",
       "name": "Rylie's Review",
       "handle": "@RyliesReview",
@@ -10255,10 +10945,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.258824+00:00"
+      "scraped_at": "2026-11-27T11:08:19.273872+00:00"
     },
     {
-      "id": 204,
+      "id": 220,
       "partner_id": "mu_badminton-jan-10-16-30-19-30-patro-villeray-10-per-person",
       "name": "BADMINTON 16:30 - 19:30 PATRO VILLERAY 10$ PER PERSON",
       "handle": "meetup/badminton-jan-10-16-30-19-30-patro-villeray-10-per-person",
@@ -10301,10 +10991,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.261821+00:00"
+      "scraped_at": "2026-11-27T11:08:19.276831+00:00"
     },
     {
-      "id": 205,
+      "id": 221,
       "partner_id": "mu_soccer-lovers-mississauga-outdoor",
       "name": "Mississauga Pickup Soccer | ReliPlay",
       "handle": "meetup/soccer-lovers-mississauga-outdoor",
@@ -10347,10 +11037,56 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.278852+00:00"
+      "scraped_at": "2026-11-27T11:08:19.280499+00:00"
     },
     {
-      "id": 206,
+      "id": 278,
+      "partner_id": "yt__SchwatyHockeyFPV",
+      "name": "SchwatyHockeyFPV",
+      "handle": "@SchwatyHockeyFPV",
+      "partner_type": "sports_org",
+      "partner_role": "Tournament Operator",
+      "primary_platform": "youtube",
+      "profile_url": "https://www.youtube.com/@SchwatyHockeyFPV",
+      "country": "United States",
+      "province_state": "",
+      "city": "",
+      "audience_count": 99,
+      "audience_text": "99 followers",
+      "audience_tier": "nano",
+      "youtube_followers": 99,
+      "instagram_followers": 0,
+      "tiktok_followers": 0,
+      "bluesky_followers": 0,
+      "meetup_members": 0,
+      "primary_sport": "Hockey & Ice Sports",
+      "sub_niche": "Shinny & Beer League Hockey",
+      "secondary_sports": [],
+      "bio": "Beer League Hockey player! Videos will come weekly as long as a session is on going. Keep any eye for tournament videos as well, When you are missing hockey this channel is for you! Thanks to any subscribers and likes! #hockey #beerleaguehockey #hockeyplayer #fpv #icehockey #goprohockey #hockeylife #vr #vrexperience #shfpv",
+      "business_email": "",
+      "website": "",
+      "youtube_url": "https://www.youtube.com/@SchwatyHockeyFPV",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "facebook_url": "",
+      "x_url": "",
+      "threads_url": "",
+      "linkedin_url": "",
+      "pinterest_url": "",
+      "reddit_url": "",
+      "strava_url": "",
+      "bluesky_url": "",
+      "meetup_url": "",
+      "eventbrite_url": "",
+      "contacted": 0,
+      "contacted_at": "",
+      "outreach_status": "not_contacted",
+      "outreach_notes": "",
+      "is_dismissed": 0,
+      "scraped_at": "2026-11-27T11:08:19.282835+00:00"
+    },
+    {
+      "id": 222,
       "partner_id": "mu_soccer-and-shisha-meetup",
       "name": "Soccer and Shisha Meetup",
       "handle": "meetup/soccer-and-shisha-meetup",
@@ -10393,10 +11129,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.282807+00:00"
+      "scraped_at": "2026-11-27T11:08:19.286596+00:00"
     },
     {
-      "id": 207,
+      "id": 223,
       "partner_id": "yt__saskatoonrecleague1119",
       "name": "Saskatoon Rec League",
       "handle": "@saskatoonrecleague1119",
@@ -10439,10 +11175,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.284605+00:00"
+      "scraped_at": "2026-11-27T11:08:19.288277+00:00"
     },
     {
-      "id": 208,
+      "id": 224,
       "partner_id": "mu_meetup-group-jwwqskjb",
       "name": "Greater Vancouver - Racquet Sports",
       "handle": "meetup/meetup-group-jwwqskjb",
@@ -10485,10 +11221,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.306531+00:00"
+      "scraped_at": "2026-11-27T11:08:19.291400+00:00"
     },
     {
-      "id": 209,
+      "id": 225,
       "partner_id": "yt__sijilthomas",
       "name": "Sijil Thomas",
       "handle": "@sijilthomas",
@@ -10531,10 +11267,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.310113+00:00"
+      "scraped_at": "2026-11-27T11:08:19.294743+00:00"
     },
     {
-      "id": 210,
+      "id": 226,
       "partner_id": "mu_play-together-vancouver",
       "name": "Play Together Pickleball Vancouver for All Levels",
       "handle": "meetup/play-together-vancouver",
@@ -10577,10 +11313,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.313125+00:00"
+      "scraped_at": "2026-11-27T11:08:19.297556+00:00"
     },
     {
-      "id": 211,
+      "id": 227,
       "partner_id": "mu_vancouver-pick-up-flag-football-meetup-group",
       "name": "Vancouver Pick-up Flag Football Meetup Group",
       "handle": "meetup/vancouver-pick-up-flag-football-meetup-group",
@@ -10625,10 +11361,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.317202+00:00"
+      "scraped_at": "2026-11-27T11:08:19.301521+00:00"
     },
     {
-      "id": 212,
+      "id": 228,
       "partner_id": "mu_meetup-group-eamhcigz",
       "name": "Badminton Meetup Group",
       "handle": "meetup/meetup-group-eamhcigz",
@@ -10671,10 +11407,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.320268+00:00"
+      "scraped_at": "2026-11-27T11:08:19.304499+00:00"
     },
     {
-      "id": 213,
+      "id": 229,
       "partner_id": "mu_basketball-for-beginners",
       "name": "Basketball for Beginners",
       "handle": "meetup/basketball-for-beginners",
@@ -10717,10 +11453,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.322255+00:00"
+      "scraped_at": "2026-11-27T11:08:19.306415+00:00"
     },
     {
-      "id": 214,
+      "id": 230,
       "partner_id": "yt__PickleballPop-UpsGTA",
       "name": "Pickleball Pop-Ups GTA",
       "handle": "@PickleballPop-UpsGTA",
@@ -10763,10 +11499,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.323793+00:00"
+      "scraped_at": "2026-11-27T11:08:19.307959+00:00"
     },
     {
-      "id": 215,
+      "id": 231,
       "partner_id": "mu_free-sports-leagues-in-toronto-scarborough",
       "name": "FREE Sports Leagues in Toronto/Scarborough",
       "handle": "meetup/free-sports-leagues-in-toronto-scarborough",
@@ -10812,10 +11548,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.326293+00:00"
+      "scraped_at": "2026-11-27T11:08:19.310350+00:00"
     },
     {
-      "id": 216,
+      "id": 232,
       "partner_id": "yt__midlifehockeycrisis394",
       "name": "Midlife Hockey Crisis",
       "handle": "@midlifehockeycrisis394",
@@ -10858,10 +11594,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.327496+00:00"
+      "scraped_at": "2026-11-27T11:08:19.311477+00:00"
     },
     {
-      "id": 217,
+      "id": 233,
       "partner_id": "yt__BlueBirdBasketball",
       "name": "Blue Bird Basketball",
       "handle": "@BlueBirdBasketball",
@@ -10906,10 +11642,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.348966+00:00"
+      "scraped_at": "2026-11-27T11:08:19.315575+00:00"
     },
     {
-      "id": 218,
+      "id": 234,
       "partner_id": "mu_Toronto-NLP-Practice-Group-Meetup",
       "name": "Toronto NLP Practice Group Meetup",
       "handle": "meetup/Toronto-NLP-Practice-Group-Meetup",
@@ -10952,10 +11688,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.352710+00:00"
+      "scraped_at": "2026-11-27T11:08:19.319201+00:00"
     },
     {
-      "id": 219,
+      "id": 235,
       "partner_id": "yt__NYCHoopProgress",
       "name": "NYC Hoop Progress",
       "handle": "@NYCHoopProgress",
@@ -11000,10 +11736,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.355716+00:00"
+      "scraped_at": "2026-11-27T11:08:19.322282+00:00"
     },
     {
-      "id": 220,
+      "id": 236,
       "partner_id": "mu_scadding-court-basketball",
       "name": "Scadding Court Sunday Basketball",
       "handle": "meetup/scadding-court-basketball",
@@ -11046,10 +11782,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.357539+00:00"
+      "scraped_at": "2026-11-27T11:08:19.324131+00:00"
     },
     {
-      "id": 221,
+      "id": 237,
       "partner_id": "mu_toronto-pickleball-meetup-group",
       "name": "Toronto Pickleball Meetup Group",
       "handle": "meetup/toronto-pickleball-meetup-group",
@@ -11092,10 +11828,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.359652+00:00"
+      "scraped_at": "2026-11-27T11:08:19.326227+00:00"
     },
     {
-      "id": 222,
+      "id": 238,
       "partner_id": "mu_richmond-hill-free-running-meetup-group",
       "name": "Pink Pace Collective - Women's Evening Run Club",
       "handle": "meetup/richmond-hill-free-running-meetup-group",
@@ -11140,10 +11876,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.363647+00:00"
+      "scraped_at": "2026-11-27T11:08:19.330190+00:00"
     },
     {
-      "id": 223,
+      "id": 239,
       "partner_id": "mu_north-york-outdoor-tennis-meetup-group",
       "name": "North York Competitive Tennis",
       "handle": "meetup/north-york-outdoor-tennis-meetup-group",
@@ -11186,10 +11922,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.366696+00:00"
+      "scraped_at": "2026-11-27T11:08:19.333150+00:00"
     },
     {
-      "id": 224,
+      "id": 240,
       "partner_id": "mu_north-york-nyc-soccer-meetup-group",
       "name": "North York NYC Soccer Meetup Group",
       "handle": "meetup/north-york-nyc-soccer-meetup-group",
@@ -11232,10 +11968,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.368492+00:00"
+      "scraped_at": "2026-11-27T11:08:19.334865+00:00"
     },
     {
-      "id": 225,
+      "id": 241,
       "partner_id": "mu_sub-club-calgary",
       "name": "Sub Run Club, Calgary",
       "handle": "meetup/sub-club-calgary",
@@ -11278,10 +12014,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.372361+00:00"
+      "scraped_at": "2026-11-27T11:08:19.338748+00:00"
     },
     {
-      "id": 226,
+      "id": 242,
       "partner_id": "mu_durham-womens-golf",
       "name": "Durham Women's Golf",
       "handle": "meetup/durham-womens-golf",
@@ -11324,10 +12060,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.375157+00:00"
+      "scraped_at": "2026-11-27T11:08:19.341441+00:00"
     },
     {
-      "id": 227,
+      "id": 243,
       "partner_id": "mu_mississauga-sports",
       "name": "Mississauga sports",
       "handle": "meetup/mississauga-sports",
@@ -11373,10 +12109,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.376547+00:00"
+      "scraped_at": "2026-11-27T11:08:19.342743+00:00"
     },
     {
-      "id": 228,
+      "id": 244,
       "partner_id": "mu_montreal-techno-run-meetup-group",
       "name": "Montr\u00e9al Techno Run Meetup Group",
       "handle": "meetup/montreal-techno-run-meetup-group",
@@ -11419,10 +12155,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.379758+00:00"
+      "scraped_at": "2026-11-27T11:08:19.345857+00:00"
     },
     {
-      "id": 229,
+      "id": 245,
       "partner_id": "mu_richmond-hill-run-club",
       "name": "Richmond Hill Run Club",
       "handle": "meetup/richmond-hill-run-club",
@@ -11467,10 +12203,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.383381+00:00"
+      "scraped_at": "2026-11-27T11:08:19.349346+00:00"
     },
     {
-      "id": 230,
+      "id": 246,
       "partner_id": "mu_sports-folks-vancouver",
       "name": "Sports and ballgame Vancouver",
       "handle": "meetup/sports-folks-vancouver",
@@ -11516,10 +12252,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.386703+00:00"
+      "scraped_at": "2026-11-27T11:08:19.352702+00:00"
     },
     {
-      "id": 231,
+      "id": 247,
       "partner_id": "mu_futsal-entre-francophones",
       "name": "Futsal Francophone Ottawa",
       "handle": "meetup/futsal-entre-francophones",
@@ -11562,10 +12298,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.390524+00:00"
+      "scraped_at": "2026-11-27T11:08:19.356373+00:00"
     },
     {
-      "id": 232,
+      "id": 248,
       "partner_id": "mu_bujinkan-budo-taijutsu",
       "name": "Bujinkan Budo Taijutsu",
       "handle": "meetup/bujinkan-budo-taijutsu",
@@ -11608,10 +12344,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.392189+00:00"
+      "scraped_at": "2026-11-27T11:08:19.357830+00:00"
     },
     {
-      "id": 233,
+      "id": 249,
       "partner_id": "mu_willowdale-community-badminton-meetup-group",
       "name": "Willowdale Community Badminton Meetup Group",
       "handle": "meetup/willowdale-community-badminton-meetup-group",
@@ -11654,10 +12390,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.395537+00:00"
+      "scraped_at": "2026-11-27T11:08:19.362413+00:00"
     },
     {
-      "id": 234,
+      "id": 250,
       "partner_id": "mu_foot-futsal-pour-francais",
       "name": "Foot/futsal pour fran\u00e7ais",
       "handle": "meetup/foot-futsal-pour-francais",
@@ -11700,10 +12436,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.397439+00:00"
+      "scraped_at": "2026-11-27T11:08:19.364166+00:00"
     },
     {
-      "id": 235,
+      "id": 251,
       "partner_id": "mu_artinmotion-running",
       "name": "Artinmotion running",
       "handle": "meetup/artinmotion-running",
@@ -11746,10 +12482,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.401111+00:00"
+      "scraped_at": "2026-11-27T11:08:19.367642+00:00"
     },
     {
-      "id": 236,
+      "id": 252,
       "partner_id": "org_urbanrec_ca",
       "name": "Urban Rec Vancouver",
       "handle": "urbanrec.ca",
@@ -11792,10 +12528,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.711156+00:00"
+      "scraped_at": "2026-11-27T11:08:18.676882+00:00"
     },
     {
-      "id": 237,
+      "id": 253,
       "partner_id": "org_slopitch_com",
       "name": "Slo-Pitch National",
       "handle": "slopitch.com",
@@ -11840,10 +12576,10 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:23.713713+00:00"
+      "scraped_at": "2026-11-27T11:08:18.679399+00:00"
     },
     {
-      "id": 238,
+      "id": 254,
       "partner_id": "eb_122009367673",
       "name": "Only the Braves",
       "handle": "eventbrite/122009367673",
@@ -11888,23 +12624,23 @@
       "outreach_status": "not_contacted",
       "outreach_notes": "",
       "is_dismissed": 0,
-      "scraped_at": "2026-11-26T23:58:24.404155+00:00"
+      "scraped_at": "2026-11-27T11:08:19.370699+00:00"
     }
   ],
   "recent_runs": [
     {
       "id": 1,
-      "started_at": "2026-11-26T23:57:48.586556+00:00",
-      "finished_at": "2026-11-26T23:58:24.405668+00:00",
+      "started_at": "2026-11-27T11:07:41.282175+00:00",
+      "finished_at": "2026-11-27T11:08:19.372064+00:00",
       "sources": "YouTube, Meetup, Eventbrite Toronto, IG/TikTok Toronto, Bluesky, Canadian Sports Orgs",
-      "total_fetched": 27,
-      "new_stored": 27,
+      "total_fetched": 25,
+      "new_stored": 25,
       "pro_candidates_found": 21,
-      "sports_orgs_found": 6,
+      "sports_orgs_found": 4,
       "with_email_found": 10,
       "status": "completed",
-      "log_summary": "Scraped 27 partners (27 new, 21 Pro Candidates, 6 Sports Orgs, 10 with email) | YouTube: 24 profiles | Meetup: 3 sports groups | Eventbrite Toronto: 0 organizers | IG/TikTok Toronto: 0 creators | Bluesky: 0 profiles | Canadian Orgs: 0 crawled | Audit pruned 6, merged 5 dups"
+      "log_summary": "Scraped 25 partners (25 new, 21 Pro Candidates, 4 Sports Orgs, 10 with email) | YouTube: 22 profiles | Meetup: 3 sports groups | Eventbrite Toronto: 0 organizers | IG/TikTok Toronto: 0 creators | Bluesky: 0 profiles | Canadian Orgs: 0 crawled | Audit pruned 6, merged 3 dups"
     }
   ],
-  "exported_at": "2026-11-26T23:58:24.412434+00:00"
+  "exported_at": "2026-11-27T11:08:19.378966+00:00"
 }
